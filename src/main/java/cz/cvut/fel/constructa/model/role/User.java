@@ -1,14 +1,11 @@
-package cz.cvut.fel.constructa.model;
+package cz.cvut.fel.constructa.model.role;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Column;
+import cz.cvut.fel.constructa.enums.Role;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
+import java.util.List;
 
 import java.util.Date;
 
@@ -32,6 +29,9 @@ public class User {
 //    @Column(name = "password", nullable = false)
     @Column(name = "password")
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    private List<Role> roles;
 
     @Column(name = "title_before_name")
     private String titleBeforeName;

@@ -12,13 +12,11 @@ public enum Role {
     EXTERNALIST("Externalist"),
     FIRED("Fired");
 
-    private String roleName;
-
-    Role(String roleName) {
-        this.roleName = roleName;
+    private String role;
+    Role(String role) {
+        this.role = role;
     }
-
-    public String getRoleName() {
-        return roleName;
+    public String getRole() {
+        return role;
     }
 }

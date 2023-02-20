@@ -1,12 +1,14 @@
 package cz.cvut.fel.constructa.controller;
 
-import cz.cvut.fel.constructa.model.User;
+import cz.cvut.fel.constructa.enums.Role;
+import cz.cvut.fel.constructa.model.role.User;
 import cz.cvut.fel.constructa.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,10 +38,17 @@ public class UserController {
     // TODO
     @ResponseStatus(code = HttpStatus.OK)
     @PutMapping(value = "/user/{userId}")
-    public Optional<User> changeEmail(@RequestBody String email, @PathVariable Long userId) {
+    public Optional<User> changeEmail(@RequestBody String role, @PathVariable Long userId) {
         Optional<User> user = userService.getUserById(userId); // TODO KONTROLA
         if(user.get() != null){
-            user.get().setEmail(email);
+            if(user.get().getRoles() == null){
+                List<Role> newRoles = new ArrayList<>();
+                newRoles.add(Role.valueOf(role));
+                user.get().setRoles(newRoles);
+            } else {
+                user.get().getRoles().add(Role.valueOf(role));
+            }
+//            user.get().setEmail(email);
             return userService.updateUser(userId, user.get());
         }
         return null;

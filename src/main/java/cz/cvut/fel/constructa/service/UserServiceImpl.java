@@ -1,7 +1,7 @@
 package cz.cvut.fel.constructa.service;
 
 import cz.cvut.fel.constructa.repository.UserRepository;
-import cz.cvut.fel.constructa.model.User;
+import cz.cvut.fel.constructa.model.role.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

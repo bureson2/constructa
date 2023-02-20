@@ -1,6 +1,6 @@
 package cz.cvut.fel.constructa.service;
 
-import cz.cvut.fel.constructa.model.User;
+import cz.cvut.fel.constructa.model.role.User;
 import java.util.List;
 import java.util.Optional;
 
