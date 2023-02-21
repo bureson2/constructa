@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "employees")
@@ -69,4 +70,16 @@ public class User {
     @Column(name = "month_salary")
     private int monthSalary;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id.equals(user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }
