@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "tasks")
+@Table(name = "locations")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -36,4 +36,8 @@ public class Location {
     private String qrCode;
     @OneToMany(mappedBy = "location")
     private List<WorkReport> workReports = new ArrayList<>();
+
+    @OneToOne(mappedBy = "companyAddress")
+    private Company company;
+
 }

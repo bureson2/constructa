@@ -1,6 +1,8 @@
 package cz.cvut.fel.constructa.model.role;
 
 import cz.cvut.fel.constructa.enums.Role;
+import cz.cvut.fel.constructa.model.Location;
+import cz.cvut.fel.constructa.model.Project;
 import cz.cvut.fel.constructa.model.Task;
 import cz.cvut.fel.constructa.model.report.FinanceReport;
 import cz.cvut.fel.constructa.model.report.WorkReport;
@@ -88,6 +90,8 @@ public class User {
     @OneToMany(mappedBy = "salariedEmployee")
     private List<FinanceReport> financeReports = new ArrayList<>();
 
+    @OneToOne(mappedBy = "projectManager")
+    private Project project;
 
     @Override
     public boolean equals(Object o) {
