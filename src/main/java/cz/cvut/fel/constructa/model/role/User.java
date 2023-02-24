@@ -2,6 +2,8 @@ package cz.cvut.fel.constructa.model.role;
 
 import cz.cvut.fel.constructa.enums.Role;
 import cz.cvut.fel.constructa.model.Task;
+import cz.cvut.fel.constructa.model.report.FinanceReport;
+import cz.cvut.fel.constructa.model.report.WorkReport;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -79,6 +81,12 @@ public class User {
     @OneToMany(mappedBy = "assignee")
     private List<Task> assignedTasks = new ArrayList<>();
 
+//    todo better name
+    @OneToMany(mappedBy = "reportingEmployee")
+    private List<WorkReport> attendance = new ArrayList<>();
+
+    @OneToMany(mappedBy = "salariedEmployee")
+    private List<FinanceReport> financeReports = new ArrayList<>();
 
 
     @Override
