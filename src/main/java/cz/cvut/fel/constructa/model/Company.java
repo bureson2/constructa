@@ -1,9 +1,15 @@
 package cz.cvut.fel.constructa.model;
 
+import cz.cvut.fel.constructa.model.report.FinanceReport;
+import cz.cvut.fel.constructa.model.role.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "companies")
@@ -28,4 +34,9 @@ public class Company {
     @OneToOne
     @JoinColumn(name = "location_id", referencedColumnName = "location_id")
     private Location companyAddress;
+
+    @OneToMany(mappedBy = "company")
+    private List<User> externalist = new ArrayList<>();
+
+
 }

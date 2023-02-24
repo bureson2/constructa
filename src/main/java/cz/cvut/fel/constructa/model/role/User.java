@@ -1,6 +1,7 @@
 package cz.cvut.fel.constructa.model.role;
 
 import cz.cvut.fel.constructa.enums.Role;
+import cz.cvut.fel.constructa.model.Company;
 import cz.cvut.fel.constructa.model.Location;
 import cz.cvut.fel.constructa.model.Project;
 import cz.cvut.fel.constructa.model.Task;
@@ -11,11 +12,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "employees")
@@ -34,7 +31,7 @@ public class User {
     //    @Column(name = "email", nullable = false)
     @Column(name = "email")
     private String email;
-//    @Column(name = "password", nullable = false)
+    //    @Column(name = "password", nullable = false)
     @Column(name = "password")
     private String password;
 
@@ -44,30 +41,30 @@ public class User {
     @Column(name = "title_before_name")
     private String titleBeforeName;
 
-//    @Column(name = "firstname", nullable = false)
+    //    @Column(name = "firstname", nullable = false)
     @Column(name = "firstname")
     private String firstname;
 
-//    @Column(name = "lastname", nullable = false)
+    //    @Column(name = "lastname", nullable = false)
     @Column(name = "lastname")
     private String lastname;
 
     @Column(name = "title_after_name")
     private String titleAfterName;
 
-//    @Column(name = "bank_account", nullable = false)
+    //    @Column(name = "bank_account", nullable = false)
     @Column(name = "bank_account")
     private String bankAccount;
 
-//    @Column(name = "date_of_acceptance", nullable = false)
+    //    @Column(name = "date_of_acceptance", nullable = false)
     @Column(name = "date_of_acceptance")
     private Date dateOfAcceptance;
 
-//    @Column(name = "date_of_birth", nullable = false)
+    //    @Column(name = "date_of_birth", nullable = false)
     @Column(name = "date_of_birth")
     private Date dateOfBirth;
 
-//    @Column(name = "birth_id", nullable = false)
+    //    @Column(name = "birth_id", nullable = false)
     @Column(name = "birth_id")
     private String birthId;
 
@@ -83,7 +80,7 @@ public class User {
     @OneToMany(mappedBy = "assignee")
     private List<Task> assignedTasks = new ArrayList<>();
 
-//    todo better name
+    //    todo better name
     @OneToMany(mappedBy = "reportingEmployee")
     private List<WorkReport> attendance = new ArrayList<>();
 
@@ -92,6 +89,17 @@ public class User {
 
     @OneToOne(mappedBy = "projectManager")
     private Project project;
+
+    @ManyToOne
+    @JoinColumn(name = "location_id")
+    private Location userAddress;
+
+    @OneToMany(mappedBy = "externalist")
+    private List<ExternalistInProject> externalProjectWork = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    private Company company;
 
     @Override
     public boolean equals(Object o) {

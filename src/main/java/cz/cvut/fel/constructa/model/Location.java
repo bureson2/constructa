@@ -1,6 +1,9 @@
 package cz.cvut.fel.constructa.model;
 
+import cz.cvut.fel.constructa.model.report.FinanceReport;
 import cz.cvut.fel.constructa.model.report.WorkReport;
+import cz.cvut.fel.constructa.model.role.ExternalistInProject;
+import cz.cvut.fel.constructa.model.role.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,11 +22,12 @@ public class Location {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "location_id", nullable = false)
     private Long id;
-
     @Column(name = "city")
     private String city;
     @Column(name = "street")
     private String street;
+    @Column(name = "descriptive_number")
+    private String descriptiveNumber;
     @Column(name = "name")
     private String name;
     //    TODO own type?
@@ -37,7 +41,16 @@ public class Location {
     @OneToMany(mappedBy = "location")
     private List<WorkReport> workReports = new ArrayList<>();
 
+    @OneToMany(mappedBy = "location")
+    private List<Task> tasks = new ArrayList<>();
+
     @OneToOne(mappedBy = "companyAddress")
     private Company company;
+
+    @OneToOne(mappedBy = "projectAddress")
+    private Project project;
+
+    @OneToMany(mappedBy = "userAddress")
+    private List<User> residents = new ArrayList<>();
 
 }

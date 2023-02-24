@@ -1,5 +1,7 @@
 package cz.cvut.fel.constructa.model;
 
+import cz.cvut.fel.constructa.enums.TaskState;
+import cz.cvut.fel.constructa.enums.WorkReportType;
 import cz.cvut.fel.constructa.model.role.User;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -35,6 +37,10 @@ public class Task {
     @Column(name="location_position")
     private Point locationPosition;
 
+    @ManyToOne
+    @JoinColumn(name = "location_id")
+    private Location location;
+
     @Column(name = "time_from")
     private Date timeFrom;
 
@@ -48,4 +54,7 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User assignee;
+
+    @Enumerated(EnumType.STRING)
+    private TaskState state;
 }
