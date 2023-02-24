@@ -9,6 +9,7 @@ import cz.cvut.fel.constructa.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,47 +31,57 @@ public class TaskController {
 
     @ResponseStatus(code = HttpStatus.OK)
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<TaskResponseDTO> getTasks() {
+    public ResponseEntity<List<TaskResponseDTO>> getTasks() {
         List<Task> tasks = taskService.getTasks();
-        return tasks.stream()
-                .map(task -> taskMapper.convertToDto(task))
-                .collect(Collectors.toList());
+        return ResponseEntity.ok().body(
+                tasks.stream()
+                        .map(task -> taskMapper.convertToDto(task))
+                        .collect(Collectors.toList())
+        );
     }
 
     @ResponseStatus(code = HttpStatus.OK)
     @GetMapping(value = "/{taskId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public TaskResponseDTO getTask(@PathVariable Long taskId) {
+    public ResponseEntity<TaskResponseDTO> getTask(@PathVariable Long taskId) {
         Optional<Task> taskToReturn = taskService.getTaskById(taskId);
-        return taskToReturn.map(task -> taskMapper.convertToDto(task)).orElse(null);
+        return taskToReturn.map(task -> ResponseEntity.ok().body(
+                taskMapper.convertToDto(task)
+        )).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public TaskResponseDTO createTask(@RequestBody Task newTask) {
+    public ResponseEntity<TaskResponseDTO> createTask(@RequestBody Task newTask) {
         Task createdTask = taskService.create(newTask);
-//        return createdTask;
-        return taskMapper.convertToDto(createdTask);
+        return ResponseEntity.ok().body(
+                taskMapper.convertToDto(createdTask)
+        );
     }
 
     // TODO move to service
     @ResponseStatus(code = HttpStatus.OK)
     @PutMapping(value = "/{taskId}/user/{userId}")
-    public TaskResponseDTO changeAssigne(@PathVariable Long taskId, @PathVariable Long userId) {
+    public ResponseEntity<TaskResponseDTO> changeAssigne(@PathVariable Long taskId, @PathVariable Long userId) {
         Optional<User> user = userService.getUserById(userId);
         Optional<Task> task = taskService.getTaskById(taskId);
-        if(user.get() != null && task.get() != null){
+        if (user.isPresent() && task.isPresent()) {
             task.get().setAssignee(user.get());
             task.get().setAuthor(user.get());
             user.get().getAssignedTasks().add(task.get());
             taskService.update(task.get());
             userService.update(user.get());
+            return ResponseEntity.ok().body(
+                    taskMapper.convertToDto(task.get())
+            );
         }
-        return taskMapper.convertToDto(task.get());
+        return ResponseEntity.notFound().build();
+
     }
 
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @DeleteMapping(value = "/{taskId}")
-    public void deleteTask(@PathVariable Long taskId) {
+    public ResponseEntity<Void> deleteTask(@PathVariable Long taskId) {
         taskService.delete(taskId);
+        return ResponseEntity.noContent().build();
     }
 }

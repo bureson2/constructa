@@ -1,9 +1,14 @@
 package cz.cvut.fel.constructa.dto.response;
 
+import cz.cvut.fel.constructa.model.role.User;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.geo.Point;
 
 import java.util.Date;
 
+@Getter
+@Setter
 public class TaskResponseDTO {
     private Long id;
     private Date dateOfCreation;
@@ -13,9 +18,8 @@ public class TaskResponseDTO {
     private Point locationPosition;
     private Date timeFrom;
     private Date timeTo;
+    private UserResponseDTO assignee;
 
-//    TODO
-//    private User author;
-//    private User assignee;
+    private UserResponseDTO author;
 
 }

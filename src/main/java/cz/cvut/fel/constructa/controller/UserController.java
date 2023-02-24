@@ -7,60 +7,68 @@ import cz.cvut.fel.constructa.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+//    TODO response body specifikace?
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
     @Autowired
     private UserService userService;
-
     @Autowired
     private UserMapper userMapper;
-
-//    TODO response body specifikace?
-//    Upravit na value a jeden hlavni path
 
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<UserResponseDTO> getUsers() {
+    public ResponseEntity<List<UserResponseDTO>> getUsers() {
         List<User> users = userService.getUsers();
-        return users.stream()
-                .map(user -> userMapper.convertToDto(user))
-                .collect(Collectors.toList());
+        return ResponseEntity.ok().body(
+                users.stream()
+                        .map(user -> userMapper.convertToDto(user))
+                        .collect(Collectors.toList())
+        );
     }
 
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
     @GetMapping(value = "/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public UserResponseDTO getUser(@PathVariable Long userId) {
+    public ResponseEntity<UserResponseDTO> getUser(@PathVariable Long userId) {
         Optional<User> usertToReturn = userService.getUserById(userId);
-        return usertToReturn.map(user -> userMapper.convertToDto(user)).orElse(null);
+        return usertToReturn.map(task -> ResponseEntity.ok().body(
+                userMapper.convertToDto(task)
+        )).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public UserResponseDTO createUser(@RequestBody User newUser) {
+    public ResponseEntity<UserResponseDTO> createUser(@RequestBody User newUser) {
         User createdUser = userService.create(newUser);
-        return userMapper.convertToDto(createdUser);
+        return ResponseEntity.ok().body(
+                userMapper.convertToDto(createdUser)
+        );
     }
 
-    // TODO
+    // TODO correct data getting
     @ResponseStatus(code = HttpStatus.OK)
     @PutMapping(value = "/{userId}")
-    public UserResponseDTO updateRole(@RequestBody String role, @PathVariable Long userId) {
+    public ResponseEntity<UserResponseDTO> updateRole(@RequestBody String role, @PathVariable Long userId) {
         User updatedUser = userService.updateRole(userId, role);
-        return userMapper.convertToDto(updatedUser);
+        return ResponseEntity.ok().body(
+                userMapper.convertToDto(updatedUser)
+        );
     }
 
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @DeleteMapping(value = "/{userId}")
-    public void deleteUser(@PathVariable Long userId) {
+    public ResponseEntity<Void> deleteUser(@PathVariable Long userId) {
         userService.delete(userId);
+        return ResponseEntity.noContent().build();
     }
 }

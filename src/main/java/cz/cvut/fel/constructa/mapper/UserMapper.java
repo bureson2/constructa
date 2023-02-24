@@ -12,7 +12,7 @@ import java.text.ParseException;
 // TODO generics
 
 @Component
-public class UserMapper{
+public class UserMapper {
     @Autowired
     private ModelMapper modelMapper;
 
@@ -20,7 +20,7 @@ public class UserMapper{
         return modelMapper.map(user, UserResponseDTO.class);
     }
 
-// TODO implement request when it will be needed
+    // TODO implement request when it will be needed
     public User convertToEntity(UserRequestDTO userDTO) throws ParseException {
         return modelMapper.map(userDTO, User.class);
     }
