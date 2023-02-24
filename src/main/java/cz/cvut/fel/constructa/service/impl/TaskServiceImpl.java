@@ -1,8 +1,8 @@
-package cz.cvut.fel.constructa.service.interfaces;
+package cz.cvut.fel.constructa.service.impl;
 
 import cz.cvut.fel.constructa.model.Task;
 import cz.cvut.fel.constructa.repository.TaskRepository;
-import cz.cvut.fel.constructa.service.impl.TaskService;
+import cz.cvut.fel.constructa.service.interfaces.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +35,12 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task update(Long id, Task updatedTask) {
+    public Task update(Task updatedTask) {
         return taskDao.save(updatedTask);
     }
+
+//    @Override
+//    public Task addAssignee(Long userId, Task task) {
+//
+//    }
 }

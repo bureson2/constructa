@@ -3,7 +3,7 @@ package cz.cvut.fel.constructa.service;
 import cz.cvut.fel.constructa.enums.Role;
 import cz.cvut.fel.constructa.model.role.User;
 import cz.cvut.fel.constructa.repository.UserRepository;
-import cz.cvut.fel.constructa.service.impl.UserService;
+import cz.cvut.fel.constructa.service.interfaces.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,7 +18,7 @@ import static cz.cvut.fel.constructa.generator.UserGenerator.randomInt;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-public class UserServiceImlTest {
+public class UserServiceTest {
     @Autowired
     private UserService userService;
     @Autowired
@@ -79,10 +79,10 @@ public class UserServiceImlTest {
         user.setHourRate(200);
         user.setPassword("password".concat(randomNumber));
 //        TODO really id in update?
-        Optional<User> updatedUser = userService.update(user.getId(), user);
+        User updatedUser = userService.updateRole(user.getId(), role);
 
-        assertNotEquals(originUserHashCode, updatedUser.get().hashCode());
-        assertEquals(user, updatedUser.get());
+        assertNotEquals(originUserHashCode, updatedUser.hashCode());
+        assertEquals(user, updatedUser);
 
     }
 

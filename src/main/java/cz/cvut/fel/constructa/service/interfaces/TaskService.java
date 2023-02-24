@@ -1,4 +1,4 @@
-package cz.cvut.fel.constructa.service.impl;
+package cz.cvut.fel.constructa.service.interfaces;
 
 import cz.cvut.fel.constructa.model.Task;
 
@@ -10,5 +10,7 @@ public interface TaskService {
     Optional<Task> getTaskById(Long id);
     List<Task> getTasks();
     void delete(Long id);
-    Task update(Long id, Task updatedTask);
+    Task update(Task updatedTask);
+
+//    Task addAssignee(Long userId, Task task);
 }
