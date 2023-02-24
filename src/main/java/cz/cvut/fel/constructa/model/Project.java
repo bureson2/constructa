@@ -23,13 +23,10 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "project_id", nullable = false)
     private Long id;
-
     @Column(name = "name")
     private String name;
-
     @Column(name = "buildingFacility")
     private String buldingFacility;
-
     @Enumerated(EnumType.STRING)
     private ProjectState state;
 

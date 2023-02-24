@@ -36,7 +36,7 @@ public class Location {
     //    TODO own validated type?
     @Column(name = "postCode")
     private String postCode;
-    @Column(name = "qrCode")
+    @Column(name = "qr_code")
     private String qrCode;
     @OneToMany(mappedBy = "location")
     private List<WorkReport> workReports = new ArrayList<>();

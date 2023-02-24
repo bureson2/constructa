@@ -8,6 +8,7 @@ public enum Role {
     MECHANICAL_ENGINEER("Mechanical_engineer"),
     CONSTRUCTION_MANAGER("Construction_manager"),
     DRIVER("Driver"),
+    WORKER("Worker"),
     EMPLOYEE("Employee"),
     EXTERNALIST("Externalist"),
     FIRED("Fired");
