@@ -1,4 +1,4 @@
-package cz.cvut.fel.constructa.model;
+package cz.cvut.fel.constructa.model.report;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -8,11 +8,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "attendances")
+@Table(name = "finance_reports")
 @Getter
 @Setter
 @NoArgsConstructor
-public class Attendance {
+public class FinanceReport {
     @Id
     private Long id;
 }

@@ -1,10 +1,13 @@
 package cz.cvut.fel.constructa.model.role;
 
 import cz.cvut.fel.constructa.enums.Role;
+import cz.cvut.fel.constructa.model.Task;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import java.util.Date;
@@ -18,7 +21,7 @@ import java.util.Objects;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
+    @Column(name = "user_id", nullable = false)
     private Long id;
 
     @Column(name = "username", nullable = false)
@@ -69,6 +72,14 @@ public class User {
 
     @Column(name = "month_salary")
     private int monthSalary;
+
+    @OneToMany(mappedBy = "author")
+    private List<Task> createdTasks = new ArrayList<>();
+
+    @OneToMany(mappedBy = "assignee")
+    private List<Task> assignedTasks = new ArrayList<>();
+
+
 
     @Override
     public boolean equals(Object o) {

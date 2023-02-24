@@ -2,7 +2,7 @@ package cz.cvut.fel.constructa.controller;
 
 import cz.cvut.fel.constructa.enums.Role;
 import cz.cvut.fel.constructa.model.role.User;
-import cz.cvut.fel.constructa.service.UserService;
+import cz.cvut.fel.constructa.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,7 +20,7 @@ public class UserController {
     @ResponseStatus(code = HttpStatus.OK)
     @GetMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<User> getUsers() {
-        return userService.getAllUsers();
+        return userService.getUsers();
     }
 
     @ResponseStatus(code = HttpStatus.OK)
@@ -32,7 +32,7 @@ public class UserController {
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping(value = "/user/new", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Optional<User> createUser(@RequestBody User newUser) {
-        return userService.createUser(newUser);
+        return userService.create(newUser);
     }
 
     // TODO
@@ -49,7 +49,7 @@ public class UserController {
                 user.get().getRoles().add(Role.valueOf(role));
             }
 //            user.get().setEmail(email);
-            return userService.updateUser(userId, user.get());
+            return userService.update(userId, user.get());
         }
         return null;
     }
@@ -57,7 +57,7 @@ public class UserController {
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @DeleteMapping(value = "/user/{userId}")
     public void deleteUser(@PathVariable Long userId) {
-        userService.deleteUser(userId);
+        userService.delete(userId);
     }
 
 }

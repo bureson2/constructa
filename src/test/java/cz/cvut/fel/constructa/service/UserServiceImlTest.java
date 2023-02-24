@@ -3,6 +3,7 @@ package cz.cvut.fel.constructa.service;
 import cz.cvut.fel.constructa.enums.Role;
 import cz.cvut.fel.constructa.model.role.User;
 import cz.cvut.fel.constructa.repository.UserRepository;
+import cz.cvut.fel.constructa.service.impl.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,7 +28,7 @@ public class UserServiceImlTest {
     public void createUser_validParams_userCreated() throws ParseException {
         User user = UserGenerator.generateBasicUser();
 
-        userService.createUser(user);
+        userService.create(user);
         Optional<User> savedUser = userDao.findById(user.getId());
 
         assertEquals(user, savedUser.get());
@@ -40,7 +41,7 @@ public class UserServiceImlTest {
         user.setId(null);
 
         assertThrows(Exception.class,
-                () -> userService.createUser(user));
+                () -> userService.create(user));
     }
 
     @Test
@@ -49,10 +50,10 @@ public class UserServiceImlTest {
         List<User> userList = new ArrayList<>();
         for (int i = 0; i < employeeCounter; i++){
             User user = UserGenerator.generateBasicUser();
-            userService.createUser(user);
+            userService.create(user);
             userList.add(user);
         }
-        List<User> returnedUser = userService.getAllUsers();
+        List<User> returnedUser = userService.getUsers();
 
         assertEquals(userList.size(), returnedUser.size());
     }
@@ -61,7 +62,7 @@ public class UserServiceImlTest {
     public void updateUser_validParams_returnChangedUser() throws ParseException {
         User user = UserGenerator.generateBasicUser();
         int originUserHashCode = user.hashCode();
-        userService.createUser(user);
+        userService.create(user);
 
         String randomNumber = Integer.toString(randomInt());
         List<Role> roles = new ArrayList<>();
@@ -78,7 +79,7 @@ public class UserServiceImlTest {
         user.setHourRate(200);
         user.setPassword("password".concat(randomNumber));
 //        TODO really id in update?
-        Optional<User> updatedUser = userService.updateUser(user.getId(), user);
+        Optional<User> updatedUser = userService.update(user.getId(), user);
 
         assertNotEquals(originUserHashCode, updatedUser.get().hashCode());
         assertEquals(user, updatedUser.get());
@@ -90,26 +91,26 @@ public class UserServiceImlTest {
     @Test
     public void updateUser_nullParams_exceptionThrow() throws ParseException {
         User user = UserGenerator.generateBasicUser();
-        userService.createUser(user);
+        userService.create(user);
         String username = user.getUsername();
         Long id = user.getId();
 
         user.setUsername(null);
         assertThrows(Exception.class,
-                () -> userService.updateUser(user.getId(), user));
+                () -> userService.update(user.getId(), user));
 
         user.setUsername(username);
         user.setId(null);
         assertThrows(Exception.class,
-                () -> userService.updateUser(id, user));
+                () -> userService.update(id, user));
     }
 
     @Test
     public void deleteUser_validUserId_userDelete() throws ParseException {
         User user = UserGenerator.generateBasicUser();
-        userService.createUser(user);
+        userService.create(user);
 
-        userService.deleteUser(user.getId());
+        userService.delete(user.getId());
         Optional<User> deletedUser = userDao.findById(user.getId());
 
         assertEquals(Optional.empty(), deletedUser);
