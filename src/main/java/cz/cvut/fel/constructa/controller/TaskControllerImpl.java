@@ -1,5 +1,6 @@
 package cz.cvut.fel.constructa.controller;
 
+import cz.cvut.fel.constructa.controller.interfaces.TaskController;
 import cz.cvut.fel.constructa.dto.response.TaskResponseDTO;
 import cz.cvut.fel.constructa.mapper.TaskMapper;
 import cz.cvut.fel.constructa.model.Task;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/tasks")
-public class TaskController {
+public class TaskControllerImpl implements TaskController {
 
     @Autowired
     private TaskService taskService;
@@ -29,6 +30,7 @@ public class TaskController {
     @Autowired
     private TaskMapper taskMapper;
 
+    @Override
     @ResponseStatus(code = HttpStatus.OK)
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TaskResponseDTO>> getTasks() {
@@ -39,7 +41,7 @@ public class TaskController {
                         .collect(Collectors.toList())
         );
     }
-
+    @Override
     @ResponseStatus(code = HttpStatus.OK)
     @GetMapping(value = "/{taskId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TaskResponseDTO> getTask(@PathVariable Long taskId) {
@@ -48,7 +50,7 @@ public class TaskController {
                 taskMapper.convertToDto(task)
         )).orElseGet(() -> ResponseEntity.notFound().build());
     }
-
+    @Override
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TaskResponseDTO> createTask(@RequestBody Task newTask) {
@@ -59,6 +61,7 @@ public class TaskController {
     }
 
     // TODO move to service
+    @Override
     @ResponseStatus(code = HttpStatus.OK)
     @PutMapping(value = "/{taskId}/user/{userId}")
     public ResponseEntity<TaskResponseDTO> changeAssigne(@PathVariable Long taskId, @PathVariable Long userId) {
@@ -77,7 +80,7 @@ public class TaskController {
         return ResponseEntity.notFound().build();
 
     }
-
+    @Override
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @DeleteMapping(value = "/{taskId}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long taskId) {

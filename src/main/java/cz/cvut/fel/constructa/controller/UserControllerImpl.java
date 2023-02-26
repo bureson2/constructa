@@ -1,5 +1,6 @@
 package cz.cvut.fel.constructa.controller;
 
+import cz.cvut.fel.constructa.controller.interfaces.UserController;
 import cz.cvut.fel.constructa.dto.response.UserResponseDTO;
 import cz.cvut.fel.constructa.mapper.UserMapper;
 import cz.cvut.fel.constructa.model.role.User;
@@ -18,12 +19,13 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")
-public class UserController {
+public class UserControllerImpl implements UserController {
     @Autowired
     private UserService userService;
     @Autowired
     private UserMapper userMapper;
 
+    @Override
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -35,7 +37,7 @@ public class UserController {
                         .collect(Collectors.toList())
         );
     }
-
+    @Override
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
     @GetMapping(value = "/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -45,7 +47,7 @@ public class UserController {
                 userMapper.convertToDto(task)
         )).orElseGet(() -> ResponseEntity.notFound().build());
     }
-
+    @Override
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserResponseDTO> createUser(@RequestBody User newUser) {
@@ -56,6 +58,7 @@ public class UserController {
     }
 
     // TODO correct data getting
+    @Override
     @ResponseStatus(code = HttpStatus.OK)
     @PutMapping(value = "/{userId}")
     public ResponseEntity<UserResponseDTO> updateRole(@RequestBody String role, @PathVariable Long userId) {
@@ -64,7 +67,7 @@ public class UserController {
                 userMapper.convertToDto(updatedUser)
         );
     }
-
+    @Override
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @DeleteMapping(value = "/{userId}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long userId) {

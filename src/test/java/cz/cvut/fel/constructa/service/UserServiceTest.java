@@ -79,7 +79,7 @@ public class UserServiceTest {
         user.setHourRate(200);
         user.setPassword("password".concat(randomNumber));
 //        TODO really id in update?
-        User updatedUser = userService.updateRole(user.getId(), role);
+        User updatedUser = userService.updateRole(role, user.getId());
 
         assertNotEquals(originUserHashCode, updatedUser.hashCode());
         assertEquals(user, updatedUser);
