@@ -126,7 +126,6 @@ public class User {
     @OneToMany(mappedBy = "executor")
     private List<ConstructionReport> constructionsReport = new ArrayList<>();
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -1,4 +1,9 @@
 package cz.cvut.fel.constructa.repository;
 
-public interface ConstrcutionReportRepository {
+import cz.cvut.fel.constructa.model.report.ConstructionReport;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface ConstrcutionReportRepository extends JpaRepository<ConstructionReport, Long> {
 }
