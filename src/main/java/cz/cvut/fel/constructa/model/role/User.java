@@ -2,6 +2,7 @@ package cz.cvut.fel.constructa.model.role;
 
 import cz.cvut.fel.constructa.enums.Role;
 import cz.cvut.fel.constructa.model.*;
+import cz.cvut.fel.constructa.model.loan.Loan;
 import cz.cvut.fel.constructa.model.report.ConstructionReport;
 import cz.cvut.fel.constructa.model.report.FinanceReport;
 import cz.cvut.fel.constructa.model.report.VehicleReport;
@@ -99,6 +100,9 @@ public class User {
     @OneToMany(mappedBy = "driver")
     private List<VehicleReport> vehicleReports = new ArrayList<>();
 
+    @OneToMany(mappedBy = "loaner")
+    private List<Loan> loans = new ArrayList<>();
+
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;
@@ -135,6 +139,5 @@ public class User {
     public int hashCode() {
         return Objects.hash(id, username, email, dateOfAcceptance, birthId);
     }
-
 
 }

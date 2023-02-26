@@ -1,5 +1,6 @@
 package cz.cvut.fel.constructa.model;
 
+import cz.cvut.fel.constructa.model.loan.Warehouse;
 import cz.cvut.fel.constructa.model.report.FinanceReport;
 import cz.cvut.fel.constructa.model.report.WorkReport;
 import cz.cvut.fel.constructa.model.role.ExternalistInProject;
@@ -46,6 +47,9 @@ public class Location {
 
     @OneToOne(mappedBy = "companyAddress")
     private Company company;
+
+    @OneToOne(mappedBy = "warehouseAddress")
+    private Warehouse warehouse;
 
     @OneToOne(mappedBy = "projectAddress")
     private Project project;
