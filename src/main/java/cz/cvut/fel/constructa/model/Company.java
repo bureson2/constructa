@@ -1,6 +1,7 @@
 package cz.cvut.fel.constructa.model;
 
 import cz.cvut.fel.constructa.model.report.FinanceReport;
+import cz.cvut.fel.constructa.model.report.VehicleReport;
 import cz.cvut.fel.constructa.model.role.User;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -38,5 +40,7 @@ public class Company {
     @OneToMany(mappedBy = "company")
     private List<User> externalist = new ArrayList<>();
 
+    @ManyToMany(mappedBy = "transportContractors")
+    private Set<VehicleReport> contractors_transport_reports = new HashSet<>();
 
 }

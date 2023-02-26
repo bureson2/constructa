@@ -1,11 +1,10 @@
 package cz.cvut.fel.constructa.model.role;
 
 import cz.cvut.fel.constructa.enums.Role;
-import cz.cvut.fel.constructa.model.Company;
-import cz.cvut.fel.constructa.model.Location;
-import cz.cvut.fel.constructa.model.Project;
-import cz.cvut.fel.constructa.model.Task;
+import cz.cvut.fel.constructa.model.*;
+import cz.cvut.fel.constructa.model.report.ConstructionReport;
 import cz.cvut.fel.constructa.model.report.FinanceReport;
+import cz.cvut.fel.constructa.model.report.VehicleReport;
 import cz.cvut.fel.constructa.model.report.WorkReport;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -97,9 +96,32 @@ public class User {
     @OneToMany(mappedBy = "externalist")
     private List<ExternalistInProject> externalProjectWork = new ArrayList<>();
 
+    @OneToMany(mappedBy = "driver")
+    private List<VehicleReport> vehicleReports = new ArrayList<>();
+
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;
+
+    @ManyToMany
+    @JoinTable(
+            name = "responsible_persons_construction_diaries",
+            joinColumns = { @JoinColumn(name = "user_id") },
+            inverseJoinColumns = { @JoinColumn(name = "responsible_person_id") }
+    )
+    private Set<ResponsiblePersonInConstructionDiary> responsiblePersons = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_documents",
+            joinColumns = { @JoinColumn(name = "user_id") },
+            inverseJoinColumns = { @JoinColumn(name = "document_id") }
+    )
+    private Set<Document> userDocumentLinks = new HashSet<>();
+
+    @OneToMany(mappedBy = "executor")
+    private List<ConstructionReport> constructionsReport = new ArrayList<>();
+
 
     @Override
     public boolean equals(Object o) {

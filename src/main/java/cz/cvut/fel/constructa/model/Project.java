@@ -41,4 +41,6 @@ public class Project {
     @JoinColumn(name = "location_id", referencedColumnName = "location_id")
     private Location projectAddress;
 
+    @OneToMany(mappedBy = "constructionDiaryProject")
+    private List<ConstructionDiary> constructionDiaries = new ArrayList<>();
 }

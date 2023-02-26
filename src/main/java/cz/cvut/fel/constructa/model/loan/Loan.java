@@ -1,4 +1,4 @@
-package cz.cvut.fel.constructa.model;
+package cz.cvut.fel.constructa.model.loan;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
