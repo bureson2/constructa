@@ -14,12 +14,11 @@ public class TaskResponseDTO {
     private Date dateOfCreation;
     private String name;
     private String description;
-    private String locationName;
-    private Point locationPosition;
+//    private String locationName;
+//    private Point locationPosition;
     private Date timeFrom;
     private Date timeTo;
     private UserResponseDTO assignee;
 
     private UserResponseDTO author;
-
 }

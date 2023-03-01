@@ -31,11 +31,11 @@ public class Task {
     @Column(name="description")
     private String description;
 
-    @Column(name="location_name")
-    private String locationName;
+//    @Column(name="location_name")
+//    private String locationName;
 
-    @Column(name="location_position")
-    private Point locationPosition;
+//    @Column(name="location_position")
+//    private Point locationPosition;
 
     @ManyToOne
     @JoinColumn(name = "location_id")
@@ -48,11 +48,11 @@ public class Task {
     private Date timeTo;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    @JoinColumn(name = "author_id")
     private User author;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "assignee_id")
     private User assignee;
 
     @Enumerated(EnumType.STRING)

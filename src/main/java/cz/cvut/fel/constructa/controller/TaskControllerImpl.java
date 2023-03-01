@@ -20,13 +20,10 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/tasks")
 public class TaskControllerImpl implements TaskController {
-
     @Autowired
     private TaskService taskService;
-
     @Autowired
     private UserService userService;
-
     @Autowired
     private TaskMapper taskMapper;
 
