@@ -30,25 +30,24 @@ public class SecurityConfig {
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
+//                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/*").permitAll()
+                        .anyRequest().authenticated()
+                )
 //                .authorizeRequests()
+//                .requestMatchers("/**/auth/**")
+//                .antMatchers("/**/auth/**")
+//                .permitAll()
+//                .anyRequest()
+//                .authenticated()
+//                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authenticationProvider(authenticationProvider())
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
-                .authorizeHttpRequests((requests) -> {
-                            try {
-                                requests
-                                        .requestMatchers("/**/auth/**").permitAll()
-                                        .anyRequest()
-                                        .authenticated()
-                                        .and()
-                                        .sessionManagement()
-                                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                                        .and()
-                                        .authenticationProvider(authenticationProvider())
-                                        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-                            } catch (Exception e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
-                );
 
 //                .permitAll()
 //                .anyRequest()
