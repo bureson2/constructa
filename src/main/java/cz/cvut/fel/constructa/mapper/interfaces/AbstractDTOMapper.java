@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 
 public abstract class AbstractDTOMapper<Entity, Dto> {
 
+//    TODO try mapstruct
+
     public abstract Dto convertToDto(Entity entity);
 
     public abstract Entity convertToEntity(Dto dto);
