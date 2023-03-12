@@ -5,19 +5,13 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import org.springframework.security.core.GrantedAuthority;
 
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
-import java.util.stream.Collectors;
+
 
 @Component
 public class JwtUtils {
@@ -68,23 +62,6 @@ public class JwtUtils {
                 .setExpiration(new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(24)))
                 .signWith(SignatureAlgorithm.HS256, jwtSigningKey)
                 .compact();
-
-//        String username = userDetails.getUsername();
-//        List<String> roles = userDetails.getAuthorities()
-//                .stream()
-//                .map(GrantedAuthority::getAuthority)
-//                .collect(Collectors.toList());
-//        claims.put("sub", username);
-//        claims.put("roles", roles);
-//        Date now = new Date();
-//        Date expiration = new Date(now.getTime() + jwtExpirationMs);
-//        return Jwts.builder()
-//                .setClaims(claims)
-//                .setIssuedAt(now)
-//                .setExpiration(expiration)
-//                .signWith(SignatureAlgorithm.HS256, jwtSigningKey)
-////                .signWith(SignatureAlgorithm.RS256, "test")
-//                .compact();
     }
 
     private Boolean isTokenExpired(String token) {
