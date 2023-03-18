@@ -8,24 +8,31 @@ import cz.cvut.fel.constructa.model.report.FinanceReport;
 import cz.cvut.fel.constructa.model.report.VehicleReport;
 import cz.cvut.fel.constructa.model.report.WorkReport;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.*;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+//@Getter
+//@Setter
 @Entity
 @Table(name = "employees")
-@Getter
-@Setter
-@NoArgsConstructor
-public class User {
+public class User implements UserDetails {
+//    TODO do bakalarky napis o 2 moznostech extends user
+//    https://www.youtube.com/watch?v=KxqlJblhzfI&t=3595s 28:00
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id", nullable = false)
     private Long id;
 
     @Column(name = "username", nullable = false)
+//    @Column(name = "username")
     private String username;
 
     //    @Column(name = "email", nullable = false)
@@ -35,8 +42,10 @@ public class User {
     @Column(name = "password")
     private String password;
 
+//    @Enumerated(EnumType.STRING)
+//    private List<Role> roles;
     @Enumerated(EnumType.STRING)
-    private List<Role> roles;
+    private Role role;
 
     @Column(name = "title_before_name")
     private String titleBeforeName;
@@ -126,17 +135,51 @@ public class User {
     @OneToMany(mappedBy = "executor")
     private List<ConstructionReport> constructionsReport = new ArrayList<>();
 
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        User user = (User) o;
+//        return hourRate == user.hourRate && monthSalary == user.monthSalary && id.equals(user.id) && username.equals(user.username) && email.equals(user.email) && password.equals(user.password) && roles.equals(user.roles) && Objects.equals(titleBeforeName, user.titleBeforeName) && Objects.equals(firstname, user.firstname) && lastname.equals(user.lastname) && Objects.equals(titleAfterName, user.titleAfterName) && Objects.equals(bankAccount, user.bankAccount) && dateOfAcceptance.equals(user.dateOfAcceptance) && dateOfBirth.equals(user.dateOfBirth) && birthId.equals(user.birthId);
+//    }
+
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(id, username, email, dateOfAcceptance, birthId);
+//    }
+
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return hourRate == user.hourRate && monthSalary == user.monthSalary && id.equals(user.id) && username.equals(user.username) && email.equals(user.email) && password.equals(user.password) && roles.equals(user.roles) && Objects.equals(titleBeforeName, user.titleBeforeName) && Objects.equals(firstname, user.firstname) && lastname.equals(user.lastname) && Objects.equals(titleAfterName, user.titleAfterName) && Objects.equals(bankAccount, user.bankAccount) && dateOfAcceptance.equals(user.dateOfAcceptance) && dateOfBirth.equals(user.dateOfBirth) && birthId.equals(user.birthId);
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(id, username, email, dateOfAcceptance, birthId);
+    public String getUsername() {
+        return email;
     }
 
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

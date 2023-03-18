@@ -40,22 +40,29 @@ public class UserServiceImpl implements UserService {
         userDao.deleteById(userId);
     }
 
+
+    // todo delete
     @Override
-    public User updateRole(Long userId, String role) {
-        Optional<User> user = getUserById(userId);
-        if (user.isPresent()) {
-            if (user.get().getRoles() == null) {
-                List<Role> newRoles = new ArrayList<>();
-                newRoles.add(Role.valueOf(role));
-                user.get().setRoles(newRoles);
-            } else {
-                user.get().getRoles().add(Role.valueOf(role));
-            }
-            userDao.save(user.get());
-            return user.get();
-        }
+    public User updateRole(Long id, String role) {
         return null;
     }
+
+//    @Override
+//    public User updateRole(Long userId, String role) {
+//        Optional<User> user = getUserById(userId);
+//        if (user.isPresent()) {
+//            if (user.get().getRoles() == null) {
+//                List<Role> newRoles = new ArrayList<>();
+//                newRoles.add(Role.valueOf(role));
+//                user.get().setRoles(newRoles);
+//            } else {
+//                user.get().getRoles().add(Role.valueOf(role));
+//            }
+//            userDao.save(user.get());
+//            return user.get();
+//        }
+//        return null;
+//    }
 
     @Override
     public User update(User user){
