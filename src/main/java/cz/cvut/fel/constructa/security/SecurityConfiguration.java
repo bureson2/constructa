@@ -31,7 +31,7 @@ public class SecurityConfiguration {
                 .permitAll()
                 .requestMatchers("/api/v1/users/**")
                 .hasAnyAuthority("ROLE_ADMIN", "ROLE_EMPLOYEE")
-                .anyRequest()
+                .requestMatchers("/api/v1/tasks/**")
 //                .hasAnyAuthority("ROLE_EMPLOYEE")
                 .authenticated()
                 .and()

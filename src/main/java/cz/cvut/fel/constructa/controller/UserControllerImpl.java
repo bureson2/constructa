@@ -1,7 +1,7 @@
 package cz.cvut.fel.constructa.controller;
 
 import cz.cvut.fel.constructa.controller.interfaces.UserController;
-import cz.cvut.fel.constructa.dto.response.UserResponseDTO;
+import cz.cvut.fel.constructa.dto.response.UserDTO;
 import cz.cvut.fel.constructa.mapper.UserMapper;
 import cz.cvut.fel.constructa.model.role.User;
 import cz.cvut.fel.constructa.service.interfaces.UserService;
@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,7 +28,7 @@ public class UserControllerImpl implements UserController {
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<UserResponseDTO>> getUsers() {
+    public ResponseEntity<List<UserDTO>> getUsers() {
         List<User> users = userService.getUsers();
         return ResponseEntity.ok().body(
                 users.stream()
@@ -41,7 +40,7 @@ public class UserControllerImpl implements UserController {
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
     @GetMapping(value = "/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserResponseDTO> getUser(@PathVariable Long userId) {
+    public ResponseEntity<UserDTO> getUser(@PathVariable Long userId) {
         Optional<User> usertToReturn = userService.getUserById(userId);
         return usertToReturn.map(task -> ResponseEntity.ok().body(
                 userMapper.convertToDto(task)
@@ -50,7 +49,7 @@ public class UserControllerImpl implements UserController {
     @Override
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserResponseDTO> createUser(@RequestBody User newUser) {
+    public ResponseEntity<UserDTO> createUser(@RequestBody User newUser) {
         User createdUser = userService.create(newUser);
         return ResponseEntity.ok().body(
                 userMapper.convertToDto(createdUser)
@@ -61,7 +60,7 @@ public class UserControllerImpl implements UserController {
     @Override
     @ResponseStatus(code = HttpStatus.OK)
     @PutMapping(value = "/{userId}")
-    public ResponseEntity<UserResponseDTO> updateRole(@RequestBody String role, @PathVariable Long userId) {
+    public ResponseEntity<UserDTO> updateRole(@RequestBody String role, @PathVariable Long userId) {
         User updatedUser = userService.updateRole(userId, role);
         return ResponseEntity.ok().body(
                 userMapper.convertToDto(updatedUser)
