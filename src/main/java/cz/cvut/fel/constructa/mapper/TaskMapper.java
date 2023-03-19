@@ -1,6 +1,6 @@
 package cz.cvut.fel.constructa.mapper;
 
-import cz.cvut.fel.constructa.dto.request.TaskRequestDTO;
+import cz.cvut.fel.constructa.dto.request.TaskRequest;
 import cz.cvut.fel.constructa.dto.response.TaskResponseDTO;
 import cz.cvut.fel.constructa.model.Task;
 import org.modelmapper.ModelMapper;
@@ -21,7 +21,7 @@ public class TaskMapper {
     }
 
     // TODO implement request when it will be needed
-    public Task convertToEntity(TaskRequestDTO taskDTO) throws ParseException {
+    public Task convertToEntity(TaskRequest taskDTO) throws ParseException {
         return modelMapper.map(taskDTO, Task.class);
     }
 }

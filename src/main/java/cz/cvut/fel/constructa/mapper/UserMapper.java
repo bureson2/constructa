@@ -1,6 +1,6 @@
 package cz.cvut.fel.constructa.mapper;
 
-import cz.cvut.fel.constructa.dto.request.UserRequestDTO;
+import cz.cvut.fel.constructa.dto.request.UserRequest;
 import cz.cvut.fel.constructa.dto.response.UserResponseDTO;
 import cz.cvut.fel.constructa.model.role.User;
 import org.modelmapper.ModelMapper;
@@ -21,7 +21,7 @@ public class UserMapper {
     }
 
     // TODO implement request when it will be needed
-    public User convertToEntity(UserRequestDTO userDTO) throws ParseException {
+    public User convertToEntity(UserRequest userDTO) throws ParseException {
         return modelMapper.map(userDTO, User.class);
     }
 }

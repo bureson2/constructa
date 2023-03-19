@@ -9,17 +9,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-//    TODO response body specifikace?
 
 @CrossOrigin
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
 public class UserControllerImpl implements UserController {
     private final UserService userService;
@@ -33,7 +33,7 @@ public class UserControllerImpl implements UserController {
         List<User> users = userService.getUsers();
         return ResponseEntity.ok().body(
                 users.stream()
-                        .map(user -> userMapper.convertToDto(user))
+                        .map(userMapper::convertToDto)
                         .collect(Collectors.toList())
         );
     }

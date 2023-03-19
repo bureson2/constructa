@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class UserRequestDTO {
+public class UserRequest {
     private Long id;
     private String username;
     private String email;

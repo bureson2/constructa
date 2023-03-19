@@ -1,23 +1,30 @@
 package cz.cvut.fel.constructa.service.impl;
 
-import cz.cvut.fel.constructa.enums.Role;
+import cz.cvut.fel.constructa.security.AuthenticationFacade;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
 import cz.cvut.fel.constructa.repository.UserRepository;
 import cz.cvut.fel.constructa.model.role.User;
 import cz.cvut.fel.constructa.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-//    TODO upravit do verze bez optional - i testy
-
     @Autowired
     private UserRepository userDao;
+
+    @Autowired
+    private AuthenticationFacade authenticationFacade;
+
 
     @Override
     public User create(User createdUser) {
@@ -32,6 +39,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getUsers() {
+
+        Authentication authentication = authenticationFacade.getAuthentication();
+        String username = authentication.getName();
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+
+        // výpis uživatelského jména
+        System.out.println("Uživatel: " + username);
+
+        // výpis seznamu rolí
+        System.out.println("Role: ");
+        for (GrantedAuthority authority : authorities) {
+            System.out.println(authority.getAuthority());
+        }
+
+
+
         return userDao.findAll();
     }
 
@@ -65,7 +88,7 @@ public class UserServiceImpl implements UserService {
 //    }
 
     @Override
-    public User update(User user){
+    public User update(User user) {
         return userDao.save(user);
     }
 }
