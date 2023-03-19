@@ -5,7 +5,7 @@ import cz.cvut.fel.constructa.dto.response.UserResponseDTO;
 import cz.cvut.fel.constructa.mapper.UserMapper;
 import cz.cvut.fel.constructa.model.role.User;
 import cz.cvut.fel.constructa.service.interfaces.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,13 +17,13 @@ import java.util.stream.Collectors;
 
 //    TODO response body specifikace?
 
+@CrossOrigin
 @RestController
 @RequestMapping("/users")
+@RequiredArgsConstructor
 public class UserControllerImpl implements UserController {
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private UserMapper userMapper;
+    private final UserService userService;
+    private final UserMapper userMapper;
 
     @Override
     @ResponseStatus(code = HttpStatus.OK)
