@@ -10,7 +10,6 @@ public interface UserService {
 
     User create(User user);
     Optional<User> getUserById(Long id);
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ADMIN')")
     List<User> getUsers();
     void delete(Long id);
     User updateRole(Long id, String role);

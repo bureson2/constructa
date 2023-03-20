@@ -25,16 +25,6 @@ public class AppConfig {
     private final UserRepository repository;
 
     @Bean
-    public UserService userService() {
-        return new UserServiceImpl();
-    }
-
-    @Bean
-    public TaskService taskService() {
-        return new TaskServiceImpl();
-    }
-
-    @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();
     }

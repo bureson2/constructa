@@ -10,11 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 
 @CrossOrigin
 @RestController
@@ -42,8 +40,8 @@ public class UserControllerImpl implements UserController {
     @GetMapping(value = "/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDTO> getUser(@PathVariable Long userId) {
         Optional<User> usertToReturn = userService.getUserById(userId);
-        return usertToReturn.map(task -> ResponseEntity.ok().body(
-                userMapper.convertToDto(task)
+        return usertToReturn.map(user -> ResponseEntity.ok().body(
+                userMapper.convertToDto(user)
         )).orElseGet(() -> ResponseEntity.notFound().build());
     }
     @Override

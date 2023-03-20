@@ -1,21 +1,21 @@
 package cz.cvut.fel.constructa.model;
 
 import cz.cvut.fel.constructa.enums.TaskState;
-import cz.cvut.fel.constructa.enums.WorkReportType;
 import cz.cvut.fel.constructa.model.role.User;
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.data.geo.Point;
 
 import java.util.Date;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "tasks")
-@Getter
-@Setter
-@NoArgsConstructor
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

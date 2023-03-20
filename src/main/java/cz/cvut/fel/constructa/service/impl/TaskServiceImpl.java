@@ -3,16 +3,16 @@ package cz.cvut.fel.constructa.service.impl;
 import cz.cvut.fel.constructa.model.Task;
 import cz.cvut.fel.constructa.repository.TaskRepository;
 import cz.cvut.fel.constructa.service.interfaces.TaskService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class TaskServiceImpl implements TaskService {
-    @Autowired
-    private TaskRepository taskDao;
+    private final TaskRepository taskDao;
 
     @Override
     public Task create(Task createdTask) {
@@ -20,8 +20,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Optional<Task> getTaskById(Long id) {
-        return taskDao.findById(id);
+    public Optional<Task> getTaskById(Long taskId) {
+        return taskDao.findById(taskId);
     }
 
     @Override

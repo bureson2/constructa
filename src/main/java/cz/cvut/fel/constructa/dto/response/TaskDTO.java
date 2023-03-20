@@ -12,11 +12,8 @@ public class TaskDTO {
     private Date dateOfCreation;
     private String name;
     private String description;
-//    private String locationName;
-//    private Point locationPosition;
     private Date timeFrom;
     private Date timeTo;
     private UserDTO assignee;
-
     private UserDTO author;
 }

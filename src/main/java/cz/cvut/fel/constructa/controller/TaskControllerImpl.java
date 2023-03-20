@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/tasks")
 @RequiredArgsConstructor
-
 public class TaskControllerImpl implements TaskController {
     private final TaskService taskService;
     private final UserService userService;
@@ -40,6 +39,7 @@ public class TaskControllerImpl implements TaskController {
     }
     @Override
     @ResponseStatus(code = HttpStatus.OK)
+    @ResponseBody
     @GetMapping(value = "/{taskId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TaskDTO> getTask(@PathVariable Long taskId) {
         Optional<Task> taskToReturn = taskService.getTaskById(taskId);
