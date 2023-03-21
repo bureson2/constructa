@@ -58,25 +58,33 @@ public class TaskControllerImpl implements TaskController {
     }
 
     // TODO move to service
-    @Override
-    @ResponseStatus(code = HttpStatus.OK)
-    @PutMapping(value = "/{taskId}/user/{userId}")
-    public ResponseEntity<TaskDTO> changeAssigne(@PathVariable Long taskId, @PathVariable Long userId) {
-        Optional<User> user = userService.getUserById(userId);
-        Optional<Task> task = taskService.getTaskById(taskId);
-        if (user.isPresent() && task.isPresent()) {
-            task.get().setAssignee(user.get());
-            task.get().setAuthor(user.get());
-            user.get().getAssignedTasks().add(task.get());
-            taskService.update(task.get());
-            userService.update(user.get());
-            return ResponseEntity.ok().body(
-                    taskMapper.convertToDto(task.get())
-            );
-        }
-        return ResponseEntity.notFound().build();
+//
+//    @PutMapping(value = "/{taskId}/user/{userId}")
+//    public ResponseEntity<TaskDTO> changeAssigne(@PathVariable Long taskId, @PathVariable Long userId) {
+//        Optional<User> user = userService.getUserById(userId);
+//        Optional<Task> task = taskService.getTaskById(taskId);
+//        if (user.isPresent() && task.isPresent()) {
+//            task.get().setAssignee(user.get());
+//            task.get().setAuthor(user.get());
+//            user.get().getAssignedTasks().add(task.get());
+//            taskService.update(task.get());
+//            userService.update(user.get());
+//            return ResponseEntity.ok().body(
+//                    taskMapper.convertToDto(task.get())
+//            );
+//        }
+//        return ResponseEntity.notFound().build();
+//    }
 
+// TODO TaskRequest better than updatedTask
+    @ResponseStatus(code = HttpStatus.OK)
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<TaskDTO> editTask(@RequestBody Task updatedTask){
+        Task taskToReturn = taskService.update(updatedTask);
+        return ResponseEntity.ok().body(
+                taskMapper.convertToDto(taskToReturn));
     }
+
     @Override
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @DeleteMapping(value = "/{taskId}")

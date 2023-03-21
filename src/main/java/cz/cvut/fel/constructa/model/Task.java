@@ -1,5 +1,6 @@
 package cz.cvut.fel.constructa.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import cz.cvut.fel.constructa.enums.TaskState;
 import cz.cvut.fel.constructa.model.role.User;
 import jakarta.persistence.*;
@@ -42,7 +43,7 @@ public class Task {
     private Location location;
 
     @Column(name = "time_from")
-    private Date timeFrom;
+        private Date timeFrom;
 
     @Column(name="time_to")
     private Date timeTo;

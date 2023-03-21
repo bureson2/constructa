@@ -21,7 +21,8 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Optional<Task> getTaskById(Long taskId) {
-        return taskDao.findById(taskId);
+//        Optional<Task> task = taskDao.findById(taskId);
+        return taskDao.findAll().stream().filter(it->it.getId().equals(taskId)).findFirst();
     }
 
     @Override
