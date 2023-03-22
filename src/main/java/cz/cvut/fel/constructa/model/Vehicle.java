@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -40,10 +41,16 @@ public class Vehicle {
 
     @Column(name = "mileage")
     private Double mileage;
+    @Column(name = "bought_at")
+    private Date boughtAt;
+    @Column(name = "created_at")
+    private Date createdAt;
 
     @OneToMany(mappedBy = "vehicle")
     private List<VehicleReport> vehicleReports = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private VehicleType type;
+
+
 }

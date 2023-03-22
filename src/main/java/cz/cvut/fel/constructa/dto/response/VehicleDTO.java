@@ -4,6 +4,8 @@ import cz.cvut.fel.constructa.enums.VehicleType;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Getter
 @Setter
 public class VehicleDTO {
@@ -14,4 +16,6 @@ public class VehicleDTO {
     private Double conditionMotorcycleWatch;
     private Double mileage;
     private VehicleType type;
+    private Date boughtAt;
+    private Date createdAt;
 }
