@@ -33,6 +33,8 @@ public class SecurityConfiguration {
                 .hasAnyAuthority("ROLE_ADMIN", "ROLE_EMPLOYEE")
                 .requestMatchers("/api/v1/tasks/**")
                 .hasAnyAuthority("ROLE_ADMIN", "ROLE_EMPLOYEE")
+                .requestMatchers("/api/v1/vehicles/**")
+                .hasAnyAuthority("ROLE_ADMIN", "ROLE_EMPLOYEE")
 //               .hasAnyAuthority("ROLE_EMPLOYEE")
 //                .authenticated()
                 .and()

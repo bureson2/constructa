@@ -1,9 +1,7 @@
 package cz.cvut.fel.constructa.model;
 
 import cz.cvut.fel.constructa.model.loan.Warehouse;
-import cz.cvut.fel.constructa.model.report.FinanceReport;
 import cz.cvut.fel.constructa.model.report.WorkReport;
-import cz.cvut.fel.constructa.model.role.ExternalistInProject;
 import cz.cvut.fel.constructa.model.role.User;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -42,8 +40,8 @@ public class Location {
     @OneToMany(mappedBy = "location")
     private List<WorkReport> workReports = new ArrayList<>();
 
-    @OneToMany(mappedBy = "location")
-    private List<Task> tasks = new ArrayList<>();
+//    @OneToMany(mappedBy = "location")
+//    private List<Task> tasks = new ArrayList<>();
 
     @OneToOne(mappedBy = "companyAddress")
     private Company company;

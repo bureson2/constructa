@@ -4,7 +4,6 @@ import cz.cvut.fel.constructa.controller.interfaces.TaskController;
 import cz.cvut.fel.constructa.dto.response.TaskDTO;
 import cz.cvut.fel.constructa.mapper.TaskMapper;
 import cz.cvut.fel.constructa.model.Task;
-import cz.cvut.fel.constructa.model.role.User;
 import cz.cvut.fel.constructa.service.interfaces.TaskService;
 import cz.cvut.fel.constructa.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
@@ -17,12 +16,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+// TODO response body everywhere
+
 @CrossOrigin
 @RestController
 @RequestMapping("/api/v1/tasks")
 @RequiredArgsConstructor
 public class TaskControllerImpl implements TaskController {
     private final TaskService taskService;
+//    TODO concrete security for owners
     private final UserService userService;
     private final TaskMapper taskMapper;
 

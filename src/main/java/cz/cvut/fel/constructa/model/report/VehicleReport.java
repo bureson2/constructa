@@ -41,7 +41,7 @@ public class VehicleReport {
     private Double distanceBefore;
 
     @Column(name = "purchase_of_fuel_litres")
-    private int purchaseOfFuelLitres;
+    private Double purchaseOfFuelLitres;
 
     @Column(name = "time_from")
     private Date timeFrom;

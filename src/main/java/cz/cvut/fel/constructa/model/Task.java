@@ -1,6 +1,5 @@
 package cz.cvut.fel.constructa.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import cz.cvut.fel.constructa.enums.TaskState;
 import cz.cvut.fel.constructa.model.role.User;
 import jakarta.persistence.*;
@@ -32,15 +31,18 @@ public class Task {
     @Column(name="description")
     private String description;
 
-//    @Column(name="location_name")
-//    private String locationName;
+    @Column(name="location_name")
+    private String locationName;
 
-//    @Column(name="location_position")
-//    private Point locationPosition;
+    @Column(name="latitude")
+    private Double latitude;
 
-    @ManyToOne
-    @JoinColumn(name = "location_id")
-    private Location location;
+    @Column(name="longitude")
+    private Double longitude;
+
+//    @ManyToOne
+//    @JoinColumn(name = "location_id")
+//    private Location location;
 
     @Column(name = "time_from")
         private Date timeFrom;

@@ -16,4 +16,7 @@ public class TaskDTO {
     private Date timeTo;
     private UserDTO assignee;
     private UserDTO author;
+    private String locationName;
+    private Double latitude;
+    private Double longitude;
 }

@@ -18,12 +18,12 @@ public class VehicleReportDTO {
     private String cargoType;
     private Double distanceAfter;
     private Double distanceBefore;
-    private int purchaseOfFuelLitres;
+    private Double purchaseOfFuelLitres;
     private Date timeFrom;
     private Date timeTo;
-    private Location startAt;
-    private Location finishAt;
-    private Vehicle vehicle;
-    private User driver;
+//    private Location startAt;
+//    private Location finishAt;
+    private VehicleDTO vehicle;
+    private UserDTO driver;
 
 }
