@@ -1,6 +1,7 @@
 package cz.cvut.fel.constructa.dto.response;
 
 import cz.cvut.fel.constructa.enums.VehicleType;
+import cz.cvut.fel.constructa.model.Vehicle;
 import lombok.Getter;
 import lombok.Setter;
 
