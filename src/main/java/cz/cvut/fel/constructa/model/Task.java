@@ -40,10 +40,6 @@ public class Task {
     @Column(name="longitude")
     private Double longitude;
 
-//    @ManyToOne
-//    @JoinColumn(name = "location_id")
-//    private Location location;
-
     @Column(name = "time_from")
         private Date timeFrom;
 

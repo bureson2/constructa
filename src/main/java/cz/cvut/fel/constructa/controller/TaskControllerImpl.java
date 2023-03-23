@@ -4,6 +4,7 @@ import cz.cvut.fel.constructa.controller.interfaces.TaskController;
 import cz.cvut.fel.constructa.dto.response.TaskDTO;
 import cz.cvut.fel.constructa.mapper.TaskMapper;
 import cz.cvut.fel.constructa.model.Task;
+import cz.cvut.fel.constructa.service.impl.TaskServiceImpl;
 import cz.cvut.fel.constructa.service.interfaces.TaskService;
 import cz.cvut.fel.constructa.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;

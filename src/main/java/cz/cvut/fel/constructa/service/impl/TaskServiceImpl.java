@@ -1,5 +1,6 @@
 package cz.cvut.fel.constructa.service.impl;
 
+import cz.cvut.fel.constructa.enums.TaskState;
 import cz.cvut.fel.constructa.model.Task;
 import cz.cvut.fel.constructa.repository.TaskRepository;
 import cz.cvut.fel.constructa.service.interfaces.TaskService;
@@ -16,6 +17,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Task create(Task createdTask) {
+        createdTask.setState(TaskState.NEW);
         return taskDao.save(createdTask);
     }
 
