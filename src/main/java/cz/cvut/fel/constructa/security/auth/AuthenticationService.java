@@ -53,8 +53,9 @@ public class AuthenticationService {
                 .hourRate(request.getHourRate())
                 .monthSalary(request.getMonthSalary())
                 .email(request.getEmail())
+                .phone(request.getPhone())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.ROLE_EMPLOYEE)
+                .role(request.getRoles())
                 .build();
         userDao.save(user);
         var jwtToken = jwtService.generateToken(user);

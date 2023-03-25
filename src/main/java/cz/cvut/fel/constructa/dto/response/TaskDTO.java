@@ -1,5 +1,6 @@
 package cz.cvut.fel.constructa.dto.response;
 
+import cz.cvut.fel.constructa.enums.TaskState;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,4 +20,5 @@ public class TaskDTO {
     private String locationName;
     private Double latitude;
     private Double longitude;
+    private String state;
 }

@@ -1,5 +1,6 @@
 package cz.cvut.fel.constructa.security.auth;
 
+import cz.cvut.fel.constructa.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,7 +24,6 @@ public class RegisterRequest {
     private String birthId;
     private int hourRate;
     private int monthSalary;
-
-
-
+    private String phone;
+    private Role roles;
 }

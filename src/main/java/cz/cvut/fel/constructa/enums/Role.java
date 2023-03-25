@@ -2,20 +2,17 @@ package cz.cvut.fel.constructa.enums;
 
 public enum Role {
 
-//    USER,
-//    ADMIN
-
     ROLE_ADMIN("Admin"),
     ROLE_MANAGER("Manager"),
-    ROLE_REPORTER("Reporter"),
-    ROLE_WAREHOUSE_MANAGER("Warehouse_manager"),
-    ROLE_MECHANICAL_ENGINEER("Mechanical_engineer"),
-    ROLE_CONSTRUCTION_MANAGER("Construction_manager"),
-    ROLE_DRIVER("Driver"),
-    ROLE_WORKER("Worker"),
-    ROLE_EMPLOYEE("Employee"),
-    ROLE_EXTERNALIST("Externalist"),
-    ROLE_FIRED("Fired");
+    ROLE_REPORTER("Referent"),
+    ROLE_WAREHOUSE_MANAGER("Vedoucí skladu"),
+    ROLE_MECHANICAL_ENGINEER("Strojní technik"),
+    ROLE_CONSTRUCTION_MANAGER("Stavbyvedoucí"),
+    ROLE_DRIVER("Řidič"),
+    ROLE_WORKER("Zedník"),
+    ROLE_EMPLOYEE("Zaměstnanec"),
+    ROLE_EXTERNALIST("Externalista"),
+    ROLE_FIRED("Vyhozen");
 
     private String role;
     Role(String role) {

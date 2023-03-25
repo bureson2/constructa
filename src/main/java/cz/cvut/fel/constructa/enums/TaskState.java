@@ -1,9 +1,10 @@
 package cz.cvut.fel.constructa.enums;
 
 public enum TaskState {
-    NEW("New"),
-    IN_PROGRESS("In_progress"),
-    DONE("Done");
+    NEW("Nový"),
+    IN_PROGRESS("V řešení"),
+    STOPPED("Pozastaveno"),
+    DONE("Hotovo");
 
     private String taskState;
     TaskState(String taskState) {
