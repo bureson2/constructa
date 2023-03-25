@@ -4,6 +4,7 @@ import cz.cvut.fel.constructa.enums.Role;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -17,5 +18,15 @@ public class UserDTO {
     private String firstname;
     private String lastname;
     private String titleAfterName;
-    // TODO
+    private String bankAccount;
+    private Date dateOfAcceptance;
+    private Date dateOfBirth;
+    private String birthId;
+    private int hourRate;
+    private int monthSalary;
+
+
+
+
+
 }

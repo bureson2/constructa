@@ -10,6 +10,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+import java.util.Random;
+
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
@@ -18,11 +21,37 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authManager;
 
+    public static String generateUsername(String firstName, String lastName) {
+        // Odstraňte mezery v prvním a posledním jménu
+        firstName = firstName.trim().replaceAll("\\s+","");
+        lastName = lastName.trim().replaceAll("\\s+","");
+
+        // Náhodné číslo mezi 1 a 100
+        Random random = new Random();
+        int randomNumber = random.nextInt(100) + 1;
+
+        // Kombinace prvního a posledního jména s náhodným číslem
+        String username = firstName.substring(0, Math.min(firstName.length(), 3)) +
+                lastName.substring(0, Math.min(lastName.length(), 3)) +
+                randomNumber;
+
+        // Vrátí výsledné uživatelské jméno
+        return username.toLowerCase();
+    }
+
     public AuthenticationResponse register(RegisterRequest request){
         var user = User.builder()
-                .username(request.getUsername())
+                .username(generateUsername(request.getFirstname(), request.getLastname()))
+                .dateOfAcceptance(new Date())
+                .birthId(request.getBirthId())
+                .dateOfBirth(request.getDateOfBirth())
+                .titleBeforeName(request.getTitleBeforeName())
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())
+                .titleAfterName(request.getTitleAfterName())
+                .bankAccount(request.getBankAccount())
+                .hourRate(request.getHourRate())
+                .monthSalary(request.getMonthSalary())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.ROLE_EMPLOYEE)
