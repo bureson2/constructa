@@ -2,6 +2,7 @@ package cz.cvut.fel.constructa.controller;
 
 import cz.cvut.fel.constructa.controller.interfaces.UserController;
 import cz.cvut.fel.constructa.dto.response.UserDTO;
+import cz.cvut.fel.constructa.dto.response.UserInputDTO;
 import cz.cvut.fel.constructa.mapper.UserMapper;
 import cz.cvut.fel.constructa.model.role.User;
 import cz.cvut.fel.constructa.service.interfaces.UserService;
@@ -34,6 +35,20 @@ public class UserControllerImpl implements UserController {
                         .collect(Collectors.toList())
         );
     }
+
+    @ResponseStatus(code = HttpStatus.OK)
+    @ResponseBody
+    @GetMapping(value="/search", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<UserInputDTO>> getInputUsers() {
+        List<User> users = userService.getUsers();
+        return ResponseEntity.ok().body(
+                users.stream()
+                        .map(userMapper::convertToInputDto)
+                        .collect(Collectors.toList())
+        );
+    }
+
+
     @Override
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody

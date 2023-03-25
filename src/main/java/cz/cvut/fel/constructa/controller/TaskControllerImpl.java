@@ -1,6 +1,7 @@
 package cz.cvut.fel.constructa.controller;
 
 import cz.cvut.fel.constructa.controller.interfaces.TaskController;
+import cz.cvut.fel.constructa.dto.request.TaskRequest;
 import cz.cvut.fel.constructa.dto.response.TaskDTO;
 import cz.cvut.fel.constructa.mapper.TaskMapper;
 import cz.cvut.fel.constructa.model.Task;
@@ -12,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -52,8 +54,8 @@ public class TaskControllerImpl implements TaskController {
     @Override
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TaskDTO> createTask(@RequestBody Task newTask) {
-        Task createdTask = taskService.create(newTask);
+    public ResponseEntity<TaskDTO> createTask(@RequestBody TaskRequest request) throws ParseException {
+        Task createdTask = taskService.create(request);
         return ResponseEntity.ok().body(
                 taskMapper.convertToDto(createdTask)
         );
