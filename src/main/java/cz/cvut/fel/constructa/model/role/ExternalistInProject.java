@@ -5,6 +5,7 @@ import cz.cvut.fel.constructa.enums.Role;
 import cz.cvut.fel.constructa.model.Project;
 import cz.cvut.fel.constructa.model.report.FinanceReport;
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,9 +14,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "externalist_in_projects")
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 public class ExternalistInProject {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

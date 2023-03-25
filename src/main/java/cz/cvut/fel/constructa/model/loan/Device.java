@@ -6,6 +6,7 @@ import cz.cvut.fel.constructa.enums.Role;
 import cz.cvut.fel.constructa.model.role.ResponsiblePersonInConstructionDiary;
 import cz.cvut.fel.constructa.model.role.User;
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,9 +17,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "devices")
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 public class Device {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

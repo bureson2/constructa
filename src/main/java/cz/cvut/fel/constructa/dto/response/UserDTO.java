@@ -14,7 +14,7 @@ public class UserDTO {
     private String username;
     private String email;
     private String phone;
-    private Role role;
+    private String role;
     private String titleBeforeName;
     private String firstname;
     private String lastname;
@@ -25,6 +25,7 @@ public class UserDTO {
     private String birthId;
     private int hourRate;
     private int monthSalary;
+    private LocationDTO userAddress;
 
 
 

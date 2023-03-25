@@ -1,4 +1,4 @@
-package cz.cvut.fel.constructa.service.impl;
+package cz.cvut.fel.constructa.service;
 
 import cz.cvut.fel.constructa.enums.TaskState;
 import cz.cvut.fel.constructa.model.Task;

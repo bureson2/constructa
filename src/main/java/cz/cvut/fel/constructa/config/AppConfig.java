@@ -1,10 +1,6 @@
 package cz.cvut.fel.constructa.config;
 
 import cz.cvut.fel.constructa.repository.UserRepository;
-import cz.cvut.fel.constructa.service.impl.TaskServiceImpl;
-import cz.cvut.fel.constructa.service.impl.UserServiceImpl;
-import cz.cvut.fel.constructa.service.interfaces.TaskService;
-import cz.cvut.fel.constructa.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

@@ -2,22 +2,23 @@ package cz.cvut.fel.constructa.model;
 
 import cz.cvut.fel.constructa.enums.ProjectState;
 import cz.cvut.fel.constructa.enums.Role;
+import cz.cvut.fel.constructa.model.report.ConstructionReport;
 import cz.cvut.fel.constructa.model.role.ExternalistInProject;
 import cz.cvut.fel.constructa.model.role.User;
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "projects")
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,8 +31,8 @@ public class Project {
     @Enumerated(EnumType.STRING)
     private ProjectState state;
 
-    @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User projectManager;
 
     @OneToMany(mappedBy = "project")

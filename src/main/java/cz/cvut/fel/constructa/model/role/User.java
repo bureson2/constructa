@@ -17,8 +17,8 @@ import java.util.*;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "employees")
 public class User implements UserDetails {
@@ -97,8 +97,8 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "salariedEmployee")
     private List<FinanceReport> financeReports = new ArrayList<>();
 
-    @OneToOne(mappedBy = "projectManager")
-    private Project project;
+    @OneToMany(mappedBy = "projectManager")
+    private List<Project> projects = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "location_id")

@@ -6,6 +6,7 @@ import cz.cvut.fel.constructa.model.Company;
 import cz.cvut.fel.constructa.model.Location;
 import cz.cvut.fel.constructa.model.role.User;
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,9 +16,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "work_reports")
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 public class WorkReport {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

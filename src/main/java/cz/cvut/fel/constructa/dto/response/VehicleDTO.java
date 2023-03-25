@@ -19,4 +19,5 @@ public class VehicleDTO {
     private VehicleType type;
     private Date boughtAt;
     private Date createdAt;
+    private String qrCode;
 }

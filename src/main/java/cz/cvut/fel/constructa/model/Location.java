@@ -4,6 +4,7 @@ import cz.cvut.fel.constructa.model.loan.Warehouse;
 import cz.cvut.fel.constructa.model.report.WorkReport;
 import cz.cvut.fel.constructa.model.role.User;
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,9 +14,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "locations")
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,12 +26,8 @@ public class Location {
     private String street;
     @Column(name = "descriptive_number")
     private String descriptiveNumber;
-    @Column(name = "name")
-    private String name;
-    //    TODO own type?
     @Column(name = "country")
     private String country;
-    //    TODO own validated type?
     @Column(name = "postCode")
     private String postCode;
     @Column(name = "qr_code")

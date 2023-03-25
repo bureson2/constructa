@@ -3,6 +3,7 @@ package cz.cvut.fel.constructa.model.report;
 import cz.cvut.fel.constructa.model.*;
 import cz.cvut.fel.constructa.model.role.User;
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,9 +14,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "vehicle_reports")
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 public class VehicleReport {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -1,4 +1,4 @@
-package cz.cvut.fel.constructa.service.impl;
+package cz.cvut.fel.constructa.service;
 
 import cz.cvut.fel.constructa.model.role.User;
 import cz.cvut.fel.constructa.repository.UserRepository;

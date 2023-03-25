@@ -2,7 +2,7 @@ package cz.cvut.fel.constructa.enums;
 
 public enum Role {
 
-    ROLE_ADMIN("Admin"),
+    ROLE_ADMIN("Administrátor"),
     ROLE_MANAGER("Manager"),
     ROLE_REPORTER("Referent"),
     ROLE_WAREHOUSE_MANAGER("Vedoucí skladu"),

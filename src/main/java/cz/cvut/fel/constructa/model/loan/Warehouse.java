@@ -2,6 +2,7 @@ package cz.cvut.fel.constructa.model.loan;
 
 import cz.cvut.fel.constructa.model.Location;
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,9 +14,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "warehouses")
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 public class Warehouse {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

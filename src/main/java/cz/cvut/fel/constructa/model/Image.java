@@ -3,15 +3,14 @@ package cz.cvut.fel.constructa.model;
 import cz.cvut.fel.constructa.model.report.ConstructionReport;
 import cz.cvut.fel.constructa.model.role.User;
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "images")
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 public class Image {
 
 //    TODO image for users etd. time is expensive

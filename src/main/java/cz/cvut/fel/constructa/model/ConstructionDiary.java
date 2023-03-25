@@ -4,6 +4,7 @@ import cz.cvut.fel.constructa.model.report.ConstructionReport;
 import cz.cvut.fel.constructa.model.report.VehicleReport;
 import cz.cvut.fel.constructa.model.role.ResponsiblePersonInConstructionDiary;
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,9 +14,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "construction_diaries")
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 public class ConstructionDiary {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

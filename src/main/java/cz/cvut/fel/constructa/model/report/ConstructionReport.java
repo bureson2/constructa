@@ -9,6 +9,7 @@ import cz.cvut.fel.constructa.model.Image;
 import cz.cvut.fel.constructa.model.role.ExternalistInProject;
 import cz.cvut.fel.constructa.model.role.User;
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,9 +21,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "construction_reports")
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 public class ConstructionReport {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

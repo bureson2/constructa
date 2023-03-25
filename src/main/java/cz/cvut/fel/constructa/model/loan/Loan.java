@@ -4,6 +4,7 @@ import cz.cvut.fel.constructa.model.Company;
 import cz.cvut.fel.constructa.model.role.ResponsiblePersonInConstructionDiary;
 import cz.cvut.fel.constructa.model.role.User;
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,9 +15,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "loans")
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 public class Loan {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
