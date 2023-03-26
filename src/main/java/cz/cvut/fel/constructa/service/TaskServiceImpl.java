@@ -10,6 +10,7 @@ import cz.cvut.fel.constructa.repository.UserRepository;
 import cz.cvut.fel.constructa.service.interfaces.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import cz.cvut.fel.constructa.security.AuthenticationFacade;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -22,7 +23,7 @@ public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskDao;
     private final UserRepository userDao;
     private final TaskMapper taskMapper;
-
+    private final AuthenticationFacade authenticationFacade;
 
     @Override
     public Task create(TaskRequest request) throws ParseException {
@@ -31,6 +32,11 @@ public class TaskServiceImpl implements TaskService {
         user.ifPresent(createdTask::setAssignee);
         createdTask.setState(TaskState.NEW);
         createdTask.setDateOfCreation(new Date());
+
+        String authorEmail = authenticationFacade.getAuthentication().getName();
+        Optional<User> author = userDao.findByEmail(authorEmail);
+        author.ifPresent(createdTask::setAuthor);
+
         return taskDao.save(createdTask);
     }
 

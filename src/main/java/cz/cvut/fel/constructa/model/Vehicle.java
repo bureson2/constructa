@@ -31,6 +31,8 @@ public class Vehicle {
 
     @Column(name="qr_code")
     private String qrCode;
+    @Column(name="vin_code")
+    private String vinCode;
 
     @Column(name="registration_number")
     private String registrationNumber;

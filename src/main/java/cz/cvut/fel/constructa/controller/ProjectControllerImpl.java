@@ -1,6 +1,7 @@
 package cz.cvut.fel.constructa.controller;
 
 import cz.cvut.fel.constructa.controller.interfaces.ProjectController;
+import cz.cvut.fel.constructa.dto.request.ProjectRequest;
 import cz.cvut.fel.constructa.dto.response.ProjectDTO;
 import cz.cvut.fel.constructa.mapper.ProjectMapper;
 import cz.cvut.fel.constructa.model.Project;
@@ -11,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -47,8 +49,8 @@ public class ProjectControllerImpl implements ProjectController {
 
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ProjectDTO> createProject(@RequestBody Project newProject) {
-        Project createdProject = projectService.create(newProject);
+    public ResponseEntity<ProjectDTO> createProject(@RequestBody ProjectRequest request) throws ParseException {
+        Project createdProject = projectService.create(request);
         return ResponseEntity.ok().body(
                 projectMapper.convertToDto(createdProject)
         );

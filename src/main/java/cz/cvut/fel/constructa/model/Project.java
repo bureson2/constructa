@@ -11,10 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "projects")
@@ -28,6 +25,11 @@ public class Project {
     private String name;
     @Column(name = "buildingFacility")
     private String buldingFacility;
+    @Column(name = "started_at")
+    private Date startedAt;
+    @Column(name = "deadline")
+    private Date deadline;
+
     @Enumerated(EnumType.STRING)
     private ProjectState state;
 

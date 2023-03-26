@@ -1,6 +1,7 @@
 package cz.cvut.fel.constructa.controller;
 
 import cz.cvut.fel.constructa.controller.interfaces.CompanyController;
+import cz.cvut.fel.constructa.dto.request.CompanyRequest;
 import cz.cvut.fel.constructa.dto.response.CompanyDTO;
 import cz.cvut.fel.constructa.mapper.CompanyMapper;
 import cz.cvut.fel.constructa.model.Company;
@@ -11,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -46,8 +48,8 @@ public class CompanyControllerImpl implements CompanyController {
 
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CompanyDTO> createCompany(@RequestBody Company newCompany) {
-        Company createdCompany = companyService.create(newCompany);
+    public ResponseEntity<CompanyDTO> createCompany(@RequestBody CompanyRequest request) throws ParseException {
+        Company createdCompany = companyService.create(request);
         return ResponseEntity.ok().body(
                 companyMapper.convertToDto(createdCompany)
         );
