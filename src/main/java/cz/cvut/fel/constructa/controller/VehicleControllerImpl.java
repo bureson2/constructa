@@ -1,7 +1,9 @@
 package cz.cvut.fel.constructa.controller;
 
 import cz.cvut.fel.constructa.controller.interfaces.VehicleController;
+import cz.cvut.fel.constructa.dto.request.VehicleReportRequest;
 import cz.cvut.fel.constructa.dto.response.VehicleDTO;
+import cz.cvut.fel.constructa.dto.response.VehicleInputDTO;
 import cz.cvut.fel.constructa.dto.response.VehicleReportDTO;
 import cz.cvut.fel.constructa.mapper.VehicleMapper;
 import cz.cvut.fel.constructa.mapper.VehicleReportMapper;
@@ -14,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -35,6 +38,19 @@ public class VehicleControllerImpl implements VehicleController {
         return ResponseEntity.ok().body(
                 vehicles.stream()
                         .map(vehicleMapper::convertToDto)
+                        .collect(Collectors.toList())
+        );
+    }
+
+    // TODO s filtrací
+
+    @ResponseStatus(code = HttpStatus.OK)
+    @GetMapping(value="/search", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<VehicleInputDTO>> getInputVehicles() {
+        List<Vehicle> vehicles = vehicleService.getVehicles();
+        return ResponseEntity.ok().body(
+                vehicles.stream()
+                        .map(vehicleMapper::convertToInputDto)
                         .collect(Collectors.toList())
         );
     }
@@ -100,10 +116,11 @@ public class VehicleControllerImpl implements VehicleController {
         )).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @Override@ResponseStatus(code = HttpStatus.CREATED)
+    @Override
+    @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping(value="/reports", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<VehicleReportDTO> createVehicleReport(@RequestBody VehicleReport newVehicleReport) {
-        VehicleReport createdVehicleReport = vehicleService.create(newVehicleReport);
+    public ResponseEntity<VehicleReportDTO> createVehicleReport(@RequestBody VehicleReportRequest requet) throws ParseException {
+        VehicleReport createdVehicleReport = vehicleService.create(requet);
         return ResponseEntity.ok().body(
                 vehicleReportMapper.convertToDto(createdVehicleReport)
         );

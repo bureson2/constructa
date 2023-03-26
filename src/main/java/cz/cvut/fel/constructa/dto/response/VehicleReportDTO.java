@@ -16,8 +16,7 @@ public class VehicleReportDTO {
     private Double afterworkConditionMotorcycleWatch;
     private int cargoMass;
     private String cargoType;
-    private Double distanceAfter;
-    private Double distanceBefore;
+    private Double distance;
     private Double purchaseOfFuelLitres;
     private Date timeFrom;
     private Date timeTo;

@@ -33,11 +33,8 @@ public class VehicleReport {
     @Column(name = "cargo_type")
     private String cargoType;
 
-    @Column(name = "distance_after")
-    private Double distanceAfter;
-
-    @Column(name = "distanceBefore")
-    private Double distanceBefore;
+    @Column(name = "distance")
+    private Double distance;
 
     @Column(name = "purchase_of_fuel_litres")
     private Double purchaseOfFuelLitres;

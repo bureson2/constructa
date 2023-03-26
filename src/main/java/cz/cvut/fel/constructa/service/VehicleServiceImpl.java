@@ -1,13 +1,19 @@
 package cz.cvut.fel.constructa.service;
 
+import cz.cvut.fel.constructa.dto.request.VehicleReportRequest;
+import cz.cvut.fel.constructa.mapper.VehicleMapper;
+import cz.cvut.fel.constructa.mapper.VehicleReportMapper;
 import cz.cvut.fel.constructa.model.Vehicle;
 import cz.cvut.fel.constructa.model.report.VehicleReport;
+import cz.cvut.fel.constructa.model.role.User;
+import cz.cvut.fel.constructa.repository.UserRepository;
 import cz.cvut.fel.constructa.repository.VehicleReportRepository;
 import cz.cvut.fel.constructa.repository.VehicleRepository;
 import cz.cvut.fel.constructa.service.interfaces.VehicleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +23,8 @@ public class VehicleServiceImpl implements VehicleService {
 
     private final VehicleRepository vehicleDao;
     private final VehicleReportRepository vehicleReportDao;
+    private final UserRepository userDao;
+    private final VehicleReportMapper vehicleReportMapper;
 
     @Override
     public Vehicle create(Vehicle newVehicle) {
@@ -45,8 +53,13 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
-    public VehicleReport create(VehicleReport newVehicleReport) {
-        return vehicleReportDao.save(newVehicleReport);
+    public VehicleReport create(VehicleReportRequest request) throws ParseException {
+        VehicleReport createdReport = vehicleReportMapper.convertToEntity(request);
+        Optional<User> driver = userDao.findById(request.getDriver());
+        driver.ifPresent(createdReport::setDriver);
+        Optional<Vehicle> vehicle = vehicleDao.findById(request.getVehicle());
+        vehicle.ifPresent(createdReport::setVehicle);
+        return vehicleReportDao.save(createdReport);
     }
 
     //    TODO check speed
