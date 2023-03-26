@@ -21,4 +21,7 @@ public interface VehicleService {
     List<VehicleReport> getVehicleReports();
     void deleteVehicleReport(Long id);
     VehicleReport update(VehicleReport updatedVehicleReport);
+
+
+    List<VehicleReport> getVehicleReportsByVehicleId(Long id);
 }

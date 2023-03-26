@@ -67,7 +67,12 @@ public class VehicleServiceImpl implements VehicleService {
     public Optional<VehicleReport> getVehicleReportById(Long id) {
 //        return vehicleReportDao.findById(id);
         return vehicleReportDao.findAll().stream().filter(it->it.getId().equals(id)).findFirst();
+    }
 
+
+    @Override
+    public List<VehicleReport> getVehicleReportsByVehicleId(Long id) {
+        return vehicleReportDao.findVehicleReportByVehicleId(id);
     }
 
     @Override

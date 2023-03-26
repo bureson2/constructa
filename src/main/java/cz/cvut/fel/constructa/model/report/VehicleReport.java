@@ -3,10 +3,7 @@ package cz.cvut.fel.constructa.model.report;
 import cz.cvut.fel.constructa.model.*;
 import cz.cvut.fel.constructa.model.role.User;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -15,6 +12,9 @@ import java.util.Set;
 @Entity
 @Table(name = "vehicle_reports")
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class VehicleReport {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -55,7 +55,7 @@ public class VehicleReport {
     private Location finishAt;
 
     @ManyToOne
-    @JoinColumn(name = "vehicle_id", insertable=false, updatable=false)
+    @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
 
     @ManyToOne

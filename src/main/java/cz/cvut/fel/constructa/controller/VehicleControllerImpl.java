@@ -105,6 +105,17 @@ public class VehicleControllerImpl implements VehicleController {
         );
     }
 
+    @ResponseStatus(code = HttpStatus.OK)
+    @GetMapping(value = "/{carId}/reports", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<VehicleReportDTO>> getVehicleReportsByVehicle(@PathVariable Long carId) {
+        List<VehicleReport> vehicleReports = vehicleService.getVehicleReportsByVehicleId(carId);
+        return ResponseEntity.ok().body(
+                vehicleReports.stream()
+                        .map(vehicleReportMapper::convertToDto)
+                        .collect(Collectors.toList())
+        );
+    }
+
     @Override
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
