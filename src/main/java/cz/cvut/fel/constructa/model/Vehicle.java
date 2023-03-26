@@ -26,6 +26,7 @@ public class Vehicle {
     @Column(name="factory")
     private String factory;
 
+    //    model
     @Column(name="name")
     private String name;
 
