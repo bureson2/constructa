@@ -5,7 +5,6 @@ import cz.cvut.fel.constructa.dto.response.VehicleInputDTO;
 import cz.cvut.fel.constructa.model.Vehicle;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component

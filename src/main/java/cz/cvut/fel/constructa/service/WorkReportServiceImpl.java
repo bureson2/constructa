@@ -3,14 +3,12 @@ package cz.cvut.fel.constructa.service;
 import cz.cvut.fel.constructa.dto.request.WorkReportRequest;
 import cz.cvut.fel.constructa.dto.response.WorkReportDTO;
 import cz.cvut.fel.constructa.mapper.WorkReportMapper;
-import cz.cvut.fel.constructa.model.Task;
 import cz.cvut.fel.constructa.model.report.WorkReport;
 import cz.cvut.fel.constructa.model.role.User;
 import cz.cvut.fel.constructa.repository.UserRepository;
 import cz.cvut.fel.constructa.repository.WorkReportRepository;
 import cz.cvut.fel.constructa.service.interfaces.WorkReportService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;

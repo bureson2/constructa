@@ -7,10 +7,10 @@ import cz.cvut.fel.constructa.model.Task;
 import cz.cvut.fel.constructa.model.role.User;
 import cz.cvut.fel.constructa.repository.TaskRepository;
 import cz.cvut.fel.constructa.repository.UserRepository;
+import cz.cvut.fel.constructa.security.AuthenticationFacade;
 import cz.cvut.fel.constructa.service.interfaces.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import cz.cvut.fel.constructa.security.AuthenticationFacade;
 
 import java.text.ParseException;
 import java.util.Date;

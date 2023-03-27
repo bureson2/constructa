@@ -1,7 +1,6 @@
 package cz.cvut.fel.constructa.service.interfaces;
 
 import cz.cvut.fel.constructa.model.role.User;
-import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 import java.util.Optional;

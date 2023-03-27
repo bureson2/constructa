@@ -2,7 +2,6 @@ package cz.cvut.fel.constructa.service;
 
 import cz.cvut.fel.constructa.model.role.User;
 import cz.cvut.fel.constructa.repository.UserRepository;
-import cz.cvut.fel.constructa.security.AuthenticationFacade;
 import cz.cvut.fel.constructa.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

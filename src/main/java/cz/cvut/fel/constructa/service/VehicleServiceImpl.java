@@ -1,7 +1,6 @@
 package cz.cvut.fel.constructa.service;
 
 import cz.cvut.fel.constructa.dto.request.VehicleReportRequest;
-import cz.cvut.fel.constructa.mapper.VehicleMapper;
 import cz.cvut.fel.constructa.mapper.VehicleReportMapper;
 import cz.cvut.fel.constructa.model.Vehicle;
 import cz.cvut.fel.constructa.model.report.VehicleReport;

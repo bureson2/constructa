@@ -1,10 +1,8 @@
 package cz.cvut.fel.constructa.mapper;
 
 import cz.cvut.fel.constructa.dto.request.ProjectRequest;
-import cz.cvut.fel.constructa.dto.request.TaskRequest;
 import cz.cvut.fel.constructa.dto.response.ProjectDTO;
 import cz.cvut.fel.constructa.model.Project;
-import cz.cvut.fel.constructa.model.Task;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;

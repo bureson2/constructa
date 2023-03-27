@@ -1,9 +1,9 @@
 package cz.cvut.fel.constructa.enums;
 
 public enum ConstructionDiaryReportState {
-    FINISHED("Functional"),
-    IN_PROGRESS("Unfunctional"),
-    BLOCKED("Under_repair");
+    FINISHED("Dokončeno"),
+    IN_PROGRESS("Rozpracováno"),
+    BLOCKED("Blokováno");
 
     private String constructionDiaryReportState;
     ConstructionDiaryReportState(String constructionDiaryReportState) {

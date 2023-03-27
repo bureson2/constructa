@@ -4,7 +4,6 @@ import cz.cvut.fel.constructa.dto.request.ProjectRequest;
 import cz.cvut.fel.constructa.enums.ProjectState;
 import cz.cvut.fel.constructa.mapper.ProjectMapper;
 import cz.cvut.fel.constructa.model.Project;
-import cz.cvut.fel.constructa.model.Task;
 import cz.cvut.fel.constructa.model.role.User;
 import cz.cvut.fel.constructa.repository.ProjectRepository;
 import cz.cvut.fel.constructa.repository.UserRepository;

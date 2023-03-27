@@ -14,9 +14,9 @@ public class ProjectDTO {
     private String name;
     private String buldingFacility;
     private String state;
-//    private UserDTO projectManager;
+    private UserDTO projectManager;
     private LocationDTO projectAddress;
     private Date startedAt;
     private Date deadline;
-    private UserInputDTO projectManager;
+//    private UserInputDTO projectManager;
 }
