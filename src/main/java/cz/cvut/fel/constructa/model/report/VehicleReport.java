@@ -45,6 +45,9 @@ public class VehicleReport {
     @Column(name = "time_to")
     private Date timeTo;
 
+    @Column(name = "description")
+    private Date description;
+
 //    MAYBE TODO
     @ManyToOne
     @JoinColumn(name = "location_id", insertable=false, updatable=false)

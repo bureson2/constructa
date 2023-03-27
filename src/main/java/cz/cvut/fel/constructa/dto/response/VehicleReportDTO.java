@@ -20,8 +20,9 @@ public class VehicleReportDTO {
     private Double purchaseOfFuelLitres;
     private Date timeFrom;
     private Date timeTo;
-//    private Location startAt;
+    //    private Location startAt;
 //    private Location finishAt;
+    private Date description;
     private VehicleDTO vehicle;
     private UserDTO driver;
 
