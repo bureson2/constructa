@@ -7,7 +7,6 @@ import cz.cvut.fel.constructa.security.auth.AuthenticationService;
 import cz.cvut.fel.constructa.security.auth.RegisterRequest;
 import cz.cvut.fel.constructa.service.interfaces.TaskService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -35,7 +34,7 @@ public class DataLoader implements CommandLineRunner {
                 .roles(Role.ROLE_ADMIN)
                 .build();
 
-//        authenticationService.register(registerRequest);
+        authenticationService.register(registerRequest);
 
         registerRequest.setFirstname("Jan");
         registerRequest.setLastname("Bořek");

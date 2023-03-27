@@ -25,8 +25,8 @@ public class ProjectControllerImpl implements ProjectController {
     private final ProjectService projectService;
     private final ProjectMapper projectMapper;
 
-
     @ResponseStatus(code = HttpStatus.OK)
+    @ResponseBody
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<ProjectDTO>> getProjects() {
         List<Project> projects = projectService.getProjects();
@@ -48,6 +48,7 @@ public class ProjectControllerImpl implements ProjectController {
     }
 
     @ResponseStatus(code = HttpStatus.CREATED)
+    @ResponseBody
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProjectDTO> createProject(@RequestBody ProjectRequest request) throws ParseException {
         Project createdProject = projectService.create(request);
@@ -57,6 +58,7 @@ public class ProjectControllerImpl implements ProjectController {
     }
 
     @ResponseStatus(code = HttpStatus.OK)
+    @ResponseBody
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProjectDTO> editProject(@RequestBody Project updatedProject){
         Project projectToReturn = projectService.update(updatedProject);

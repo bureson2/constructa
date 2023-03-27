@@ -8,7 +8,7 @@ import java.text.ParseException;
 import java.util.List;
 
 public interface ConstructionDiaryService {
-    ConstructionDiary create(ConstructionDiaryRequest request) throws ParseException;
+    ConstructionDiaryDTO create(ConstructionDiaryRequest request) throws ParseException;
     ConstructionDiaryDTO getConstructionDiaryById(Long id);
     List<ConstructionDiaryDTO> getConstructionDiaries();
     void delete(Long id);

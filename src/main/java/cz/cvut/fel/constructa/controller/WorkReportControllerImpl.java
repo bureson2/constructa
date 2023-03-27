@@ -53,6 +53,7 @@ public class WorkReportControllerImpl implements WorkReportController {
     }
 
     @ResponseStatus(code = HttpStatus.CREATED)
+    @ResponseBody
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<WorkReportDTO> createWorkReport(@RequestBody WorkReportRequest request) throws ParseException {
         WorkReport report = workReportService.create(request);
@@ -62,6 +63,7 @@ public class WorkReportControllerImpl implements WorkReportController {
     }
 
     @ResponseStatus(code = HttpStatus.CREATED)
+    @ResponseBody
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<WorkReportDTO> updateeWorkReport(@RequestBody WorkReportRequest request) throws ParseException {
 //        WorkReport report = workReportService.update(request);

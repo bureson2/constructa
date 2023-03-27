@@ -61,6 +61,7 @@ public class UserControllerImpl implements UserController {
     }
     @Override
     @ResponseStatus(code = HttpStatus.CREATED)
+    @ResponseBody
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDTO> createUser(@RequestBody User newUser) {
         User createdUser = userService.create(newUser);
@@ -72,6 +73,7 @@ public class UserControllerImpl implements UserController {
     // TODO correct data getting
     @Override
     @ResponseStatus(code = HttpStatus.OK)
+    @ResponseBody
     @PutMapping(value = "/{userId}")
     public ResponseEntity<UserDTO> updateRole(@RequestBody String role, @PathVariable Long userId) {
         User updatedUser = userService.updateRole(userId, role);

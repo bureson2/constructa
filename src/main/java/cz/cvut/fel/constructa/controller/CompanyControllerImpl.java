@@ -26,6 +26,7 @@ public class CompanyControllerImpl implements CompanyController {
     private final CompanyMapper companyMapper;
 
     @ResponseStatus(code = HttpStatus.OK)
+    @ResponseBody
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<CompanyDTO>> getCompanies() {
         List<Company> companies = companyService.getCompanies();
@@ -47,6 +48,7 @@ public class CompanyControllerImpl implements CompanyController {
     }
 
     @ResponseStatus(code = HttpStatus.CREATED)
+    @ResponseBody
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CompanyDTO> createCompany(@RequestBody CompanyRequest request) throws ParseException {
         Company createdCompany = companyService.create(request);
@@ -56,6 +58,7 @@ public class CompanyControllerImpl implements CompanyController {
     }
 
     @ResponseStatus(code = HttpStatus.OK)
+    @ResponseBody
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CompanyDTO> editCompany(@RequestBody Company updatedCompany){
         Company companyToReturn = companyService.update(updatedCompany);

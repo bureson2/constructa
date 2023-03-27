@@ -14,14 +14,4 @@ public interface VehicleService {
     List<Vehicle> getVehicles();
     void deleteVehicle(Long id);
     Vehicle update(Vehicle updatedVehicle);
-
-
-    VehicleReport create(VehicleReportRequest request) throws ParseException;
-    Optional<VehicleReport> getVehicleReportById(Long id);
-    List<VehicleReport> getVehicleReports();
-    void deleteVehicleReport(Long id);
-    VehicleReport update(VehicleReport updatedVehicleReport);
-
-
-    List<VehicleReport> getVehicleReportsByVehicleId(Long id);
 }

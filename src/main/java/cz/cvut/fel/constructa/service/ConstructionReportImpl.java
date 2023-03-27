@@ -20,9 +20,10 @@ public class ConstructionReportImpl implements ConstructionReportService {
     private final ConstructionReportRepository constructionReportDao;
     private final ConstructionReportMapper constructionReportMapper;
     @Override
-    public ConstructionReport create(ConstructionReportRequest request) throws ParseException {
+    public ConstructionReportDTO create(ConstructionReportRequest request) throws ParseException {
         ConstructionReport constructionReport = constructionReportMapper.convertToEntity(request);
-        return constructionReportDao.save(constructionReport);
+        ConstructionReport createdReport = constructionReportDao.save(constructionReport);
+        return constructionReportMapper.convertToDto(createdReport);
     }
 
     @Override

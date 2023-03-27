@@ -8,7 +8,7 @@ import java.text.ParseException;
 import java.util.List;
 
 public interface ConstructionReportService {
-    ConstructionReport create(ConstructionReportRequest request) throws ParseException;
+    ConstructionReportDTO create(ConstructionReportRequest request) throws ParseException;
     ConstructionReportDTO getConstructionReporttById(Long id);
     List<ConstructionReportDTO> getConstructionReports();
     void delete(Long id);

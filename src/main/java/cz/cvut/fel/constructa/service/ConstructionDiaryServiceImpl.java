@@ -4,7 +4,6 @@ import cz.cvut.fel.constructa.dto.request.ConstructionDiaryRequest;
 import cz.cvut.fel.constructa.dto.response.ConstructionDiaryDTO;
 import cz.cvut.fel.constructa.mapper.ConstructionDiaryMapper;
 import cz.cvut.fel.constructa.model.ConstructionDiary;
-import cz.cvut.fel.constructa.model.report.ConstructionReport;
 import cz.cvut.fel.constructa.repository.ConstructionDiaryRepository;
 import cz.cvut.fel.constructa.service.interfaces.ConstructionDiaryService;
 import lombok.RequiredArgsConstructor;
@@ -21,9 +20,10 @@ public class ConstructionDiaryServiceImpl implements ConstructionDiaryService {
     private final ConstructionDiaryRepository constructionDiaryDao;
     private final ConstructionDiaryMapper constructionDiaryMapper;
     @Override
-    public ConstructionDiary create(ConstructionDiaryRequest request) throws ParseException {
+    public ConstructionDiaryDTO create(ConstructionDiaryRequest request) throws ParseException {
         ConstructionDiary constructiondiary = constructionDiaryMapper.convertToEntity(request);
-        return constructionDiaryDao.save(constructiondiary);
+        ConstructionDiary createdConstructionDiary = constructionDiaryDao.save(constructiondiary);
+        return constructionDiaryMapper.convertToDto(createdConstructionDiary);
     }
 
     @Override

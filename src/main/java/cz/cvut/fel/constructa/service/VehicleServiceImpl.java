@@ -19,11 +19,9 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class VehicleServiceImpl implements VehicleService {
-
     private final VehicleRepository vehicleDao;
-    private final VehicleReportRepository vehicleReportDao;
     private final UserRepository userDao;
-    private final VehicleReportMapper vehicleReportMapper;
+
 
     @Override
     public Vehicle create(Vehicle newVehicle) {
@@ -49,43 +47,5 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public Vehicle update(Vehicle updatedVehicle) {
         return vehicleDao.save(updatedVehicle);
-    }
-
-    @Override
-    public VehicleReport create(VehicleReportRequest request) throws ParseException {
-        VehicleReport createdReport = vehicleReportMapper.convertToEntity(request);
-        Optional<User> driver = userDao.findById(request.getDriver());
-        driver.ifPresent(createdReport::setDriver);
-        Optional<Vehicle> vehicle = vehicleDao.findById(request.getVehicle());
-        vehicle.ifPresent(createdReport::setVehicle);
-        return vehicleReportDao.save(createdReport);
-    }
-
-    //    TODO check speed
-    @Override
-    public Optional<VehicleReport> getVehicleReportById(Long id) {
-//        return vehicleReportDao.findById(id);
-        return vehicleReportDao.findAll().stream().filter(it->it.getId().equals(id)).findFirst();
-    }
-
-
-    @Override
-    public List<VehicleReport> getVehicleReportsByVehicleId(Long id) {
-        return vehicleReportDao.findVehicleReportByVehicleId(id);
-    }
-
-    @Override
-    public List<VehicleReport> getVehicleReports() {
-        return vehicleReportDao.findAll();
-    }
-
-    @Override
-    public void deleteVehicleReport(Long id) {
-        vehicleReportDao.deleteById(id);
-    }
-
-    @Override
-    public VehicleReport update(VehicleReport updatedVehicleReport) {
-        return vehicleReportDao.save(updatedVehicleReport);
     }
 }
