@@ -20,6 +20,9 @@ public class Location {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "location_id", nullable = false)
     private Long id;
+
+//    todo fi boolean
+
     @Column(name = "active_workplace")
     private Boolean active;
     @Column(name = "city")

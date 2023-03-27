@@ -41,6 +41,7 @@ public class TaskControllerImpl implements TaskController {
                         .collect(Collectors.toList())
         );
     }
+
     @Override
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
@@ -51,6 +52,7 @@ public class TaskControllerImpl implements TaskController {
                 taskMapper.convertToDto(task)
         )).orElseGet(() -> ResponseEntity.notFound().build());
     }
+
     @Override
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)

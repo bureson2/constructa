@@ -52,6 +52,12 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public List<Task> getTaskByAssigneeId(Long id) {
+//        TODO
+        return null;
+    }
+
+    @Override
     public void delete(Long id) {
         taskDao.deleteById(id);
     }

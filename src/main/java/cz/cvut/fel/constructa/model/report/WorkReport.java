@@ -43,5 +43,4 @@ public class WorkReport {
 
     @Enumerated(EnumType.STRING)
     private WorkReportType type;
-
 }

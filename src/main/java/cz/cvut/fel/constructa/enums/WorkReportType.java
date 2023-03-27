@@ -1,12 +1,12 @@
 package cz.cvut.fel.constructa.enums;
 
 public enum WorkReportType {
-    WORK_REPORT("Work_report"),
-    HOLIDAY("Holiday"),
-    SICK_NOTE("Sick_note"),
-    MATERNITY_LEAVE("Maternity_leave"),
-    UNPAID_VACATION("Unpaid_vacation"),
-    SICK_DAY("Sick_daz");
+    WORK_REPORT("Pracovní záznam"),
+    HOLIDAY("Dovolená"),
+    SICK_NOTE("Nemocenská"),
+    MATERNITY_LEAVE("Mateřská"),
+    UNPAID_VACATION("Neplacená dovolená"),
+    SICK_DAY("Sick day");
 
     private String workReportType;
     WorkReportType(String workReportType) {

@@ -1,13 +1,11 @@
 package cz.cvut.fel.constructa.controller.interfaces;
 
 import cz.cvut.fel.constructa.dto.request.VehicleReportRequest;
-import cz.cvut.fel.constructa.dto.response.UserDTO;
 import cz.cvut.fel.constructa.dto.response.VehicleDTO;
 import cz.cvut.fel.constructa.dto.response.VehicleInputDTO;
 import cz.cvut.fel.constructa.dto.response.VehicleReportDTO;
 import cz.cvut.fel.constructa.model.Vehicle;
 import cz.cvut.fel.constructa.model.report.VehicleReport;
-import cz.cvut.fel.constructa.model.role.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

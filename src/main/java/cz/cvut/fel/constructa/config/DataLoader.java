@@ -40,6 +40,7 @@ public class DataLoader implements CommandLineRunner {
         registerRequest.setFirstname("Jan");
         registerRequest.setLastname("Bořek");
         registerRequest.setEmail("Jan@Bořek.com");
+        registerRequest.setRoles(Role.ROLE_EMPLOYEE);
 //        authenticationService.register(registerRequest);
 
         registerRequest.setFirstname("Pavel");
