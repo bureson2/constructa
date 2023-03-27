@@ -1,14 +1,9 @@
 package cz.cvut.fel.constructa.model;
 
-import cz.cvut.fel.constructa.enums.TaskState;
 import cz.cvut.fel.constructa.enums.VehicleType;
 import cz.cvut.fel.constructa.model.report.VehicleReport;
-import cz.cvut.fel.constructa.model.role.User;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Date;

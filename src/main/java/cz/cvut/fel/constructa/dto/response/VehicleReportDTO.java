@@ -1,8 +1,5 @@
 package cz.cvut.fel.constructa.dto.response;
 
-import cz.cvut.fel.constructa.model.Location;
-import cz.cvut.fel.constructa.model.Vehicle;
-import cz.cvut.fel.constructa.model.role.User;
 import lombok.Getter;
 import lombok.Setter;
 

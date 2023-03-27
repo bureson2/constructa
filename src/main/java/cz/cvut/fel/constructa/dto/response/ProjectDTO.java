@@ -1,7 +1,5 @@
 package cz.cvut.fel.constructa.dto.response;
 
-import cz.cvut.fel.constructa.enums.ProjectState;
-import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
 

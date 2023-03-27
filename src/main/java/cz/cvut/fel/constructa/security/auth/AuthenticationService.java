@@ -1,6 +1,5 @@
 package cz.cvut.fel.constructa.security.auth;
 
-import cz.cvut.fel.constructa.enums.Role;
 import cz.cvut.fel.constructa.model.role.User;
 import cz.cvut.fel.constructa.repository.UserRepository;
 import cz.cvut.fel.constructa.security.JwtService;

@@ -1,7 +1,5 @@
 package cz.cvut.fel.constructa.dto.request;
 
-import cz.cvut.fel.constructa.dto.response.UserDTO;
-import cz.cvut.fel.constructa.dto.response.VehicleDTO;
 import lombok.Builder;
 import lombok.Data;
 

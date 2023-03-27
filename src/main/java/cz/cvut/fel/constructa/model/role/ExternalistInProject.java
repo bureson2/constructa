@@ -1,14 +1,9 @@
 package cz.cvut.fel.constructa.model.role;
 
 import cz.cvut.fel.constructa.enums.ExternalistRole;
-import cz.cvut.fel.constructa.enums.Role;
 import cz.cvut.fel.constructa.model.Project;
-import cz.cvut.fel.constructa.model.report.FinanceReport;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.List;
 

@@ -1,11 +1,9 @@
 package cz.cvut.fel.constructa.dto.response;
 
-import cz.cvut.fel.constructa.enums.Role;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
-import java.util.List;
 
 @Getter
 @Setter

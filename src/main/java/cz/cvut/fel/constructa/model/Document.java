@@ -4,9 +4,6 @@ import cz.cvut.fel.constructa.model.report.ConstructionReport;
 import cz.cvut.fel.constructa.model.role.User;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;

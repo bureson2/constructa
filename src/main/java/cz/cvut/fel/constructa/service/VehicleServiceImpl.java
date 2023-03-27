@@ -1,18 +1,12 @@
 package cz.cvut.fel.constructa.service;
 
-import cz.cvut.fel.constructa.dto.request.VehicleReportRequest;
-import cz.cvut.fel.constructa.mapper.VehicleReportMapper;
 import cz.cvut.fel.constructa.model.Vehicle;
-import cz.cvut.fel.constructa.model.report.VehicleReport;
-import cz.cvut.fel.constructa.model.role.User;
 import cz.cvut.fel.constructa.repository.UserRepository;
-import cz.cvut.fel.constructa.repository.VehicleReportRepository;
 import cz.cvut.fel.constructa.repository.VehicleRepository;
 import cz.cvut.fel.constructa.service.interfaces.VehicleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 

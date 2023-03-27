@@ -1,18 +1,12 @@
 package cz.cvut.fel.constructa.model.report;
 
-import cz.cvut.fel.constructa.enums.Role;
 import cz.cvut.fel.constructa.enums.WorkReportType;
-import cz.cvut.fel.constructa.model.Company;
 import cz.cvut.fel.constructa.model.Location;
 import cz.cvut.fel.constructa.model.role.User;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "work_reports")

@@ -1,17 +1,14 @@
 package cz.cvut.fel.constructa.model;
 
 import cz.cvut.fel.constructa.enums.ProjectState;
-import cz.cvut.fel.constructa.enums.Role;
-import cz.cvut.fel.constructa.model.report.ConstructionReport;
 import cz.cvut.fel.constructa.model.role.ExternalistInProject;
 import cz.cvut.fel.constructa.model.role.User;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "projects")

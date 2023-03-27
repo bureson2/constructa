@@ -1,7 +1,5 @@
 package cz.cvut.fel.constructa.dto.response;
 
-import cz.cvut.fel.constructa.enums.ConstructionDiaryReportState;
-import cz.cvut.fel.constructa.model.role.User;
 import lombok.Data;
 
 @Data
