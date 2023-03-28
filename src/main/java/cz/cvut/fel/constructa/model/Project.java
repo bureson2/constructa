@@ -1,7 +1,10 @@
 package cz.cvut.fel.constructa.model;
 
 import cz.cvut.fel.constructa.enums.ProjectState;
+import cz.cvut.fel.constructa.model.report.ConstructionReport;
+import cz.cvut.fel.constructa.model.report.VehicleReport;
 import cz.cvut.fel.constructa.model.role.ExternalistInProject;
+import cz.cvut.fel.constructa.model.role.ResponsiblePersonInConstructionDiary;
 import cz.cvut.fel.constructa.model.role.User;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -41,6 +44,15 @@ public class Project {
     @JoinColumn(name = "location_id", referencedColumnName = "location_id")
     private Location projectAddress;
 
-    @OneToMany(mappedBy = "constructionDiaryProject")
-    private List<ConstructionDiary> constructionDiaries = new ArrayList<>();
+//    @OneToMany(mappedBy = "constructionDiaryProject")
+//    private List<ConstructionDiary> constructionDiaries = new ArrayList<>();
+
+    @OneToMany(mappedBy = "project")
+    private List<ConstructionReport> constructionReports = new ArrayList<>();
+
+    @OneToMany(mappedBy = "constructionDiary")
+    private List<VehicleReport> vehicleReports = new ArrayList<>();
+
+    @OneToMany(mappedBy = "constructionDiary")
+    private List<ResponsiblePersonInConstructionDiary> responsiblePerson = new ArrayList<>();
 }

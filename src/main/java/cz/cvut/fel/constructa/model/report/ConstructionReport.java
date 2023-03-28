@@ -2,10 +2,7 @@ package cz.cvut.fel.constructa.model.report;
 
 import cz.cvut.fel.constructa.enums.ConstructionDiaryReportState;
 import cz.cvut.fel.constructa.enums.WorkReportType;
-import cz.cvut.fel.constructa.model.Company;
-import cz.cvut.fel.constructa.model.ConstructionDiary;
-import cz.cvut.fel.constructa.model.Document;
-import cz.cvut.fel.constructa.model.Image;
+import cz.cvut.fel.constructa.model.*;
 import cz.cvut.fel.constructa.model.role.ExternalistInProject;
 import cz.cvut.fel.constructa.model.role.User;
 import jakarta.persistence.*;
@@ -14,10 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "construction_reports")
@@ -37,6 +31,9 @@ public class ConstructionReport {
     @Column(name = "weather_description")
     private String weather;
 
+    @Column(name = "date")
+    private Date date;
+
     @ManyToMany
     @JoinTable(
             name = "reports_documents",
@@ -53,8 +50,8 @@ public class ConstructionReport {
     private User executor;
 
     @ManyToOne
-    @JoinColumn(name = "construction_diary_id")
-    private ConstructionDiary constructionDiary;
+    @JoinColumn(name = "project_id")
+    private Project project;
 
     @Enumerated(EnumType.STRING)
     private ConstructionDiaryReportState state;

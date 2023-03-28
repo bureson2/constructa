@@ -11,6 +11,7 @@ public interface ConstructionReportService {
     ConstructionReportDTO create(ConstructionReportRequest request) throws ParseException;
     ConstructionReportDTO getConstructionReporttById(Long id);
     List<ConstructionReportDTO> getConstructionReports();
+    List<ConstructionReportDTO> getConstructionReportsByProjectId(Long projectId);
     void delete(Long id);
     ConstructionReport update(ConstructionReportRequest constructionReport);
 }

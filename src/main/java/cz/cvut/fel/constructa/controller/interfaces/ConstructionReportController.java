@@ -12,6 +12,8 @@ import java.util.List;
 public interface ConstructionReportController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<List<ConstructionReportDTO>> getConstructionReports();
+    @GetMapping(value="project/{projectId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<ConstructionReportDTO>> getConstructionReportsByProjectId(Long projectId);
     @GetMapping(value = "/{constructionReportId}", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<ConstructionReportDTO> getConstructionReport(@PathVariable Long constructionReportId);
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)

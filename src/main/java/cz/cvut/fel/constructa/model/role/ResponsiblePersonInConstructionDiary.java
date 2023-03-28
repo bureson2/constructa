@@ -1,7 +1,7 @@
 package cz.cvut.fel.constructa.model.role;
 
 import cz.cvut.fel.constructa.enums.ConstructionDiaryRole;
-import cz.cvut.fel.constructa.model.ConstructionDiary;
+import cz.cvut.fel.constructa.model.Project;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -22,8 +22,8 @@ public class ResponsiblePersonInConstructionDiary {
     private List<ConstructionDiaryRole> roles;
 
     @ManyToOne
-    @JoinColumn(name = "construction_diary_id")
-    private ConstructionDiary constructionDiary;
+    @JoinColumn(name = "project_id")
+    private Project constructionDiary;
 
     @ManyToMany(mappedBy = "responsiblePersons")
     private Set<User> responsiblePersons = new HashSet<>();

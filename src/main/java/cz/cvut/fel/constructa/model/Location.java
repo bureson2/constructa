@@ -37,9 +37,6 @@ public class Location {
     @OneToMany(mappedBy = "location")
     private List<WorkReport> workReports = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "location")
-//    private List<Task> tasks = new ArrayList<>();
-
     @OneToOne(mappedBy = "companyAddress")
     private Company company;
 

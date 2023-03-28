@@ -3,8 +3,12 @@ package cz.cvut.fel.constructa.service;
 import cz.cvut.fel.constructa.dto.request.ConstructionReportRequest;
 import cz.cvut.fel.constructa.dto.response.ConstructionReportDTO;
 import cz.cvut.fel.constructa.mapper.ConstructionReportMapper;
+import cz.cvut.fel.constructa.model.Project;
 import cz.cvut.fel.constructa.model.report.ConstructionReport;
+import cz.cvut.fel.constructa.model.role.User;
 import cz.cvut.fel.constructa.repository.ConstructionReportRepository;
+import cz.cvut.fel.constructa.repository.ProjectRepository;
+import cz.cvut.fel.constructa.repository.UserRepository;
 import cz.cvut.fel.constructa.service.interfaces.ConstructionReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,11 +22,21 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ConstructionReportImpl implements ConstructionReportService {
     private final ConstructionReportRepository constructionReportDao;
+    private final UserRepository userDao;
+    private final ProjectRepository projectDao;
     private final ConstructionReportMapper constructionReportMapper;
     @Override
     public ConstructionReportDTO create(ConstructionReportRequest request) throws ParseException {
         ConstructionReport constructionReport = constructionReportMapper.convertToEntity(request);
+
+        Optional<User> user = userDao.findById(request.getExecutorId());
+        user.ifPresent(constructionReport::setExecutor);
+
+        Optional<Project> project = projectDao.findById(request.getProjectId());
+        project.ifPresent(constructionReport::setProject);
+
         ConstructionReport createdReport = constructionReportDao.save(constructionReport);
+
         return constructionReportMapper.convertToDto(createdReport);
     }
 
@@ -35,6 +49,17 @@ public class ConstructionReportImpl implements ConstructionReportService {
     @Override
     public List<ConstructionReportDTO> getConstructionReports() {
         List<ConstructionReport> constructionReports = constructionReportDao.findAll();
+        return constructionReports.stream()
+                .map(constructionReportMapper::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ConstructionReportDTO> getConstructionReportsByProjectId(Long projectId) {
+//        List<ConstructionReport> constructionReports = constructionReportDao.findAll();
+        System.out.println(projectId);
+        List<ConstructionReport> constructionReports = constructionReportDao.findAllByProjectId(projectId);
+        System.out.println(constructionReports.size());
         return constructionReports.stream()
                 .map(constructionReportMapper::convertToDto)
                 .collect(Collectors.toList());

@@ -62,8 +62,8 @@ public class VehicleReport {
     private Vehicle vehicle;
 
     @ManyToOne
-    @JoinColumn(name = "construction_diary_id")
-    private ConstructionDiary constructionDiary;
+    @JoinColumn(name = "project_id")
+    private Project constructionDiary;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

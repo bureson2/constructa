@@ -1,9 +1,7 @@
 package cz.cvut.fel.constructa.controller;
 
 import cz.cvut.fel.constructa.controller.interfaces.ConstructionReportController;
-import cz.cvut.fel.constructa.dto.request.ConstructionDiaryRequest;
 import cz.cvut.fel.constructa.dto.request.ConstructionReportRequest;
-import cz.cvut.fel.constructa.dto.response.ConstructionDiaryDTO;
 import cz.cvut.fel.constructa.dto.response.ConstructionReportDTO;
 import cz.cvut.fel.constructa.service.interfaces.ConstructionReportService;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +28,17 @@ public class ConstructionReportControllerImpl implements ConstructionReportContr
                 constructionReportService.getConstructionReports()
         );
     }
+
+    @Override
+    @ResponseStatus(code = HttpStatus.OK)
+    @ResponseBody
+    @GetMapping(value="project/{projectId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<ConstructionReportDTO>> getConstructionReportsByProjectId(@PathVariable Long projectId) {
+        return ResponseEntity.ok().body(
+                constructionReportService.getConstructionReportsByProjectId(projectId)
+        );
+    }
+
     @Override
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
