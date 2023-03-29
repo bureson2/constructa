@@ -19,7 +19,7 @@ public class VehicleReportDTO {
     private Date timeTo;
     //    private Location startAt;
 //    private Location finishAt;
-    private Date description;
+    private String description;
     private VehicleDTO vehicle;
     private UserDTO driver;
 

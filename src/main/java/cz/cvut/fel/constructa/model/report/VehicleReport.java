@@ -46,7 +46,7 @@ public class VehicleReport {
     private Date timeTo;
 
     @Column(name = "description")
-    private Date description;
+    private String description;
 
 //    MAYBE TODO
     @ManyToOne

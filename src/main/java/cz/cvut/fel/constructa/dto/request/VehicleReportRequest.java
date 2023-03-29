@@ -17,7 +17,7 @@ public class VehicleReportRequest {
     private Double purchaseOfFuelLitres;
     private Date timeFrom;
     private Date timeTo;
-    private Date description;
+    private String description;
     private Long vehicle;
     private Long driver;
 }

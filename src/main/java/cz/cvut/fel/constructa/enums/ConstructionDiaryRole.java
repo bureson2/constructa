@@ -3,7 +3,6 @@ package cz.cvut.fel.constructa.enums;
 public enum ConstructionDiaryRole {
     CONSTRUCTION_PART_CONTRACTOR("Construction_part_contractor"),
     CONSTRUCTION_MANAGER("Construction_manager"),
-
     COPYRIGHT_SUPERVISOR("Copyright_supervisor"),
     GENERAL_CONTRACTOR("General_contractor"),
     TECHNICAL_PERMANENT_SUPERVISOR("Technical_permanent_supervisor"),

@@ -1,3 +1,26 @@
-1,2023-03-28 21:57:45.000000,Vše se podařilo,FINISHED,Výkopy hlíny,Hnusně bylo,53,987
-2,2022-03-28 21:57:47.000000,Problémy s elektřinou,FINISHED,oprava střechy,Nehezky bylo,54,987
-3,2023-07-28 21:57:51.000000,Práce probíhá podle plánu,IN_PROGRESS,Oprava parapetů,"Ošklivé počasí bylo, -4 C",54,968
+82,2023-07-28 21:57:51.000000,Práce probíhá podle plánu,IN_PROGRESS,Oprava parapetů,Zataženo s občasnými slunečními úseky a mírným deštěm.,54,968
+81,2022-03-28 21:57:47.000000,Problémy s elektřinou,FINISHED,Oprava střechy,Polojasno s převážně slunečným počasím a mírným větrem.,54,987
+80,2023-03-28 21:57:45.000000,Vše se podařilo,FINISHED,Výkopy hlíny,Slunečno a horko s minimální oblačností.,53,987
+86,2023-03-28 21:57:45.000000,Práce probíhá podle plánu,FINISHED,Výstavba nového bytového domu v centru města,Silná oblačnost a zataženo s mírným deštěm po celý den.,54,992
+87,2023-03-28 21:57:45.000000,První etapa stavby byla dokončena včas.,IN_PROGRESS,Výroba a instalace nových oken a dveří v rodinném domě,Polojasno s mírným větrem a teplotou kolem 20 stupňů Celsia.,71,992
+88,2023-03-28 21:57:45.000000,Stavba pokračuje v souladu s plánem.,FINISHED,Vybudování nového hřiště pro děti v místním parku,Mrholení a oblačno se slunečními úseky.,54,991
+89,2023-03-28 21:57:45.000000,Práce probíhá podle plánu,IN_PROGRESS,Oprava betonového povrchu u vjezdu do garáže,Silné bouřky s deštěm a větrem po celý den.,54,991
+90,2023-03-28 21:57:45.000000,Dokončení výstavby nového objektu je blízko.,IN_PROGRESS,Montáž nového výtahu v bytovém domě,Chladné počasí s místy slabého sněžení a zimními podmínkami.,54,991
+91,2023-03-28 21:57:45.000000,Práce probíhá podle plánu,IN_PROGRESS,Rekonstrukce historické budovy pro kulturní účely,Slunečno s převážně polojasným počasím a mírným větrem.,69,987
+92,2023-03-28 21:57:45.000000,Průběh výstavby odpovídá plánu a časovému harmonogramu.,FINISHED,Výstavba nového sportovního areálu v rekreační oblasti,Horké počasí s minimální oblačností a teplotou přesahující 30 stupňů Celsia.,53,987
+93,2023-03-28 21:57:45.000000,Průběh výstavby odpovídá plánu a časovému harmonogramu.,BLOCKED,Oprava kanalizace a vodovodu v sídlišti,Průtrž mračen s bouřkou a silným deštěm a větrem.,54,968
+94,2023-03-28 21:57:45.000000,Práce probíhá podle plánu,FINISHED,Výstavba nového nákupního centra v blízkosti letiště,Mlhavo a chladno s mírným deštěm po celý den.,71,968
+95,2023-03-28 21:57:45.000000,Průběh výstavby odpovídá plánu a časovému harmonogramu.,IN_PROGRESS,Montáž nových klimatizačních jednotek v kancelářské budově,Polojasno s mírným větrem a teplotou kolem 15 stupňů Celsia.,53,968
+96,2023-03-28 21:57:45.000000,Dodavatel nedodává stavební materiály včas.,IN_PROGRESS,Výstavba nového skladu pro potravinářskou firmu,Silná oblačnost a zataženo s mírným sněžením.,54,968
+97,2023-03-28 21:57:45.000000,Práce probíhá podle plánu,BLOCKED,Výstavba nového skladu pro potravinářskou firmu,Slabá oblačnost a teplota kolem 25 stupňů Celsia s mírným větrem.,69,987
+98,2023-03-28 21:57:45.000000,Výstavba nového bytového domu postupuje rychle a bez komplikací.,IN_PROGRESS,Výstavba nového parku s pěší zónou v centru města,Mrholení a oblačno s minimálními slunečními úseky.,53,968
+99,2023-03-28 21:57:45.000000,Výstavba nového bytového domu postupuje rychle a bez komplikací.,BLOCKED,Zhotovení projektové dokumentace pro modernizaci silnice,Silné bouřky s deštěm a větrem v průběhu odpoledne a večera.,54,992
+100,2023-03-28 21:57:45.000000,Stavební práce se zpožděním kvůli nedostatku pracovníků.,BLOCKED,Vybudování nového cyklostezky v blízkosti řeky.,Chladné počasí s místy silného sněžení a větrem.,54,991
+101,2023-03-28 21:57:45.000000,Chybně naplánované pracovní úkoly vedou k opakovaným zpožděním.,BLOCKED,Výstavba nového parku s pěší zónou v centru města,Slunečno s polojasným počasím a mírným větrem.,76,990
+102,2023-03-28 21:57:45.000000,Nesprávné řešení technických problémů vede k prodloužení termínu dokončení stavby.,IN_PROGRESS,Rekonstrukce historického nádraží na muzeum,Horké počasí s minimální oblačností a teplotou přes 35 stupňů Celsia.,73,968
+103,2023-03-28 21:57:45.000000,Práce probíhá podle plánu,IN_PROGRESS,Výkopové práce,Průtrž mračen s bouřkou a silným deštěm a větrem po celý den.,53,987
+104,2023-03-28 21:57:45.000000,Nesprávné řešení technických problémů vede k prodloužení termínu dokončení stavby.,IN_PROGRESS,Výkopové práce,Mlhavo a chladno s mírným deštěm v dopoledních hodinách.,54,987
+105,2023-03-28 21:57:45.000000,Neefektivní využití pracovních sil vede ke zpoždění v harmonogramu práce.,IN_PROGRESS,Výkopové práce,Polojasno s mírným větrem a teplotou kolem 18 stupňů Celsia.,76,968
+106,2023-03-28 21:57:45.000000,Neefektivní využití pracovních sil vede ke zpoždění v harmonogramu práce.,IN_PROGRESS,Elektroinstalace,Silná oblačnost a zataženo s mírným sněžením a větrem.,73,968
+107,2023-03-28 21:57:45.000000,Špatná koordinace práce mezi jednotlivými dodavateli na stavbě.,IN_PROGRESS,Elektroinstalace,Silná oblačnost a zataženo s mírným sněžením a větrem.,73,990
+108,2023-03-28 21:57:45.000000,Nezajištění dodávky všech potřebných materiálů pro dokončení stavebních prací.,IN_PROGRESS,Elektroinstalace,Silná oblačnost a zataženo s mírným sněžením a větrem.,53,991
