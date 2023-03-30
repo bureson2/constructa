@@ -13,13 +13,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userDao;
-//    private final AuthenticationFacade authenticationFacade;
-
-    @Override
-    public User create(User createdUser) {
-
-        return userDao.save(createdUser);
-    }
 
     @Override
     public Optional<User> getUserById(Long userId) {
@@ -35,30 +28,6 @@ public class UserServiceImpl implements UserService {
     public void delete(Long userId) {
         userDao.deleteById(userId);
     }
-
-
-    // todo delete
-    @Override
-    public User updateRole(Long id, String role) {
-        return null;
-    }
-
-//    @Override
-//    public User updateRole(Long userId, String role) {
-//        Optional<User> user = getUserById(userId);
-//        if (user.isPresent()) {
-//            if (user.get().getRoles() == null) {
-//                List<Role> newRoles = new ArrayList<>();
-//                newRoles.add(Role.valueOf(role));
-//                user.get().setRoles(newRoles);
-//            } else {
-//                user.get().getRoles().add(Role.valueOf(role));
-//            }
-//            userDao.save(user.get());
-//            return user.get();
-//        }
-//        return null;
-//    }
 
     @Override
     public User update(User user) {

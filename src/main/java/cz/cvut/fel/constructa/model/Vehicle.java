@@ -48,6 +48,4 @@ public class Vehicle {
 
     @Enumerated(EnumType.STRING)
     private VehicleType type;
-
-
 }

@@ -1,20 +1,26 @@
 package cz.cvut.fel.constructa.controller.interfaces;
 
 import cz.cvut.fel.constructa.dto.response.UserDTO;
+import cz.cvut.fel.constructa.dto.response.UserInputDTO;
 import cz.cvut.fel.constructa.model.role.User;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
 public interface UserController {
-    ResponseEntity<List<UserDTO>> getUsers();
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<UserDTO>> getUsers();
 
-    ResponseEntity<UserDTO> getUser(Long userId);
+    @GetMapping(value="/search", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<UserInputDTO>> getInputUsers();
 
-    public ResponseEntity<UserDTO> createUser(User newUser);
+    @GetMapping(value = "/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserDTO> getUser(@PathVariable Long userId);
 
-//    TODO update
-    ResponseEntity<UserDTO> updateRole(String role, Long userId);
-
-    ResponseEntity<Void> deleteUser(Long id);
+    @DeleteMapping(value = "/{userId}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long userId);
 }

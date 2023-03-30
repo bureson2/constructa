@@ -16,5 +16,4 @@ public class ProjectDTO {
     private LocationDTO projectAddress;
     private Date startedAt;
     private Date deadline;
-//    private UserInputDTO projectManager;
 }

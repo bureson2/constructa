@@ -36,6 +36,7 @@ public class UserControllerImpl implements UserController {
         );
     }
 
+    @Override
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
     @GetMapping(value="/search", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -58,28 +59,6 @@ public class UserControllerImpl implements UserController {
         return usertToReturn.map(user -> ResponseEntity.ok().body(
                 userMapper.convertToDto(user)
         )).orElseGet(() -> ResponseEntity.notFound().build());
-    }
-    @Override
-    @ResponseStatus(code = HttpStatus.CREATED)
-    @ResponseBody
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDTO> createUser(@RequestBody User newUser) {
-        User createdUser = userService.create(newUser);
-        return ResponseEntity.ok().body(
-                userMapper.convertToDto(createdUser)
-        );
-    }
-
-    // TODO correct data getting
-    @Override
-    @ResponseStatus(code = HttpStatus.OK)
-    @ResponseBody
-    @PutMapping(value = "/{userId}")
-    public ResponseEntity<UserDTO> updateRole(@RequestBody String role, @PathVariable Long userId) {
-        User updatedUser = userService.updateRole(userId, role);
-        return ResponseEntity.ok().body(
-                userMapper.convertToDto(updatedUser)
-        );
     }
     @Override
     @ResponseStatus(code = HttpStatus.NO_CONTENT)

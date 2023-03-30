@@ -10,5 +10,6 @@ public class CompanyDTO {
     private String name;
     private String din;
     private String cin;
+    private String phone;
     private LocationDTO companyAddress;
 }

@@ -15,4 +15,9 @@ public class ProjectRequest {
     private Long userId;
     private Date startedAt;
     private Date deadline;
+    private String country;
+    private String city;
+    private String street;
+    private String descriptiveNumber;
+    private String postCode;
 }

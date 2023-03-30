@@ -4,7 +4,10 @@ import cz.cvut.fel.constructa.model.loan.Warehouse;
 import cz.cvut.fel.constructa.model.report.WorkReport;
 import cz.cvut.fel.constructa.model.role.User;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +15,9 @@ import java.util.List;
 @Entity
 @Table(name = "locations")
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

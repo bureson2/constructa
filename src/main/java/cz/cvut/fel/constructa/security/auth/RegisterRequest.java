@@ -26,4 +26,9 @@ public class RegisterRequest {
     private int monthSalary;
     private String phone;
     private Role roles;
+    private String country;
+    private String city;
+    private String street;
+    private String descriptiveNumber;
+    private String postCode;
 }

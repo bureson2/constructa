@@ -10,5 +10,10 @@ public class CompanyRequest {
     private String name;
     private String din;
     private String cin;
-    private LocationDTO companyAddress;
+    private String phone;
+    private String country;
+    private String city;
+    private String street;
+    private String descriptiveNumber;
+    private String postCode;
 }

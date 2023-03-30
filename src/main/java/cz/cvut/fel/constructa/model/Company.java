@@ -28,6 +28,9 @@ public class Company {
     @Column(name = "cin")
     private String cin;
 
+    @Column(name = "phone")
+    private String phone;
+
     @OneToOne
     @JoinColumn(name = "location_id", referencedColumnName = "location_id")
     private Location companyAddress;

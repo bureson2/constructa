@@ -56,10 +56,7 @@ public class ConstructionReportImpl implements ConstructionReportService {
 
     @Override
     public List<ConstructionReportDTO> getConstructionReportsByProjectId(Long projectId) {
-//        List<ConstructionReport> constructionReports = constructionReportDao.findAll();
-        System.out.println(projectId);
         List<ConstructionReport> constructionReports = constructionReportDao.findAllByProjectId(projectId);
-        System.out.println(constructionReports.size());
         return constructionReports.stream()
                 .map(constructionReportMapper::convertToDto)
                 .collect(Collectors.toList());

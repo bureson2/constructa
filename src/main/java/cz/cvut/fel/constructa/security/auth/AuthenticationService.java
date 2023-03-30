@@ -1,6 +1,8 @@
 package cz.cvut.fel.constructa.security.auth;
 
+import cz.cvut.fel.constructa.model.Location;
 import cz.cvut.fel.constructa.model.role.User;
+import cz.cvut.fel.constructa.repository.LocationRepository;
 import cz.cvut.fel.constructa.repository.UserRepository;
 import cz.cvut.fel.constructa.security.JwtService;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,7 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class AuthenticationService {
     private final UserRepository userDao;
+    private final LocationRepository locationDao;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authManager;
@@ -39,7 +42,17 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse register(RegisterRequest request){
-        var user = User.builder()
+        Location address = Location.builder()
+                .active(false)
+                .city(request.getCity())
+                .street(request.getStreet())
+                .country(request.getCountry())
+                .descriptiveNumber(request.getDescriptiveNumber())
+                .postCode(request.getPostCode())
+                .build();
+        locationDao.save(address);
+
+        User user = User.builder()
                 .username(generateUsername(request.getFirstname(), request.getLastname()))
                 .dateOfAcceptance(new Date())
                 .birthId(request.getBirthId())
@@ -55,6 +68,7 @@ public class AuthenticationService {
                 .phone(request.getPhone())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(request.getRoles())
+                .userAddress(address)
                 .build();
         userDao.save(user);
         var jwtToken = jwtService.generateToken(user);

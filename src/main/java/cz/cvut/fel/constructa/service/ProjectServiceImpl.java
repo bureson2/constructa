@@ -3,8 +3,10 @@ package cz.cvut.fel.constructa.service;
 import cz.cvut.fel.constructa.dto.request.ProjectRequest;
 import cz.cvut.fel.constructa.enums.ProjectState;
 import cz.cvut.fel.constructa.mapper.ProjectMapper;
+import cz.cvut.fel.constructa.model.Location;
 import cz.cvut.fel.constructa.model.Project;
 import cz.cvut.fel.constructa.model.role.User;
+import cz.cvut.fel.constructa.repository.LocationRepository;
 import cz.cvut.fel.constructa.repository.ProjectRepository;
 import cz.cvut.fel.constructa.repository.UserRepository;
 import cz.cvut.fel.constructa.service.interfaces.ProjectService;
@@ -20,6 +22,7 @@ import java.util.Optional;
 public class ProjectServiceImpl implements ProjectService {
     private final ProjectRepository projectDao;
     private final UserRepository userDao;
+    private final LocationRepository locationDao;
     private final ProjectMapper projectMapper;
     @Override
     public Project create(ProjectRequest request) throws ParseException {
@@ -27,6 +30,18 @@ public class ProjectServiceImpl implements ProjectService {
         Optional<User> user = userDao.findById(request.getUserId());
         user.ifPresent(createdProject::setProjectManager);
         createdProject.setState(ProjectState.IN_PREPARATION);
+
+        Location address = Location.builder()
+                .active(false)
+                .city(request.getCity())
+                .street(request.getStreet())
+                .country(request.getCountry())
+                .descriptiveNumber(request.getDescriptiveNumber())
+                .postCode(request.getPostCode())
+                .build();
+        locationDao.save(address);
+        createdProject.setProjectAddress(address);
+
         return projectDao.save(createdProject);
     }
 

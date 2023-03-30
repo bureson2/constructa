@@ -23,10 +23,5 @@ public class UserDTO {
     private String birthId;
     private int hourRate;
     private int monthSalary;
-    private LocationDTO userAddress;
-
-
-
-
-
+    private LocationDTO address;
 }
