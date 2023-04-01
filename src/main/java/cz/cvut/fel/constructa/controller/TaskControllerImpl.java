@@ -3,8 +3,6 @@ package cz.cvut.fel.constructa.controller;
 import cz.cvut.fel.constructa.controller.interfaces.TaskController;
 import cz.cvut.fel.constructa.dto.request.TaskRequest;
 import cz.cvut.fel.constructa.dto.response.TaskDTO;
-import cz.cvut.fel.constructa.mapper.TaskMapper;
-import cz.cvut.fel.constructa.model.Task;
 import cz.cvut.fel.constructa.service.interfaces.TaskService;
 import cz.cvut.fel.constructa.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
@@ -15,10 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-// TODO response body everywhere
 
 @CrossOrigin
 @RestController
@@ -26,20 +20,16 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class TaskControllerImpl implements TaskController {
     private final TaskService taskService;
-//    TODO concrete security for owners
+    //    TODO concrete security for owners
     private final UserService userService;
-    private final TaskMapper taskMapper;
 
     @Override
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TaskDTO>> getTasks() {
-        List<Task> tasks = taskService.getTasks();
         return ResponseEntity.ok().body(
-                tasks.stream()
-                        .map(taskMapper::convertToDto)
-                        .collect(Collectors.toList())
+                taskService.getTasks()
         );
     }
 
@@ -48,10 +38,11 @@ public class TaskControllerImpl implements TaskController {
     @ResponseBody
     @GetMapping(value = "/{taskId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TaskDTO> getTask(@PathVariable Long taskId) {
-        Optional<Task> taskToReturn = taskService.getTaskById(taskId);
-        return taskToReturn.map(task -> ResponseEntity.ok().body(
-                taskMapper.convertToDto(task)
-        )).orElseGet(() -> ResponseEntity.notFound().build());
+        TaskDTO task = taskService.getTaskById(taskId);
+        if (task != null) {
+            return ResponseEntity.ok().body(task);
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @Override
@@ -59,27 +50,25 @@ public class TaskControllerImpl implements TaskController {
     @ResponseBody
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TaskDTO> createTask(@RequestBody TaskRequest request) throws ParseException {
-        Task createdTask = taskService.create(request);
         return ResponseEntity.ok().body(
-                taskMapper.convertToDto(createdTask)
+                taskService.create(request)
         );
     }
 
-// TODO TaskRequest better than updatedTask
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TaskDTO> editTask(@RequestBody Task updatedTask){
-        Task taskToReturn = taskService.update(updatedTask);
+    public ResponseEntity<TaskDTO> editTask(@RequestBody TaskRequest request) throws ParseException {
         return ResponseEntity.ok().body(
-                taskMapper.convertToDto(taskToReturn));
+                taskService.update(request)
+        );
     }
 
     @Override
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @DeleteMapping(value = "/{taskId}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long taskId) {
-        taskService.   delete(taskId);
+        taskService.delete(taskId);
         return ResponseEntity.noContent().build();
     }
 }

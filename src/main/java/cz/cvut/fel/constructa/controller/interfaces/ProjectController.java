@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 import java.util.List;
 
+@RequestMapping("/api/v1/projects")
 public interface ProjectController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<List<ProjectDTO>> getProjects();
