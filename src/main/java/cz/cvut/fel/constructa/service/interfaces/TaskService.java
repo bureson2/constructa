@@ -2,7 +2,6 @@ package cz.cvut.fel.constructa.service.interfaces;
 
 import cz.cvut.fel.constructa.dto.request.TaskRequest;
 import cz.cvut.fel.constructa.dto.response.TaskDTO;
-import cz.cvut.fel.constructa.model.Task;
 
 import java.text.ParseException;
 import java.util.List;

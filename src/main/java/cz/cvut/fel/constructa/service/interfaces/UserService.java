@@ -1,14 +1,17 @@
 package cz.cvut.fel.constructa.service.interfaces;
 
-import cz.cvut.fel.constructa.model.role.User;
+import cz.cvut.fel.constructa.dto.request.UserRequest;
+import cz.cvut.fel.constructa.dto.response.UserDTO;
+import cz.cvut.fel.constructa.dto.response.UserInputDTO;
 
+import java.text.ParseException;
 import java.util.List;
-import java.util.Optional;
 
 public interface UserService {
-    Optional<User> getUserById(Long id);
-    List<User> getUsers();
+    UserDTO getUserById(Long id);
+    List<UserDTO> getUsers();
+    List<UserInputDTO> getInputUsers();
     void delete(Long id);
-    User update(User user);
+    UserDTO update(UserRequest request) throws ParseException;
 
 }

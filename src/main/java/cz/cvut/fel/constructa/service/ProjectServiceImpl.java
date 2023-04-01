@@ -69,7 +69,6 @@ public class ProjectServiceImpl implements ProjectService {
         Optional<Project> project = projectDao.findById(request.getId());
 
         Location address = null;
-        User projectManager = null;
 
         if (project.isPresent()) {
             address = project.get().getProjectAddress();

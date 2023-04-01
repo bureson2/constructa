@@ -2,7 +2,6 @@ package cz.cvut.fel.constructa.service.interfaces;
 
 import cz.cvut.fel.constructa.dto.request.ProjectRequest;
 import cz.cvut.fel.constructa.dto.response.ProjectDTO;
-import cz.cvut.fel.constructa.model.Project;
 
 import java.text.ParseException;
 import java.util.List;

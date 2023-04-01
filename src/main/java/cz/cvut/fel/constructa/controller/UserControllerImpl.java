@@ -1,19 +1,18 @@
 package cz.cvut.fel.constructa.controller;
 
 import cz.cvut.fel.constructa.controller.interfaces.UserController;
+import cz.cvut.fel.constructa.dto.request.UserRequest;
 import cz.cvut.fel.constructa.dto.response.UserDTO;
 import cz.cvut.fel.constructa.dto.response.UserInputDTO;
-import cz.cvut.fel.constructa.mapper.UserMapper;
-import cz.cvut.fel.constructa.model.role.User;
 import cz.cvut.fel.constructa.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.text.ParseException;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @CrossOrigin
 @RestController
@@ -21,31 +20,24 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserControllerImpl implements UserController {
     private final UserService userService;
-    private final UserMapper userMapper;
 
     @Override
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<UserDTO>> getUsers() {
-        List<User> users = userService.getUsers();
         return ResponseEntity.ok().body(
-                users.stream()
-                        .map(userMapper::convertToDto)
-                        .collect(Collectors.toList())
+                userService.getUsers()
         );
     }
 
     @Override
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
-    @GetMapping(value="/search", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<UserInputDTO>> getInputUsers() {
-        List<User> users = userService.getUsers();
         return ResponseEntity.ok().body(
-                users.stream()
-                        .map(userMapper::convertToInputDto)
-                        .collect(Collectors.toList())
+                userService.getInputUsers()
         );
     }
 
@@ -55,11 +47,22 @@ public class UserControllerImpl implements UserController {
     @ResponseBody
     @GetMapping(value = "/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDTO> getUser(@PathVariable Long userId) {
-        Optional<User> usertToReturn = userService.getUserById(userId);
-        return usertToReturn.map(user -> ResponseEntity.ok().body(
-                userMapper.convertToDto(user)
-        )).orElseGet(() -> ResponseEntity.notFound().build());
+        UserDTO user = userService.getUserById(userId);
+        if (user != null) {
+            return ResponseEntity.ok().body(user);
+        }
+        return ResponseEntity.notFound().build();
     }
+
+    @Override
+    @ResponseStatus(code = HttpStatus.OK)
+    @ResponseBody
+    @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserDTO> updateUser(@RequestBody UserRequest request) throws ParseException {
+        return ResponseEntity.ok().body(
+                userService.update(request));
+    }
+
     @Override
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @DeleteMapping(value = "/{userId}")
