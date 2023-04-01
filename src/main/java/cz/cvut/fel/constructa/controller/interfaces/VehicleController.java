@@ -1,26 +1,31 @@
 package cz.cvut.fel.constructa.controller.interfaces;
 
+import cz.cvut.fel.constructa.dto.request.VehicleRequest;
 import cz.cvut.fel.constructa.dto.response.VehicleDTO;
 import cz.cvut.fel.constructa.dto.response.VehicleInputDTO;
-import cz.cvut.fel.constructa.model.Vehicle;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 
 public interface VehicleController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<List<VehicleDTO>> getVehicles();
-    @GetMapping(value="/search", produces = MediaType.APPLICATION_JSON_VALUE)
+
+    @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<List<VehicleInputDTO>> getInputVehicles();
+
     @GetMapping(value = "/{vehicleId}", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<VehicleDTO> getVehicle(@PathVariable Long vehicleId);
+
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<VehicleDTO> createVehicle(@RequestBody Vehicle newVehicle);
+    ResponseEntity<VehicleDTO> createVehicle(@RequestBody VehicleRequest request) throws ParseException;
+
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<VehicleDTO> updateVehicle(@RequestBody Vehicle vehicle);
+    ResponseEntity<VehicleDTO> updateVehicle(@RequestBody VehicleRequest request) throws ParseException;
+
     @DeleteMapping(value = "/{vehicleId}")
-    ResponseEntity<Void> deleteVehicle(@PathVariable Long id);
+    ResponseEntity<Void> deleteVehicle(@PathVariable Long vehicleId);
 }

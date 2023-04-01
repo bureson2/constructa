@@ -1,10 +1,9 @@
 package cz.cvut.fel.constructa.controller;
 
 import cz.cvut.fel.constructa.controller.interfaces.VehicleController;
+import cz.cvut.fel.constructa.dto.request.VehicleRequest;
 import cz.cvut.fel.constructa.dto.response.VehicleDTO;
 import cz.cvut.fel.constructa.dto.response.VehicleInputDTO;
-import cz.cvut.fel.constructa.mapper.VehicleMapper;
-import cz.cvut.fel.constructa.model.Vehicle;
 import cz.cvut.fel.constructa.service.interfaces.VehicleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,9 +11,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @CrossOrigin
 @RestController
@@ -22,33 +20,23 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class VehicleControllerImpl implements VehicleController {
     private final VehicleService vehicleService;
-    private final VehicleMapper vehicleMapper;
-
 
     @Override
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<VehicleDTO>> getVehicles() {
-        List<Vehicle> vehicles = vehicleService.getVehicles();
         return ResponseEntity.ok().body(
-                vehicles.stream()
-                        .map(vehicleMapper::convertToDto)
-                        .collect(Collectors.toList())
+                vehicleService.getVehicles()
         );
     }
 
-    // TODO s filtrací
-
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
-    @GetMapping(value="/search", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<VehicleInputDTO>> getInputVehicles() {
-        List<Vehicle> vehicles = vehicleService.getVehicles();
         return ResponseEntity.ok().body(
-                vehicles.stream()
-                        .map(vehicleMapper::convertToInputDto)
-                        .collect(Collectors.toList())
+                vehicleService.getInputVehicles()
         );
     }
 
@@ -57,20 +45,20 @@ public class VehicleControllerImpl implements VehicleController {
     @ResponseBody
     @GetMapping(value = "/{vehicleId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<VehicleDTO> getVehicle(@PathVariable Long vehicleId) {
-        Optional<Vehicle> vehicleToReturn = vehicleService.getVehicleById(vehicleId);
-        return vehicleToReturn.map(vehicle -> ResponseEntity.ok().body(
-                vehicleMapper.convertToDto(vehicle)
-        )).orElseGet(() -> ResponseEntity.notFound().build());
+        VehicleDTO vehicle = vehicleService.getVehicleById(vehicleId);
+        if (vehicle != null) {
+            return ResponseEntity.ok().body(vehicle);
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @Override
     @ResponseStatus(code = HttpStatus.CREATED)
     @ResponseBody
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<VehicleDTO> createVehicle(@RequestBody Vehicle newVehicle) {
-        Vehicle createdVehicle = vehicleService.create(newVehicle);
+    public ResponseEntity<VehicleDTO> createVehicle(@RequestBody VehicleRequest request) throws ParseException {
         return ResponseEntity.ok().body(
-                vehicleMapper.convertToDto(createdVehicle)
+                vehicleService.create(request)
         );
     }
 
@@ -78,10 +66,10 @@ public class VehicleControllerImpl implements VehicleController {
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<VehicleDTO> updateVehicle(@RequestBody Vehicle vehicle) {
-        Vehicle vehicleToUpdate = vehicleService.update(vehicle);
+    public ResponseEntity<VehicleDTO> updateVehicle(@RequestBody VehicleRequest request) throws ParseException {
         return ResponseEntity.ok().body(
-                vehicleMapper.convertToDto(vehicleToUpdate));
+                vehicleService.update(request)
+        );
     }
 
     @Override

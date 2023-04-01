@@ -18,29 +18,29 @@ public class Vehicle {
     @Column(name = "vehicle_id", nullable = false)
     private Long id;
 
-    @Column(name="factory")
+    @Column(name="factory", nullable = false)
     private String factory;
 
     //    model
-    @Column(name="name")
+    @Column(name="name", nullable = false)
     private String name;
 
     @Column(name="qr_code")
     private String qrCode;
-    @Column(name="vin_code")
+    @Column(name="vin_code", nullable = false)
     private String vinCode;
 
-    @Column(name="registration_number")
+    @Column(name="registration_number", nullable = false)
     private String registrationNumber;
 
-    @Column(name = "condition_motorcycle_watch")
+    @Column(name = "condition_motorcycle_watch", nullable = false)
     private Double conditionMotorcycleWatch;
 
-    @Column(name = "mileage")
+    @Column(name = "mileage", nullable = false)
     private Double mileage;
-    @Column(name = "bought_at")
+    @Column(name = "bought_at", nullable = false)
     private Date boughtAt;
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false)
     private Date createdAt;
 
     @OneToMany(mappedBy = "vehicle")
