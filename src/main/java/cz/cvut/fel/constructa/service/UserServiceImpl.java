@@ -10,6 +10,7 @@ import cz.cvut.fel.constructa.repository.LocationRepository;
 import cz.cvut.fel.constructa.repository.UserRepository;
 import cz.cvut.fel.constructa.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -24,7 +25,7 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
     private final UserRepository userDao;
     private final LocationRepository locationDao;
-
+    private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
 
     @Override
@@ -42,7 +43,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserInputDTO> getInputUsers(){
+    public List<UserInputDTO> getInputUsers() {
         List<User> users = userDao.findAll();
         return users.stream()
                 .map(userMapper::convertToInputDto)
@@ -87,7 +88,7 @@ public class UserServiceImpl implements UserService {
         updatedUser.setUserAddress(address);
         updatedUser.setUsername(username);
         updatedUser.setDateOfAcceptance(acceptance);
-
+        updatedUser.setPassword(passwordEncoder.encode(request.getPassword()));
         updatedUser = userDao.save(updatedUser);
         return userMapper.convertToDto(updatedUser);
     }

@@ -28,6 +28,8 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests()
                 .requestMatchers("/api/v1/auth/**")
                 .permitAll()
+                .requestMatchers("/api/v1/permissions")
+                .permitAll()
                 .requestMatchers("/api/v1/users/**")
                 .hasAnyAuthority("ROLE_ADMIN", "ROLE_EMPLOYEE")
                 .requestMatchers("/api/v1/tasks/**")
