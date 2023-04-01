@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 @Builder
 public class CompanyRequest {
+    private Long id;
     private String name;
     private String din;
     private String cin;

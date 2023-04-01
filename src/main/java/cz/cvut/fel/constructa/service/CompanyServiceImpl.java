@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -53,7 +54,30 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Company update(Company updatedCompany) {
+    public Company update(CompanyRequest request) throws ParseException {
+        Optional<Company> company = companyDao.findById(request.getId());
+        Location address = null;
+        if(company.isPresent()){
+            address = company.get().getCompanyAddress();
+            if(!Objects.equals(address.getCity(), request.getCity())){
+                address.setCity(request.getCity());
+            }
+            if(!Objects.equals(address.getStreet(), request.getStreet())){
+                address.setStreet(request.getStreet());
+            }
+            if(!Objects.equals(address.getDescriptiveNumber(), request.getDescriptiveNumber())){
+                address.setDescriptiveNumber(request.getDescriptiveNumber());
+            }
+            if(!Objects.equals(address.getPostCode(), request.getPostCode())){
+                address.setPostCode(request.getPostCode());
+            }
+            if(!Objects.equals(address.getCountry(), request.getCountry())){
+                address.setCountry(request.getCountry());
+            }
+            locationDao.save(address);
+        }
+        Company updatedCompany = companyMapper.convertToEntity(request);
+        updatedCompany.setCompanyAddress(address);
         return companyDao.save(updatedCompany);
     }
 }

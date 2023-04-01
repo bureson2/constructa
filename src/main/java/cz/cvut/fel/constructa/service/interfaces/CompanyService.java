@@ -12,5 +12,5 @@ public interface CompanyService {
     Optional<Company> getCompanyById(Long id);
     List<Company> getCompanies();
     void delete(Long id);
-    Company update(Company updatedCompany);
+    Company update(CompanyRequest request) throws ParseException;
 }
