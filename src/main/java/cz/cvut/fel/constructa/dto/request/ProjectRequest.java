@@ -9,6 +9,7 @@ import java.util.Date;
 @Data
 @Builder
 public class ProjectRequest {
+    private Long id;
     private String name;
     private String buldingFacility;
     private ProjectState state;

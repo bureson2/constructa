@@ -11,17 +11,17 @@ import java.util.List;
 
 public interface CompanyController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<CompanyDTO>> getCompanies();
+    ResponseEntity<List<CompanyDTO>> getCompanies();
 
     @GetMapping(value = "/{companyId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CompanyDTO> getCompanys(@PathVariable Long companyId);
+    ResponseEntity<CompanyDTO> getCompanys(@PathVariable Long companyId);
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CompanyDTO> createCompany(@RequestBody CompanyRequest request) throws ParseException;
+    ResponseEntity<CompanyDTO> createCompany(@RequestBody CompanyRequest request) throws ParseException;
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CompanyDTO> editCompany(@RequestBody CompanyRequest request) throws ParseException;
+    ResponseEntity<CompanyDTO> editCompany(@RequestBody CompanyRequest request) throws ParseException;
 
     @DeleteMapping(value = "/{companyId}")
-    public ResponseEntity<Void> deleteCompany(@PathVariable Long companyId);
+    ResponseEntity<Void> deleteCompany(@PathVariable Long companyId);
 }

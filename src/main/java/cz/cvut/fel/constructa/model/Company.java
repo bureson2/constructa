@@ -19,20 +19,20 @@ public class Company {
     @Column(name = "company_id", nullable = false)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
-//    TODO special type
-    @Column(name = "din")
+
+    @Column(name = "din", nullable = false)
     private String din;
-    //    TODO special type
-    @Column(name = "cin")
+
+    @Column(name = "cin", nullable = false)
     private String cin;
 
-    @Column(name = "phone")
+    @Column(name = "phone", nullable = false)
     private String phone;
 
     @OneToOne
-    @JoinColumn(name = "location_id", referencedColumnName = "location_id")
+    @JoinColumn(name = "location_id", referencedColumnName = "location_id", nullable = false)
     private Location companyAddress;
 
     @OneToMany(mappedBy = "company")

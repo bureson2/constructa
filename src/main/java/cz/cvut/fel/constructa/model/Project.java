@@ -21,31 +21,28 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "project_id", nullable = false)
     private Long id;
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
-    @Column(name = "buildingFacility")
+    @Column(name = "buildingFacility", nullable = false)
     private String buldingFacility;
-    @Column(name = "started_at")
+    @Column(name = "started_at", nullable = false)
     private Date startedAt;
-    @Column(name = "deadline")
+    @Column(name = "deadline", nullable = false)
     private Date deadline;
 
     @Enumerated(EnumType.STRING)
     private ProjectState state;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User projectManager;
 
     @OneToMany(mappedBy = "project")
     private List<ExternalistInProject> externalWorkers = new ArrayList<>();
 
     @OneToOne
-    @JoinColumn(name = "location_id", referencedColumnName = "location_id")
+    @JoinColumn(name = "location_id", referencedColumnName = "location_id", nullable = false)
     private Location projectAddress;
-
-//    @OneToMany(mappedBy = "constructionDiaryProject")
-//    private List<ConstructionDiary> constructionDiaries = new ArrayList<>();
 
     @OneToMany(mappedBy = "project")
     private List<ConstructionReport> constructionReports = new ArrayList<>();

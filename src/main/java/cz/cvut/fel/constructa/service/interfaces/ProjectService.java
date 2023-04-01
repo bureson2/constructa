@@ -1,16 +1,16 @@
 package cz.cvut.fel.constructa.service.interfaces;
 
 import cz.cvut.fel.constructa.dto.request.ProjectRequest;
+import cz.cvut.fel.constructa.dto.response.ProjectDTO;
 import cz.cvut.fel.constructa.model.Project;
 
 import java.text.ParseException;
 import java.util.List;
-import java.util.Optional;
 
 public interface ProjectService {
-    Project create(ProjectRequest request) throws ParseException;
-    Optional<Project> getProjectById(Long id);
-    List<Project> getProjects();
+    ProjectDTO create(ProjectRequest request) throws ParseException;
+    ProjectDTO getProjectById(Long id);
+    List<ProjectDTO> getProjects();
     void delete(Long id);
-    Project update(Project updatedProject);
+    ProjectDTO update(ProjectRequest request) throws ParseException;
 }

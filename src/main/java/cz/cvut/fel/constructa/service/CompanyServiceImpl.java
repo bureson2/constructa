@@ -1,6 +1,7 @@
 package cz.cvut.fel.constructa.service;
 
 import cz.cvut.fel.constructa.dto.request.CompanyRequest;
+import cz.cvut.fel.constructa.dto.response.CompanyDTO;
 import cz.cvut.fel.constructa.mapper.CompanyMapper;
 import cz.cvut.fel.constructa.model.Company;
 import cz.cvut.fel.constructa.model.Location;
@@ -14,6 +15,7 @@ import java.text.ParseException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,7 +25,7 @@ public class CompanyServiceImpl implements CompanyService {
     private final CompanyMapper companyMapper;
 
     @Override
-    public Company create(CompanyRequest request) throws ParseException {
+    public CompanyDTO create(CompanyRequest request) throws ParseException {
         Location address = Location.builder()
                 .active(false)
                 .city(request.getCity())
@@ -35,17 +37,23 @@ public class CompanyServiceImpl implements CompanyService {
         locationDao.save(address);
         Company company = companyMapper.convertToEntity(request);
         company.setCompanyAddress(address);
-        return companyDao.save(company);
+        Company createdCompany = companyDao.save(company);
+        return companyMapper.convertToDto(createdCompany);
     }
 
     @Override
-    public Optional<Company> getCompanyById(Long id) {
-        return companyDao.findById(id);
+    public CompanyDTO getCompanyById(Long id) {
+        Optional<Company> company = companyDao.findById(id);
+        return company.map(companyMapper::convertToDto).orElse(null);
+
     }
 
     @Override
-    public List<Company> getCompanies() {
-        return companyDao.findAll();
+    public List<CompanyDTO> getCompanies() {
+        List<Company> companies = companyDao.findAll();
+        return companies.stream()
+                .map(companyMapper::convertToDto)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -54,30 +62,33 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Company update(CompanyRequest request) throws ParseException {
+    public CompanyDTO update(CompanyRequest request) throws ParseException {
         Optional<Company> company = companyDao.findById(request.getId());
         Location address = null;
-        if(company.isPresent()){
+        if (company.isPresent()) {
             address = company.get().getCompanyAddress();
-            if(!Objects.equals(address.getCity(), request.getCity())){
+            if (!Objects.equals(address.getCity(), request.getCity())) {
                 address.setCity(request.getCity());
             }
-            if(!Objects.equals(address.getStreet(), request.getStreet())){
+            if (!Objects.equals(address.getStreet(), request.getStreet())) {
                 address.setStreet(request.getStreet());
             }
-            if(!Objects.equals(address.getDescriptiveNumber(), request.getDescriptiveNumber())){
+            if (!Objects.equals(address.getDescriptiveNumber(), request.getDescriptiveNumber())) {
                 address.setDescriptiveNumber(request.getDescriptiveNumber());
             }
-            if(!Objects.equals(address.getPostCode(), request.getPostCode())){
+            if (!Objects.equals(address.getPostCode(), request.getPostCode())) {
                 address.setPostCode(request.getPostCode());
             }
-            if(!Objects.equals(address.getCountry(), request.getCountry())){
+            if (!Objects.equals(address.getCountry(), request.getCountry())) {
                 address.setCountry(request.getCountry());
             }
             locationDao.save(address);
         }
         Company updatedCompany = companyMapper.convertToEntity(request);
         updatedCompany.setCompanyAddress(address);
-        return companyDao.save(updatedCompany);
+
+        updatedCompany = companyDao.save(updatedCompany);
+
+        return companyMapper.convertToDto(updatedCompany);
     }
 }
