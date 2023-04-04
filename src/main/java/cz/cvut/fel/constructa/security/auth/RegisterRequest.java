@@ -25,7 +25,7 @@ public class RegisterRequest {
     private int hourRate;
     private int monthSalary;
     private String phone;
-    private Role roles;
+    private Role role;
     private String country;
     private String city;
     private String street;

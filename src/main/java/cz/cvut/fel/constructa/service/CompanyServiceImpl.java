@@ -27,7 +27,6 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public CompanyDTO create(CompanyRequest request) throws ParseException {
         Location address = Location.builder()
-                .active(false)
                 .city(request.getCity())
                 .street(request.getStreet())
                 .country(request.getCountry())

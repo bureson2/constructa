@@ -53,7 +53,6 @@ public class ProjectServiceImpl implements ProjectService {
     public ProjectDTO getProjectById(Long id) {
         Optional<Project> project = projectDao.findById(id);
         return project.map(projectMapper::convertToDto).orElse(null);
-
     }
 
     @Override

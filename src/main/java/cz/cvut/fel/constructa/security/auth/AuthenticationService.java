@@ -67,7 +67,7 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .phone(request.getPhone())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(request.getRoles())
+                .role(request.getRole())
                 .userAddress(address)
                 .build();
         userDao.save(user);
