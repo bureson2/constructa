@@ -10,10 +10,10 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000") // Povolení přístupu z React FE běžícího na portu 3000
-                .allowedMethods("GET", "POST", "PUT", "DELETE") // Povolení metod
-                .allowedHeaders("*") // Povolení všech hlaviček
-                .allowCredentials(true) // Povolení cookie přenosu
-                .maxAge(3600); // Caching
+                .allowedOrigins("http://localhost:3000", "exp://localhost:19000") // allow web and mobile localhost origin
+                .allowedMethods("GET", "POST", "PUT", "DELETE") // allow request methods
+                .allowedHeaders("*") // allow headers
+                .allowCredentials(true) // allow connection with cookie
+                .maxAge(36000); // caching
     }
 }
