@@ -3,6 +3,7 @@ package cz.cvut.fel.constructa.service;
 import cz.cvut.fel.constructa.dto.request.WorkReportRequest;
 import cz.cvut.fel.constructa.dto.response.WorkReportDTO;
 import cz.cvut.fel.constructa.mapper.WorkReportMapper;
+import cz.cvut.fel.constructa.model.Location;
 import cz.cvut.fel.constructa.model.report.WorkReport;
 import cz.cvut.fel.constructa.model.role.User;
 import cz.cvut.fel.constructa.repository.UserRepository;
@@ -23,17 +24,18 @@ public class WorkReportServiceImpl implements WorkReportService {
     private final WorkReportRepository workReportDao;
     private final WorkReportMapper workReportMapper;
     @Override
-    public WorkReport create(WorkReportRequest request) throws ParseException {
+    public WorkReportDTO create(WorkReportRequest request) throws ParseException {
         WorkReport createdWorkReport = workReportMapper.convertToEntity(request);
         Optional<User> user = userDao.findById(request.getUserId());
         user.ifPresent(createdWorkReport::setReportingEmployee);
-        return workReportDao.save(createdWorkReport);
+        createdWorkReport = workReportDao.save(createdWorkReport);
+        return workReportMapper.convertToDto(createdWorkReport);
     }
 
     @Override
-    public Optional<WorkReport> getWorkReportById(Long id) {
-        return workReportDao.findAll().stream().filter(it -> it.getId().equals(id)).findFirst();
-//        return workReportDao.findById(id);
+    public WorkReportDTO getWorkReportById(Long id) {
+        Optional<WorkReport> workReport = workReportDao.findAll().stream().filter(it -> it.getId().equals(id)).findFirst();
+        return workReport.map(workReportMapper::convertToDto).orElse(null);
     }
 
     @Override
@@ -58,8 +60,20 @@ public class WorkReportServiceImpl implements WorkReportService {
     }
 
     @Override
-    public WorkReport update(WorkReport updatedWorkReport) {
-//        TODO
-        return null;
+    public WorkReportDTO update(WorkReportRequest request) throws ParseException {
+        Optional<WorkReport> report = workReportDao.findById(request.getId());
+        User employee = null;
+        Location location = null;
+
+        if (report.isPresent()) {
+            employee = report.get().getReportingEmployee();
+            location = report.get().getLocation();
+        }
+        WorkReport updatedReport = workReportMapper.convertToEntity(request);
+        updatedReport.setReportingEmployee(employee);
+        updatedReport.setLocation(location);
+        updatedReport = workReportDao.save(updatedReport);
+
+        return workReportMapper.convertToDto(updatedReport);
     }
 }

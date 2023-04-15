@@ -8,7 +8,7 @@ import java.util.Date;
 @Data
 @Builder
 public class VehicleReportRequest {
-//    private Long id;
+    private Long id;
     private Double originalConditionMotorcycleWatch;
     private Double afterworkConditionMotorcycleWatch;
     private int cargoMass;

@@ -32,7 +32,6 @@ public class SecurityConfiguration {
                 .requestMatchers("/api/v1/users/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER", "ROLE_EMPLOYEE")
                 .requestMatchers("/api/v1/tasks/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_EMPLOYEE")
                 .requestMatchers("/api/v1/vehicles/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_EMPLOYEE")
-//                .requestMatchers("/api/v1/vehicles").permitAll()
                 .requestMatchers("/api/v1/companies/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_EMPLOYEE")
                 .requestMatchers("/api/v1/projects/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_EMPLOYEE")
                 .requestMatchers("/api/v1/work-reports/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_EMPLOYEE")

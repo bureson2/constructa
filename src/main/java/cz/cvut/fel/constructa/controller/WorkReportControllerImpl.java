@@ -4,7 +4,6 @@ import cz.cvut.fel.constructa.controller.interfaces.WorkReportController;
 import cz.cvut.fel.constructa.dto.request.WorkReportRequest;
 import cz.cvut.fel.constructa.dto.response.WorkReportDTO;
 import cz.cvut.fel.constructa.mapper.WorkReportMapper;
-import cz.cvut.fel.constructa.model.report.WorkReport;
 import cz.cvut.fel.constructa.service.interfaces.WorkReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin
 @RestController
@@ -46,19 +44,21 @@ public class WorkReportControllerImpl implements WorkReportController {
     @ResponseBody
     @GetMapping(value = "/{workReportId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<WorkReportDTO> getWorkReport(@PathVariable Long workReportId) {
-        Optional<WorkReport> taskToReturn = workReportService.getWorkReportById(workReportId);
-        return taskToReturn.map(report -> ResponseEntity.ok().body(
-                workReportMapper.convertToDto(report)
-        )).orElseGet(() -> ResponseEntity.notFound().build());
+        WorkReportDTO report = workReportService.getWorkReportById(workReportId);
+        if (report != null) {
+            return ResponseEntity.ok().body(
+                    report
+            );
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @ResponseStatus(code = HttpStatus.CREATED)
     @ResponseBody
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<WorkReportDTO> createWorkReport(@RequestBody WorkReportRequest request) throws ParseException {
-        WorkReport report = workReportService.create(request);
         return ResponseEntity.ok().body(
-                workReportMapper.convertToDto(report)
+                workReportService.create(request)
         );
     }
 
@@ -66,12 +66,9 @@ public class WorkReportControllerImpl implements WorkReportController {
     @ResponseBody
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<WorkReportDTO> updateeWorkReport(@RequestBody WorkReportRequest request) throws ParseException {
-//        WorkReport report = workReportService.update(request);
-//        return ResponseEntity.ok().body(
-//                workReportMapper.convertToDto(report)
-//        );
-//        todo
-        return null;
+        return ResponseEntity.ok().body(
+                workReportService.update(request)
+        );
     }
 
     @ResponseStatus(code = HttpStatus.NO_CONTENT)

@@ -2,6 +2,7 @@ package cz.cvut.fel.constructa.controller;
 
 import cz.cvut.fel.constructa.controller.interfaces.VehicleReportsController;
 import cz.cvut.fel.constructa.dto.request.VehicleReportRequest;
+import cz.cvut.fel.constructa.dto.response.CompanyDTO;
 import cz.cvut.fel.constructa.dto.response.VehicleReportDTO;
 import cz.cvut.fel.constructa.mapper.VehicleReportMapper;
 import cz.cvut.fel.constructa.model.report.VehicleReport;
@@ -23,18 +24,14 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class VehicleReportControllerImpl implements VehicleReportsController {
     private final VehicleReportService vehicleReportService;
-    private final VehicleReportMapper vehicleReportMapper;
 
     @Override
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
     @GetMapping(value = "/reports", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<VehicleReportDTO>> getVehicleReports() {
-        List<VehicleReport> vehicleReports = vehicleReportService.getVehicleReports();
         return ResponseEntity.ok().body(
-                vehicleReports.stream()
-                        .map(vehicleReportMapper::convertToDto)
-                        .collect(Collectors.toList())
+                vehicleReportService.getVehicleReports()
         );
     }
 
@@ -43,11 +40,8 @@ public class VehicleReportControllerImpl implements VehicleReportsController {
     @ResponseBody
     @GetMapping(value = "/{carId}/reports", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<VehicleReportDTO>> getVehicleReportsByVehicle(@PathVariable Long carId) {
-        List<VehicleReport> vehicleReports = vehicleReportService.getVehicleReportsByVehicleId(carId);
         return ResponseEntity.ok().body(
-                vehicleReports.stream()
-                        .map(vehicleReportMapper::convertToDto)
-                        .collect(Collectors.toList())
+                vehicleReportService.getVehicleReportsByVehicleId(carId)
         );
     }
 
@@ -56,10 +50,13 @@ public class VehicleReportControllerImpl implements VehicleReportsController {
     @ResponseBody
     @GetMapping(value = "/reports/{vehicleReportId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<VehicleReportDTO> getVehicleReport(@PathVariable Long vehicleReportId) {
-        Optional<VehicleReport> vehicleReportToReturn = vehicleReportService.getVehicleReportById(vehicleReportId);
-        return vehicleReportToReturn.map(vehicleReport -> ResponseEntity.ok().body(
-                vehicleReportMapper.convertToDto(vehicleReport)
-        )).orElseGet(() -> ResponseEntity.notFound().build());
+        VehicleReportDTO report = vehicleReportService.getVehicleReportById(vehicleReportId);
+        if (report != null) {
+            return ResponseEntity.ok().body(
+                    report
+            );
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @Override
@@ -67,9 +64,8 @@ public class VehicleReportControllerImpl implements VehicleReportsController {
     @ResponseBody
     @PostMapping(value="/reports", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<VehicleReportDTO> createVehicleReport(@RequestBody VehicleReportRequest request) throws ParseException {
-        VehicleReport createdVehicleReport = vehicleReportService.create(request);
         return ResponseEntity.ok().body(
-                vehicleReportMapper.convertToDto(createdVehicleReport)
+                vehicleReportService.create(request)
         );
     }
 
@@ -77,10 +73,10 @@ public class VehicleReportControllerImpl implements VehicleReportsController {
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
     @PutMapping(value="/reports", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<VehicleReportDTO> updateVehicleReport(@RequestBody VehicleReport vehicleReport) {
-        VehicleReport vehicleReportToUpdate = vehicleReportService.update(vehicleReport);
+    public ResponseEntity<VehicleReportDTO> updateVehicleReport(@RequestBody VehicleReportRequest request) throws ParseException {
         return ResponseEntity.ok().body(
-                vehicleReportMapper.convertToDto(vehicleReportToUpdate));
+                vehicleReportService.update(request)
+        );
     }
 
     @Override

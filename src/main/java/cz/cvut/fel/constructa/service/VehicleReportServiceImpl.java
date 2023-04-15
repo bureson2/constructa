@@ -1,6 +1,7 @@
 package cz.cvut.fel.constructa.service;
 
 import cz.cvut.fel.constructa.dto.request.VehicleReportRequest;
+import cz.cvut.fel.constructa.dto.response.VehicleReportDTO;
 import cz.cvut.fel.constructa.mapper.VehicleReportMapper;
 import cz.cvut.fel.constructa.model.Vehicle;
 import cz.cvut.fel.constructa.model.report.VehicleReport;
@@ -14,7 +15,9 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -26,31 +29,38 @@ public class VehicleReportServiceImpl implements VehicleReportService {
 
 
     @Override
-    public VehicleReport create(VehicleReportRequest request) throws ParseException {
+    public VehicleReportDTO create(VehicleReportRequest request) throws ParseException {
         VehicleReport createdReport = vehicleReportMapper.convertToEntity(request);
         Optional<User> driver = userDao.findById(request.getDriver());
         driver.ifPresent(createdReport::setDriver);
         Optional<Vehicle> vehicle = vehicleDao.findById(request.getVehicle());
         vehicle.ifPresent(createdReport::setVehicle);
-        return vehicleReportDao.save(createdReport);
-    }
 
-    //    TODO check speed
-    @Override
-    public Optional<VehicleReport> getVehicleReportById(Long id) {
-//        return vehicleReportDao.findById(id);
-        return vehicleReportDao.findAll().stream().filter(it->it.getId().equals(id)).findFirst();
-    }
-
-
-    @Override
-    public List<VehicleReport> getVehicleReportsByVehicleId(Long id) {
-        return vehicleReportDao.findVehicleReportByVehicleId(id);
+        createdReport = vehicleReportDao.save(createdReport);
+        return vehicleReportMapper.convertToDto(createdReport);
     }
 
     @Override
-    public List<VehicleReport> getVehicleReports() {
-        return vehicleReportDao.findAll();
+    public VehicleReportDTO getVehicleReportById(Long id) {
+        Optional<VehicleReport> vehicleReport = vehicleReportDao.findAll().stream().filter(it -> it.getId().equals(id)).findFirst();
+        return vehicleReport.map(vehicleReportMapper::convertToDto).orElse(null);
+    }
+
+
+    @Override
+    public List<VehicleReportDTO> getVehicleReportsByVehicleId(Long id) {
+        List<VehicleReport> vehicleReports = vehicleReportDao.findVehicleReportByVehicleId(id);
+        return vehicleReports.stream()
+                .map(vehicleReportMapper::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<VehicleReportDTO> getVehicleReports() {
+        List<VehicleReport> vehicleReports = vehicleReportDao.findAll();
+        return vehicleReports.stream()
+                .map(vehicleReportMapper::convertToDto)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -59,9 +69,28 @@ public class VehicleReportServiceImpl implements VehicleReportService {
     }
 
     @Override
-    public VehicleReport update(VehicleReport updatedVehicleReport) {
-        return vehicleReportDao.save(updatedVehicleReport);
+    public VehicleReportDTO update(VehicleReportRequest request) throws ParseException {
+
+        Optional<VehicleReport> report = vehicleReportDao.findById(request.getId());
+        User driver = null;
+        Vehicle vehicle = null;
+
+        if (report.isPresent()) {
+            driver = report.get().getDriver();
+            if (!Objects.equals(driver.getId(), request.getDriver())) {
+                report.get().setDriver(userDao.findById(request.getDriver()).get());
+            }
+            vehicle = report.get().getVehicle();
+            if (!Objects.equals(vehicle.getId(), request.getVehicle())) {
+                report.get().setVehicle(vehicleDao.findById(request.getVehicle()).get());
+            }
+        }
+        VehicleReport updatedVehicleReport = vehicleReportMapper.convertToEntity(request);
+        updatedVehicleReport.setVehicle(vehicle);
+        updatedVehicleReport.setDriver(driver);
+        updatedVehicleReport = vehicleReportDao.save(updatedVehicleReport);
+
+        return vehicleReportMapper.convertToDto(updatedVehicleReport);
+
     }
-
-
 }
