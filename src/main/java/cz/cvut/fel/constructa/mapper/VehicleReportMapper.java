@@ -27,6 +27,7 @@ public class VehicleReportMapper {
                 .purchaseOfFuelLitres(request.getPurchaseOfFuelLitres())
                 .timeFrom(request.getTimeFrom())
                 .timeTo(request.getTimeTo())
+                .description(request.getDescription())
                 .build();
 //        return modelMapper.map(request, VehicleReport.class);
     }
