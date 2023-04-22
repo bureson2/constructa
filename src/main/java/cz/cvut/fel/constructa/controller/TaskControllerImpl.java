@@ -70,7 +70,7 @@ public class TaskControllerImpl implements TaskController {
 
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
-    @PutMapping(value = "/state",consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/state",consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TaskDTO> editTaskState(@RequestBody TaskRequest request) {
         return ResponseEntity.ok().body(
                 taskService.changeTaskState(request)

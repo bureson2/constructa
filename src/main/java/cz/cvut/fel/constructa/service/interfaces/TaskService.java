@@ -13,6 +13,6 @@ public interface TaskService {
     List<TaskDTO> getMyTasks();
     void delete(Long id);
     TaskDTO update(TaskRequest request) throws ParseException;
-    TaskDTO changeTaskState(TaskRequest request)
+    TaskDTO changeTaskState(TaskRequest request);
 
 }
