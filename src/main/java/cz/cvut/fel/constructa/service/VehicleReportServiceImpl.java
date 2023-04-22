@@ -9,6 +9,7 @@ import cz.cvut.fel.constructa.model.role.User;
 import cz.cvut.fel.constructa.repository.UserRepository;
 import cz.cvut.fel.constructa.repository.VehicleReportRepository;
 import cz.cvut.fel.constructa.repository.VehicleRepository;
+import cz.cvut.fel.constructa.security.AuthenticationFacade;
 import cz.cvut.fel.constructa.service.interfaces.VehicleReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,15 +27,28 @@ public class VehicleReportServiceImpl implements VehicleReportService {
     private final UserRepository userDao;
     private final VehicleRepository vehicleDao;
     private final VehicleReportMapper vehicleReportMapper;
-
+    private final AuthenticationFacade authenticationFacade;
 
     @Override
     public VehicleReportDTO create(VehicleReportRequest request) throws ParseException {
         VehicleReport createdReport = vehicleReportMapper.convertToEntity(request);
+
         Optional<User> driver = userDao.findById(request.getDriver());
-        driver.ifPresent(createdReport::setDriver);
+        if(driver.isPresent()){
+            createdReport.setDriver(driver.get());
+        } else {
+            String authorEmail = authenticationFacade.getAuthentication().getName();
+            Optional<User> author = userDao.findByEmail(authorEmail);
+            author.ifPresent(createdReport::setDriver);
+        }
+
         Optional<Vehicle> vehicle = vehicleDao.findById(request.getVehicle());
         vehicle.ifPresent(createdReport::setVehicle);
+
+        if(vehicle.isPresent()){
+            vehicle.get().setConditionMotorcycleWatch(request.getAfterworkConditionMotorcycleWatch());
+            vehicleDao.save(vehicle.get());
+        }
 
         createdReport = vehicleReportDao.save(createdReport);
         return vehicleReportMapper.convertToDto(createdReport);
@@ -45,7 +59,6 @@ public class VehicleReportServiceImpl implements VehicleReportService {
         Optional<VehicleReport> vehicleReport = vehicleReportDao.findAll().stream().filter(it -> it.getId().equals(id)).findFirst();
         return vehicleReport.map(vehicleReportMapper::convertToDto).orElse(null);
     }
-
 
     @Override
     public List<VehicleReportDTO> getVehicleReportsByVehicleId(Long id) {
