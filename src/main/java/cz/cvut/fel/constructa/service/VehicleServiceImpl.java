@@ -24,7 +24,6 @@ public class VehicleServiceImpl implements VehicleService {
     private final UserRepository userDao;
     private final VehicleMapper vehicleMapper;
 
-
     @Override
     public VehicleDTO create(VehicleRequest request) throws ParseException {
         Vehicle vehicle = vehicleMapper.convertToEntity(request);

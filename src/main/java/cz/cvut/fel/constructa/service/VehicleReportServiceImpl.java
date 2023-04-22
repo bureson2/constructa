@@ -33,7 +33,11 @@ public class VehicleReportServiceImpl implements VehicleReportService {
     public VehicleReportDTO create(VehicleReportRequest request) throws ParseException {
         VehicleReport createdReport = vehicleReportMapper.convertToEntity(request);
 
-        Optional<User> driver = userDao.findById(request.getDriver());
+        Optional<User> driver = Optional.empty();
+
+        if(request.getDriver() != null){
+            driver = userDao.findById(request.getDriver());
+        }
         if(driver.isPresent()){
             createdReport.setDriver(driver.get());
         } else {

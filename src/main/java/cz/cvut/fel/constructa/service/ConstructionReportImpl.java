@@ -9,6 +9,7 @@ import cz.cvut.fel.constructa.model.role.User;
 import cz.cvut.fel.constructa.repository.ConstructionReportRepository;
 import cz.cvut.fel.constructa.repository.ProjectRepository;
 import cz.cvut.fel.constructa.repository.UserRepository;
+import cz.cvut.fel.constructa.security.AuthenticationFacade;
 import cz.cvut.fel.constructa.service.interfaces.ConstructionReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,17 +26,42 @@ public class ConstructionReportImpl implements ConstructionReportService {
     private final UserRepository userDao;
     private final ProjectRepository projectDao;
     private final ConstructionReportMapper constructionReportMapper;
+    private final AuthenticationFacade authenticationFacade;
+
     @Override
     public ConstructionReportDTO create(ConstructionReportRequest request) throws ParseException {
+
+        System.out.println("point 1");
+
         ConstructionReport constructionReport = constructionReportMapper.convertToEntity(request);
 
-        Optional<User> user = userDao.findById(request.getExecutorId());
-        user.ifPresent(constructionReport::setExecutor);
+        System.out.println("point 2");
+
+        Optional<User> user = Optional.empty();
+        if(request.getExecutorId() != null){
+            user = userDao.findById(request.getExecutorId());
+        }
+
+        System.out.println("point 3");
+
+        if(user.isPresent()){
+            constructionReport.setExecutor(user.get());
+        } else {
+            String authorEmail = authenticationFacade.getAuthentication().getName();
+            Optional<User> author = userDao.findByEmail(authorEmail);
+            author.ifPresent(constructionReport::setExecutor);
+        }
+
+        System.out.println("point 3");
 
         Optional<Project> project = projectDao.findById(request.getProjectId());
         project.ifPresent(constructionReport::setProject);
 
+        System.out.println("point 4");
+
         ConstructionReport createdReport = constructionReportDao.save(constructionReport);
+
+        System.out.println("point 5");
 
         return constructionReportMapper.convertToDto(createdReport);
     }

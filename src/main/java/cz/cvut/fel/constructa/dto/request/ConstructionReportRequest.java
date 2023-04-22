@@ -13,7 +13,6 @@ public class ConstructionReportRequest {
     private String note;
     private String weather;
     private Date date;
-
     private Long executorId;
     private ConstructionDiaryReportState state;
     private Long projectId;
