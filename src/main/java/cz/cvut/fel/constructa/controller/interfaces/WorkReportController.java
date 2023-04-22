@@ -17,6 +17,9 @@ public interface WorkReportController {
     @GetMapping(value="/user/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<List<WorkReportDTO>> getUsersWorkReports(@PathVariable Long userId);
 
+    @GetMapping(value="/my", produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<List<WorkReportDTO>> getMyWorkReports();
+
     @GetMapping(value = "/{workReportId}", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<WorkReportDTO> getWorkReport(@PathVariable Long workReportId);
 

@@ -25,8 +25,6 @@ public class Vehicle {
     @Column(name="name", nullable = false)
     private String name;
 
-    @Column(name="qr_code")
-    private String qrCode;
     @Column(name="vin_code", nullable = false)
     private String vinCode;
 

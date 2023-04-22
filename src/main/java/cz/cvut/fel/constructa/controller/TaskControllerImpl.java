@@ -21,9 +21,7 @@ import java.util.List;
 public class TaskControllerImpl implements TaskController {
     private final TaskService taskService;
     //    TODO concrete security for owners
-    private final UserService userService;
 
-    @Override
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -33,7 +31,15 @@ public class TaskControllerImpl implements TaskController {
         );
     }
 
-    @Override
+    @ResponseStatus(code = HttpStatus.OK)
+    @ResponseBody
+    @GetMapping(value = "/my", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<TaskDTO>> getUserTasks() {
+        return ResponseEntity.ok().body(
+                taskService.getMyTasks()
+        );
+    }
+
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
     @GetMapping(value = "/{taskId}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -45,7 +51,6 @@ public class TaskControllerImpl implements TaskController {
         return ResponseEntity.notFound().build();
     }
 
-    @Override
     @ResponseStatus(code = HttpStatus.CREATED)
     @ResponseBody
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -64,7 +69,6 @@ public class TaskControllerImpl implements TaskController {
         );
     }
 
-    @Override
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @DeleteMapping(value = "/{taskId}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long taskId) {

@@ -10,8 +10,7 @@ public interface TaskService {
     TaskDTO create(TaskRequest request) throws ParseException;
     TaskDTO getTaskById(Long id);
     List<TaskDTO> getTasks();
-    List<TaskDTO> getTaskByAssigneeId(Long id);
-
+    List<TaskDTO> getMyTasks();
     void delete(Long id);
     TaskDTO update(TaskRequest request) throws ParseException;
 

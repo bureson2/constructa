@@ -1,28 +1,28 @@
-987,true,Praha,Česká republika,13,12345,,Ocelářská
-8001,true,Černošice,Česká republika,512,25228,,Horská
-8004,true,Chomutov,Česká republika,155,43false01,,Jiráskova
-8006,true,Kladno,Česká republika,124,27201,,Nadrazni
-8007,true,Říčany,Česká republika,729,25101,,U Zeleného stromu
-8009,true,Pardubice,Česká republika,898,53208,,Opletalova
-80012,true,Třebíč,Česká republika,347,67401,,Mírové náměstí
-80014,true,Olomouc,Česká republika,983,77900,,Komenského náměstí
-80016,true,Plzeň,Česká republika,771,30100,,Klatovská třída
-80019,true,Opava,Česká republika,670,74601,,Náměstí Republiky
-80021,true,Plzeň,Česká republika,521,30100,,Sady 5.května
-80022,true,Česká Lípa,Česká republika,421,47001,,Jiráskova
-984,false,Mladá Boleslav,Česká republika,189,65487,,Nehezká
-80013,false,Praha,Česká republika,561,11000,,Václavské náměstí
-80023,false,Ústí nad Labem,Česká republika,208,40001,,Střekovská
-80015,false,Litoměřice,Česká republika,202,41201,,U Parku
-985,false,Praha,Česká republika,16,12345,,Ošklivá
-80017,false,Karviná,Česká republika,397,73301,,Školní
-8002,false,Benešov,Česká republika,782,25636,,Vinařská
-8003,false,Kutná Hora,Česká republika,388,28401,,Svatováclavská
-80018,false,Karlovy Vary,Česká republika,524,36005,,U divadla
-8005,false,Nový Jičín,Česká republika,93,74101,,Sokolovská
-983,false,Brno,Česká republika,1498,78945,,Ohyzdná
-80020,false,Ostrava,Česká republika,285,70800,,Slezská Ostrava
-8008,false,České Budějovice,Česká republika,190,37001,,Kruhová
-986,false,Neratovice,Česká republika,12,14785,,Skalní
-80010,false,Beroun,Česká republika,352,26601,,Řeznická
-80011,false,Jihlava,Česká republika,241,58601,,Václavské náměstí
+987,true,Praha,Česká republika,13,12345,Ocelářská
+8001,true,Černošice,Česká republika,512,25228,Horská
+8004,true,Chomutov,Česká republika,155,43false01,Jiráskova
+8006,true,Kladno,Česká republika,124,27201,Nadrazni
+8007,true,Říčany,Česká republika,729,25101,U Zeleného stromu
+8009,true,Pardubice,Česká republika,898,53208,Opletalova
+80012,true,Třebíč,Česká republika,347,67401,Mírové náměstí
+80014,true,Olomouc,Česká republika,983,77900,Komenského náměstí
+80016,true,Plzeň,Česká republika,771,30100,Klatovská třída
+80019,true,Opava,Česká republika,670,74601,Náměstí Republiky
+80021,true,Plzeň,Česká republika,521,30100,Sady 5.května
+80022,true,Česká Lípa,Česká republika,421,47001,Jiráskova
+984,false,Mladá Boleslav,Česká republika,189,65487,Nehezká
+80013,false,Praha,Česká republika,561,11000,Václavské náměstí
+80023,false,Ústí nad Labem,Česká republika,208,40001,Střekovská
+80015,false,Litoměřice,Česká republika,202,41201,U Parku
+985,false,Praha,Česká republika,16,12345,Ošklivá
+80017,false,Karviná,Česká republika,397,73301,Školní
+8002,false,Benešov,Česká republika,782,25636,Vinařská
+8003,false,Kutná Hora,Česká republika,388,28401,Svatováclavská
+80018,false,Karlovy Vary,Česká republika,524,36005,U divadla
+8005,false,Nový Jičín,Česká republika,93,74101,Sokolovská
+983,false,Brno,Česká republika,1498,78945,Ohyzdná
+80020,false,Ostrava,Česká republika,285,70800,Slezská Ostrava
+8008,false,České Budějovice,Česká republika,190,37001,Kruhová
+986,false,Neratovice,Česká republika,12,14785,Skalní
+80010,false,Beroun,Česká republika,352,26601,Řeznická
+80011,false,Jihlava,Česká republika,241,58601,Václavské náměstí

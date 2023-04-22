@@ -14,6 +14,9 @@ public interface TaskController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<List<TaskDTO>> getTasks();
 
+    @GetMapping(value = "/my", produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<List<TaskDTO>> getUserTasks();
+
     @GetMapping(value = "/{taskId}", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<TaskDTO> getTask(@PathVariable Long taskId);
 

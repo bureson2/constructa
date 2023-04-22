@@ -23,6 +23,9 @@ public class WorkReport {
     @Column(name="time_to")
     private Date timeTo;
 
+    @Column(name="minutes")
+    private Date minutes;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User reportingEmployee;

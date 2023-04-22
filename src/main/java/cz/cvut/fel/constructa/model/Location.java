@@ -38,8 +38,6 @@ public class Location {
     private String country;
     @Column(name = "postCode")
     private String postCode;
-    @Column(name = "qr_code")
-    private String qrCode;
     @OneToMany(mappedBy = "location")
     private List<WorkReport> workReports = new ArrayList<>();
 

@@ -4,7 +4,6 @@ import cz.cvut.fel.constructa.dto.request.TaskRequest;
 import cz.cvut.fel.constructa.dto.response.TaskDTO;
 import cz.cvut.fel.constructa.enums.TaskState;
 import cz.cvut.fel.constructa.mapper.TaskMapper;
-import cz.cvut.fel.constructa.model.Project;
 import cz.cvut.fel.constructa.model.Task;
 import cz.cvut.fel.constructa.model.role.User;
 import cz.cvut.fel.constructa.repository.TaskRepository;
@@ -15,10 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -55,17 +51,26 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<TaskDTO> getTasks() {
-        List<Task> projects = taskDao.findAll();
-        return projects.stream()
+        List<Task> tasks = taskDao.findAll();
+        return tasks.stream()
                 .map(taskMapper::convertToDto)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<TaskDTO> getTaskByAssigneeId(Long id) {
-//        TODO
-        return null;
-    }
+    public List<TaskDTO> getMyTasks(){
+        String authorEmail = authenticationFacade.getAuthentication().getName();
+        Optional<User> assignee = userDao.findByEmail(authorEmail);
+        List<Task> tasks = new ArrayList<>();
+
+        if(assignee.isPresent()) {
+            tasks = taskDao.findTaskByAssigneeId(assignee.get().getId());
+        }
+
+        return tasks.stream()
+                .map(taskMapper::convertToDto)
+                .collect(Collectors.toList());
+    };
 
     @Override
     public void delete(Long id) {

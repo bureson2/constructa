@@ -11,6 +11,7 @@ public interface WorkReportService {
     WorkReportDTO create(WorkReportRequest request) throws ParseException;
     WorkReportDTO getWorkReportById(Long id);
     List<WorkReportDTO> getWorkReports();
+    List<WorkReportDTO> getMyWorkReports();
     List<WorkReportDTO> getWorkReportsByReportingEmployeeId(Long id);
     void delete(Long id);
     WorkReportDTO update(WorkReportRequest request) throws ParseException;

@@ -3,7 +3,6 @@ package cz.cvut.fel.constructa.controller;
 import cz.cvut.fel.constructa.controller.interfaces.WorkReportController;
 import cz.cvut.fel.constructa.dto.request.WorkReportRequest;
 import cz.cvut.fel.constructa.dto.response.WorkReportDTO;
-import cz.cvut.fel.constructa.mapper.WorkReportMapper;
 import cz.cvut.fel.constructa.service.interfaces.WorkReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,7 +19,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WorkReportControllerImpl implements WorkReportController {
     private final WorkReportService workReportService;
-    private final WorkReportMapper workReportMapper;
 
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
@@ -28,6 +26,15 @@ public class WorkReportControllerImpl implements WorkReportController {
     public ResponseEntity<List<WorkReportDTO>> getWorkReports() {
         return ResponseEntity.ok().body(
                 workReportService.getWorkReports()
+        );
+    }
+
+    @ResponseStatus(code = HttpStatus.OK)
+    @ResponseBody
+    @GetMapping(value="/my", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<WorkReportDTO>> getMyWorkReports() {
+        return ResponseEntity.ok().body(
+                workReportService.getMyWorkReports()
         );
     }
 
