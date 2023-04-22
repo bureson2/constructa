@@ -104,4 +104,16 @@ public class TaskServiceImpl implements TaskService {
         updatedTask = taskDao.save(updatedTask);
         return taskMapper.convertToDto(updatedTask);
     }
+
+    @Override
+    public TaskDTO changeTaskState(TaskRequest request){
+        Optional<Task> task = taskDao.findById(request.getId());
+        if(task.isPresent()){
+            TaskState taskState = TaskState.getEnumByName(request.getState());
+            task.get().setState(taskState);
+            taskDao.save(task.get());
+            return taskMapper.convertToDto(task.get());
+        }
+        return null;
+    }
 }

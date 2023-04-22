@@ -13,4 +13,12 @@ public enum TaskState {
     public String getTestState() {
         return taskState;
     }
+    public static TaskState getEnumByName(String taskStateValue) {
+        for (TaskState taskState : TaskState.values()) {
+            if (taskState.getTestState().equals(taskStateValue)) {
+                return taskState;
+            }
+        }
+        return null;
+    }
 }

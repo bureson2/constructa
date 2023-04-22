@@ -26,6 +26,9 @@ public interface TaskController {
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<TaskDTO> editTask(@RequestBody TaskRequest request) throws ParseException;
 
+    @PutMapping(value = "/state",consumes = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<TaskDTO> editTaskState(@RequestBody TaskRequest request);
+
     @DeleteMapping(value = "/{taskId}")
     ResponseEntity<Void> deleteTask(@PathVariable Long taskId);
 }

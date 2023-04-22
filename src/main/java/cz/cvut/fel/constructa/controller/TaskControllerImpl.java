@@ -20,7 +20,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TaskControllerImpl implements TaskController {
     private final TaskService taskService;
-    //    TODO concrete security for owners
 
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
@@ -66,6 +65,15 @@ public class TaskControllerImpl implements TaskController {
     public ResponseEntity<TaskDTO> editTask(@RequestBody TaskRequest request) throws ParseException {
         return ResponseEntity.ok().body(
                 taskService.update(request)
+        );
+    }
+
+    @ResponseStatus(code = HttpStatus.OK)
+    @ResponseBody
+    @PutMapping(value = "/state",consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<TaskDTO> editTaskState(@RequestBody TaskRequest request) {
+        return ResponseEntity.ok().body(
+                taskService.changeTaskState(request)
         );
     }
 
