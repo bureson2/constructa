@@ -13,6 +13,4 @@ public class LocationDTO {
     private String name;
     private String country;
     private String postCode;
-    private String qrCode;
-
 }

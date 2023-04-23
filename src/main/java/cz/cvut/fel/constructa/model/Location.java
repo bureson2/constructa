@@ -38,6 +38,10 @@ public class Location {
     private String country;
     @Column(name = "postCode")
     private String postCode;
+    @Column(name="latitude")
+    private Double latitude;
+    @Column(name="longitude")
+    private Double longitude;
     @OneToMany(mappedBy = "location")
     private List<WorkReport> workReports = new ArrayList<>();
 

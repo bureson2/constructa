@@ -1,5 +1,6 @@
 package cz.cvut.fel.constructa.controller.interfaces;
 
+import cz.cvut.fel.constructa.dto.request.IllnessRequest;
 import cz.cvut.fel.constructa.dto.request.WorkReportRequest;
 import cz.cvut.fel.constructa.dto.response.WorkReportDTO;
 import org.springframework.http.MediaType;
@@ -25,6 +26,9 @@ public interface WorkReportController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<WorkReportDTO> createWorkReport(@RequestBody WorkReportRequest request) throws ParseException;
+
+    @PostMapping(value = "/illness", consumes = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<Void> recordIllness(@RequestBody IllnessRequest request);
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<WorkReportDTO> updateeWorkReport(@RequestBody WorkReportRequest request) throws ParseException;

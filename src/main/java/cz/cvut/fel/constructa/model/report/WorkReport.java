@@ -24,7 +24,7 @@ public class WorkReport {
     private Date timeTo;
 
     @Column(name="minutes")
-    private Date minutes;
+    private int minutes;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

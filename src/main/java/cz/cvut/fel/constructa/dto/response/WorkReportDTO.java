@@ -9,6 +9,7 @@ public class WorkReportDTO {
     private Long id;
     private Date timeFrom;
     private Date timeTo;
+    private int minutes;
     private UserDTO reportingEmployee;
     private LocationDTO location;
     private String type;
