@@ -91,7 +91,6 @@ public class TaskServiceImpl implements TaskService {
             if(!Objects.equals(assignee.getId(), request.getUserId())){
                 Optional<User> newAssignee = userDao.findById(request.getUserId());
                 if(newAssignee.isPresent()){
-                    System.out.println(newAssignee.get().getId());
                     assignee = newAssignee.get();
                 }
             }

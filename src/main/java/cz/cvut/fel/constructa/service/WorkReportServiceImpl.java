@@ -67,12 +67,12 @@ public class WorkReportServiceImpl implements WorkReportService {
             workReport.setLocation(location);
             reportingEmployee.ifPresent(workReport::setReportingEmployee);
             Date timeFrom = calendar.getTime();
-            timeFrom.setHours(8);
+            timeFrom.setHours(10);
             timeFrom.setMinutes(0);
             workReport.setTimeFrom(timeFrom);
             Date timeTo = calendar.getTime();
-            timeTo.setHours(16);
-            timeFrom.setMinutes(0);
+            timeTo.setHours(18);
+            timeTo.setMinutes(0);
             workReport.setTimeTo(timeTo);
             workReport.setMinutes(480);
             calendar.add(Calendar.DATE, 1);
@@ -120,7 +120,6 @@ public class WorkReportServiceImpl implements WorkReportService {
     public void stopWorkReportRecord(StopAttendanceRequest request){
         Date today = new Date();
         today.setHours(0);
-        System.out.println(today);
 
         String authorEmail = authenticationFacade.getAuthentication().getName();
         Optional<User> reportingEmployee = userDao.findByEmail(authorEmail);
