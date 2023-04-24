@@ -18,12 +18,11 @@ import cz.cvut.fel.constructa.repository.WorkReportRepository;
 import cz.cvut.fel.constructa.security.AuthenticationFacade;
 import cz.cvut.fel.constructa.service.interfaces.WorkReportService;
 import cz.cvut.fel.constructa.service.util.DistanceCalculator;
+import cz.cvut.fel.constructa.service.util.RoundTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -67,11 +66,14 @@ public class WorkReportServiceImpl implements WorkReportService {
 
             workReport.setLocation(location);
             reportingEmployee.ifPresent(workReport::setReportingEmployee);
-            workReport.setTimeFrom(calendar.getTime());
-            calendar.add(Calendar.HOUR_OF_DAY, 8);
+            Date timeFrom = calendar.getTime();
+            timeFrom.setHours(8);
+            timeFrom.setMinutes(0);
+            workReport.setTimeFrom(timeFrom);
             Date timeTo = calendar.getTime();
+            timeTo.setHours(16);
+            timeFrom.setMinutes(0);
             workReport.setTimeTo(timeTo);
-            calendar.add(Calendar.HOUR_OF_DAY, -8);
             workReport.setMinutes(480);
             calendar.add(Calendar.DATE, 1);
 
@@ -97,6 +99,7 @@ public class WorkReportServiceImpl implements WorkReportService {
             workReport.setReportingEmployee(reportingEmployee.get());
             workReport.setLocation(location.get());
             workReport.setTimeFrom(timeFrom);
+            workReport.setTimeTo(timeFrom);
             workReport = workReportDao.save(workReport);
 
             if(request.getLatitude() == null || request.getLongitude() == null){
@@ -116,16 +119,8 @@ public class WorkReportServiceImpl implements WorkReportService {
     @Override
     public void stopWorkReportRecord(StopAttendanceRequest request){
         Date today = new Date();
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTime(today);
-//        calendar.add(Calendar.DATE, -1);
-//        today = calendar.getTime();
-
         today.setHours(0);
         System.out.println(today);
-
-
-//        LocalDate compareDate = today.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
         String authorEmail = authenticationFacade.getAuthentication().getName();
         Optional<User> reportingEmployee = userDao.findByEmail(authorEmail);
@@ -133,12 +128,13 @@ public class WorkReportServiceImpl implements WorkReportService {
 
             List<WorkReport> workReports = workReportDao.findTodayAttendance(reportingEmployee.get().getId(), today);
             WorkReport workReport = workReports.get(0);
-//
-//            System.out.println(request.getTime());
-//
+
             workReport.setTimeTo(new Date());
-            // todo check
-            workReport.setMinutes(request.getTime() / 60);
+            int minutes = request.getTime() / 60;
+            minutes -= RoundTime.getRoundedUpMinutes(workReport.getTimeFrom());
+            minutes -= RoundTime.getRoundedDownMinutes(new Date());
+
+            workReport.setMinutes(RoundTime.setToQuarterHour(minutes));
             workReportDao.save(workReport);
         }
     }
