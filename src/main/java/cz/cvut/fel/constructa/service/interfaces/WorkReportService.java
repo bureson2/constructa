@@ -2,6 +2,7 @@ package cz.cvut.fel.constructa.service.interfaces;
 
 import cz.cvut.fel.constructa.dto.request.AttendanceRequest;
 import cz.cvut.fel.constructa.dto.request.IllnessRequest;
+import cz.cvut.fel.constructa.dto.request.StopAttendanceRequest;
 import cz.cvut.fel.constructa.dto.request.WorkReportRequest;
 import cz.cvut.fel.constructa.dto.response.LocationDTO;
 import cz.cvut.fel.constructa.dto.response.WorkReportDTO;
@@ -14,6 +15,7 @@ public interface WorkReportService {
     WorkReportDTO create(WorkReportRequest request) throws ParseException;
     void recordIllness(IllnessRequest request);
     WorkReportDTO recordWorkReport(AttendanceRequest request);
+    void stopWorkReportRecord(StopAttendanceRequest request);
     WorkReportDTO getWorkReportById(Long id);
     List<WorkReportDTO> getWorkReports();
     List<WorkReportDTO> getMyWorkReports();

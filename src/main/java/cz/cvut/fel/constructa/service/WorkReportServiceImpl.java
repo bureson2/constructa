@@ -2,6 +2,7 @@ package cz.cvut.fel.constructa.service;
 
 import cz.cvut.fel.constructa.dto.request.AttendanceRequest;
 import cz.cvut.fel.constructa.dto.request.IllnessRequest;
+import cz.cvut.fel.constructa.dto.request.StopAttendanceRequest;
 import cz.cvut.fel.constructa.dto.request.WorkReportRequest;
 import cz.cvut.fel.constructa.dto.response.LocationDTO;
 import cz.cvut.fel.constructa.dto.response.WorkReportDTO;
@@ -21,6 +22,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -96,13 +99,48 @@ public class WorkReportServiceImpl implements WorkReportService {
             workReport.setTimeFrom(timeFrom);
             workReport = workReportDao.save(workReport);
 
+            if(request.getLatitude() == null || request.getLongitude() == null){
+//                notify manager about missing location
+                return workReportMapper.convertToDto(workReport);
+            }
+
             double metres = DistanceCalculator.haversineDistance(location.get().getLatitude(),location.get().getLongitude(), request.getLatitude(), request.getLongitude());
             if(metres < 100){
-//                TODO notify manager about wrong location
+//                notify manager about wrong location
             }
         }
 
         return workReportMapper.convertToDto(workReport);
+    }
+
+    @Override
+    public void stopWorkReportRecord(StopAttendanceRequest request){
+        Date today = new Date();
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTime(today);
+//        calendar.add(Calendar.DATE, -1);
+//        today = calendar.getTime();
+
+        today.setHours(0);
+        System.out.println(today);
+
+
+//        LocalDate compareDate = today.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        String authorEmail = authenticationFacade.getAuthentication().getName();
+        Optional<User> reportingEmployee = userDao.findByEmail(authorEmail);
+        if(reportingEmployee.isPresent()){
+
+            List<WorkReport> workReports = workReportDao.findTodayAttendance(reportingEmployee.get().getId(), today);
+            WorkReport workReport = workReports.get(0);
+//
+//            System.out.println(request.getTime());
+//
+            workReport.setTimeTo(new Date());
+            // todo check
+            workReport.setMinutes(request.getTime() / 60);
+            workReportDao.save(workReport);
+        }
     }
 
     @Override

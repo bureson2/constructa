@@ -31,18 +31,12 @@ public class ConstructionReportImpl implements ConstructionReportService {
     @Override
     public ConstructionReportDTO create(ConstructionReportRequest request) throws ParseException {
 
-        System.out.println("point 1");
-
         ConstructionReport constructionReport = constructionReportMapper.convertToEntity(request);
-
-        System.out.println("point 2");
 
         Optional<User> user = Optional.empty();
         if(request.getExecutorId() != null){
             user = userDao.findById(request.getExecutorId());
         }
-
-        System.out.println("point 3");
 
         if(user.isPresent()){
             constructionReport.setExecutor(user.get());
@@ -52,16 +46,9 @@ public class ConstructionReportImpl implements ConstructionReportService {
             author.ifPresent(constructionReport::setExecutor);
         }
 
-        System.out.println("point 3");
-
         Optional<Project> project = projectDao.findById(request.getProjectId());
         project.ifPresent(constructionReport::setProject);
-
-        System.out.println("point 4");
-
         ConstructionReport createdReport = constructionReportDao.save(constructionReport);
-
-        System.out.println("point 5");
 
         return constructionReportMapper.convertToDto(createdReport);
     }

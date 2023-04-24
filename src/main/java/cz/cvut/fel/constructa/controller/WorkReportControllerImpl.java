@@ -3,6 +3,7 @@ package cz.cvut.fel.constructa.controller;
 import cz.cvut.fel.constructa.controller.interfaces.WorkReportController;
 import cz.cvut.fel.constructa.dto.request.AttendanceRequest;
 import cz.cvut.fel.constructa.dto.request.IllnessRequest;
+import cz.cvut.fel.constructa.dto.request.StopAttendanceRequest;
 import cz.cvut.fel.constructa.dto.request.WorkReportRequest;
 import cz.cvut.fel.constructa.dto.response.LocationDTO;
 import cz.cvut.fel.constructa.dto.response.WorkReportDTO;
@@ -101,6 +102,15 @@ public class WorkReportControllerImpl implements WorkReportController {
                 workReportService.recordWorkReport(request)
         );
     }
+
+    @ResponseStatus(code = HttpStatus.CREATED)
+    @ResponseBody
+    @PostMapping(value = "/end-work", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> stopRecordAttendance(@RequestBody StopAttendanceRequest request) {
+        workReportService.stopWorkReportRecord(request);
+        return ResponseEntity.noContent().build();
+    }
+
 
     @ResponseStatus(code = HttpStatus.CREATED)
     @ResponseBody
