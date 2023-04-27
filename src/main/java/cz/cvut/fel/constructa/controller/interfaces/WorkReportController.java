@@ -35,7 +35,7 @@ public interface WorkReportController {
     ResponseEntity<Void> stopRecordAttendance(@RequestBody StopAttendanceRequest request);
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<WorkReportDTO> updateeWorkReport(@RequestBody WorkReportRequest request) throws ParseException;
+    ResponseEntity<WorkReportDTO> updateWorkReport(@RequestBody WorkReportRequest request) throws ParseException;
 
     @DeleteMapping(value = "/{workReportId}")
     ResponseEntity<Void> deleteWorkReport(@PathVariable Long workReportId);
