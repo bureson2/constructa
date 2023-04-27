@@ -1,13 +1,31 @@
 package cz.cvut.fel.constructa.service.util;
 
+/**
+ * The type Distance calculator.
+ */
 public final class DistanceCalculator {
 
+    /**
+     * The constant EARTH_RADIUS.
+     */
     private static final int EARTH_RADIUS = 6371; // poloměr Země v kilometrech
 
+    /**
+     * Instantiates a new Distance calculator.
+     */
     private DistanceCalculator() {
         // Soukromý konstruktor, aby se zabránilo vytváření instancí třídy
     }
 
+    /**
+     * Haversine distance double.
+     *
+     * @param lat1 the lat 1
+     * @param lon1 the lon 1
+     * @param lat2 the lat 2
+     * @param lon2 the lon 2
+     * @return the double
+     */
     public static double haversineDistance(double lat1, double lon1, double lat2, double lon2) {
         // Převod stupňů na radiány
         double lat1Rad = Math.toRadians(lat1);

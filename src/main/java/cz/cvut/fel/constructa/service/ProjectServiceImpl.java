@@ -36,7 +36,6 @@ public class ProjectServiceImpl implements ProjectService {
         createdProject.setState(ProjectState.IN_PREPARATION);
 
         Location address = Location.builder()
-                .active(false)
                 .city(request.getCity())
                 .street(request.getStreet())
                 .country(request.getCountry())

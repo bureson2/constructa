@@ -16,13 +16,31 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+/**
+ * The type Jwt authentication filter.
+ */
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
+    /**
+     * The Jwt service.
+     */
     private final JwtService jwtService;
+    /**
+     * The User details service.
+     */
     private final UserDetailsService userDetailsService;
 
+    /**
+     * Do filter internal.
+     *
+     * @param request     the request
+     * @param response    the response
+     * @param filterChain the filter chain
+     * @throws ServletException the servlet exception
+     * @throws IOException      the io exception
+     */
     @Override
     protected void doFilterInternal(
             @NonNull HttpServletRequest request,

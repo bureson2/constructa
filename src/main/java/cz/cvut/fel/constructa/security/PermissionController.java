@@ -15,11 +15,24 @@ import org.json.JSONObject;
 import java.nio.file.AccessDeniedException;
 import java.util.Collection;
 
+/**
+ * The type Permission controller.
+ */
 @RestController
 @RequiredArgsConstructor
 public class PermissionController {
+    /**
+     * The Authentication facade.
+     */
     private final AuthenticationFacade authenticationFacade;
 
+    /**
+     * Gets permission.
+     *
+     * @return the permission
+     * @throws AccessDeniedException the access denied exception
+     * @throws JSONException         the json exception
+     */
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
     @GetMapping(value="/api/v1/permissions", produces = MediaType.APPLICATION_JSON_VALUE)

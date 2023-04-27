@@ -19,6 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ConstructionReportControllerImpl implements ConstructionReportController {
     private final ConstructionReportService constructionReportService;
+
     @Override
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody

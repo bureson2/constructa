@@ -14,15 +14,40 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.Random;
 
+/**
+ * The type Authentication service.
+ */
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
+    /**
+     * The User dao.
+     */
     private final UserRepository userDao;
+    /**
+     * The Location dao.
+     */
     private final LocationRepository locationDao;
+    /**
+     * The Password encoder.
+     */
     private final PasswordEncoder passwordEncoder;
+    /**
+     * The Jwt service.
+     */
     private final JwtService jwtService;
+    /**
+     * The Auth manager.
+     */
     private final AuthenticationManager authManager;
 
+    /**
+     * Generate username string.
+     *
+     * @param firstName the first name
+     * @param lastName  the last name
+     * @return the string
+     */
     public static String generateUsername(String firstName, String lastName) {
         // Odstraňte mezery v prvním a posledním jménu
         firstName = firstName.trim().replaceAll("\\s+","");
@@ -41,9 +66,14 @@ public class AuthenticationService {
         return username.toLowerCase();
     }
 
+    /**
+     * Register authentication response.
+     *
+     * @param request the request
+     * @return the authentication response
+     */
     public AuthenticationResponse register(RegisterRequest request){
         Location address = Location.builder()
-                .active(false)
                 .city(request.getCity())
                 .street(request.getStreet())
                 .country(request.getCountry())
@@ -77,6 +107,12 @@ public class AuthenticationService {
                 .build();
     }
 
+    /**
+     * Authenticate authentication response.
+     *
+     * @param request the request
+     * @return the authentication response
+     */
     public AuthenticationResponse authenticate(AuthenticationRequest request){
         authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
