@@ -8,9 +8,6 @@ import lombok.Data;
 @Table(name = "images")
 @Data
 public class Image {
-
-//    TODO image for users etd. time is expensive
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "image_id", nullable = false)

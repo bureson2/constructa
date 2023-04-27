@@ -90,7 +90,6 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "assignee")
     private List<Task> assignedTasks = new ArrayList<>();
 
-    //    todo better name
     @OneToMany(mappedBy = "reportingEmployee")
     private List<WorkReport> attendance = new ArrayList<>();
 

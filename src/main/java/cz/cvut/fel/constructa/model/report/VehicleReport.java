@@ -48,15 +48,6 @@ public class VehicleReport {
     @Column(name = "description")
     private String description;
 
-//    MAYBE TODO
-    @ManyToOne
-    @JoinColumn(name = "location_id", insertable=false, updatable=false)
-    private Location startAt;
-
-    @ManyToOne
-    @JoinColumn(name = "location_id", insertable=false, updatable=false)
-    private Location finishAt;
-
     @ManyToOne
     @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;

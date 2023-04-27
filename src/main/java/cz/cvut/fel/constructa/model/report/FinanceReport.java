@@ -30,12 +30,9 @@ public class FinanceReport {
     @Column(name="wage")
     private int wage;
 
-//    TODO study CascadeTypes
-//    TODO check camel case
     @OneToMany(mappedBy = "financeReport")
     private List<WorkReport> attendance = new ArrayList<>();
 
-//    TODO check if it is ok
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User salariedEmployee;

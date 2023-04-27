@@ -39,7 +39,6 @@ public class UserGenerator {
         return new SimpleDateFormat("dd-MMM-yyyy").parse(dateFormatted);
     }
 
-//    TODO better params
     public static User generateBasicUser() throws ParseException {
         String randomNumber = Integer.toString(randomInt());
         User user = new User();
