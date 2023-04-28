@@ -14,13 +14,24 @@ import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 import java.util.List;
 
+/**
+ * The type User controller.
+ */
 @CrossOrigin
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
 public class UserControllerImpl implements UserController {
+    /**
+     * The User service.
+     */
     private final UserService userService;
 
+    /**
+     * Gets users.
+     *
+     * @return the users
+     */
     @Override
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
@@ -31,6 +42,11 @@ public class UserControllerImpl implements UserController {
         );
     }
 
+    /**
+     * Gets input users.
+     *
+     * @return the input users
+     */
     @Override
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
@@ -42,6 +58,12 @@ public class UserControllerImpl implements UserController {
     }
 
 
+    /**
+     * Gets user.
+     *
+     * @param userId the user id
+     * @return the user
+     */
     @Override
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
@@ -54,6 +76,13 @@ public class UserControllerImpl implements UserController {
         return ResponseEntity.notFound().build();
     }
 
+    /**
+     * Update user response entity.
+     *
+     * @param request the request
+     * @return the response entity
+     * @throws ParseException the parse exception
+     */
     @Override
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
@@ -63,6 +92,12 @@ public class UserControllerImpl implements UserController {
                 userService.update(request));
     }
 
+    /**
+     * Delete user response entity.
+     *
+     * @param userId the user id
+     * @return the response entity
+     */
     @Override
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @DeleteMapping(value = "/{userId}")

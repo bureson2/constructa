@@ -17,13 +17,24 @@ import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 import java.util.List;
 
+/**
+ * The type Work report controller.
+ */
 @CrossOrigin
 @RestController
     @RequestMapping("/api/v1/work-reports")
 @RequiredArgsConstructor
 public class WorkReportControllerImpl implements WorkReportController {
+    /**
+     * The Work report service.
+     */
     private final WorkReportService workReportService;
 
+    /**
+     * Gets work reports.
+     *
+     * @return the work reports
+     */
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -33,6 +44,11 @@ public class WorkReportControllerImpl implements WorkReportController {
         );
     }
 
+    /**
+     * Gets my work reports.
+     *
+     * @return the my work reports
+     */
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
     @GetMapping(value="/my", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -42,6 +58,12 @@ public class WorkReportControllerImpl implements WorkReportController {
         );
     }
 
+    /**
+     * Gets users work reports.
+     *
+     * @param userId the user id
+     * @return the users work reports
+     */
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
     @GetMapping(value="/user/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -51,6 +73,12 @@ public class WorkReportControllerImpl implements WorkReportController {
         );
     }
 
+    /**
+     * Gets work report.
+     *
+     * @param workReportId the work report id
+     * @return the work report
+     */
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
     @GetMapping(value = "/{workReportId}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -64,6 +92,12 @@ public class WorkReportControllerImpl implements WorkReportController {
         return ResponseEntity.notFound().build();
     }
 
+    /**
+     * Gets work location.
+     *
+     * @param locationId the location id
+     * @return the work location
+     */
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
     @GetMapping(value = "/location/{locationId}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -77,6 +111,13 @@ public class WorkReportControllerImpl implements WorkReportController {
         return ResponseEntity.notFound().build();
     }
 
+    /**
+     * Create work report response entity.
+     *
+     * @param request the request
+     * @return the response entity
+     * @throws ParseException the parse exception
+     */
     @ResponseStatus(code = HttpStatus.CREATED)
     @ResponseBody
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -86,6 +127,12 @@ public class WorkReportControllerImpl implements WorkReportController {
         );
     }
 
+    /**
+     * Record illness response entity.
+     *
+     * @param request the request
+     * @return the response entity
+     */
     @ResponseStatus(code = HttpStatus.CREATED)
     @ResponseBody
     @PostMapping(value = "/illness", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -94,6 +141,12 @@ public class WorkReportControllerImpl implements WorkReportController {
         return ResponseEntity.noContent().build();
     }
 
+    /**
+     * Record attendance response entity.
+     *
+     * @param request the request
+     * @return the response entity
+     */
     @ResponseStatus(code = HttpStatus.CREATED)
     @ResponseBody
     @PostMapping(value = "/attendance", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -103,6 +156,12 @@ public class WorkReportControllerImpl implements WorkReportController {
         );
     }
 
+    /**
+     * Stop record attendance response entity.
+     *
+     * @param request the request
+     * @return the response entity
+     */
     @ResponseStatus(code = HttpStatus.CREATED)
     @ResponseBody
     @PostMapping(value = "/end-work", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -112,6 +171,13 @@ public class WorkReportControllerImpl implements WorkReportController {
     }
 
 
+    /**
+     * Update work report response entity.
+     *
+     * @param request the request
+     * @return the response entity
+     * @throws ParseException the parse exception
+     */
     @ResponseStatus(code = HttpStatus.CREATED)
     @ResponseBody
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -121,6 +187,12 @@ public class WorkReportControllerImpl implements WorkReportController {
         );
     }
 
+    /**
+     * Delete work report response entity.
+     *
+     * @param workReportId the work report id
+     * @return the response entity
+     */
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @DeleteMapping(value = "/{workReportId}")
     public ResponseEntity<Void> deleteWorkReport(@PathVariable Long workReportId) {

@@ -12,11 +12,23 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
+/**
+ * The type Data loader.
+ */
 @Component
 @RequiredArgsConstructor
 public class DataLoader implements CommandLineRunner {
+    /**
+     * The Authentication service.
+     */
     private final AuthenticationService authenticationService;
 
+    /**
+     * Run.
+     *
+     * @param args the args
+     * @throws Exception the exception
+     */
     @Override
     public void run(String... args) throws Exception {
 

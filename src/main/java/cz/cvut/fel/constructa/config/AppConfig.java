@@ -22,7 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class AppConfig {
 
     /**
-     * The Repository.
+     * The User repoitory for userdetails.
      */
     private final UserRepository repository;
 

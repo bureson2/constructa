@@ -18,13 +18,24 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * The type Vehicle report controller.
+ */
 @CrossOrigin
 @RestController
 @RequestMapping("/api/v1/vehicles")
 @RequiredArgsConstructor
 public class VehicleReportControllerImpl implements VehicleReportsController {
+    /**
+     * The Vehicle report service.
+     */
     private final VehicleReportService vehicleReportService;
 
+    /**
+     * Gets vehicle reports.
+     *
+     * @return the vehicle reports
+     */
     @Override
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
@@ -35,6 +46,12 @@ public class VehicleReportControllerImpl implements VehicleReportsController {
         );
     }
 
+    /**
+     * Gets vehicle reports by vehicle.
+     *
+     * @param carId the car id
+     * @return the vehicle reports by vehicle
+     */
     @Override
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
@@ -45,6 +62,12 @@ public class VehicleReportControllerImpl implements VehicleReportsController {
         );
     }
 
+    /**
+     * Gets vehicle report.
+     *
+     * @param vehicleReportId the vehicle report id
+     * @return the vehicle report
+     */
     @Override
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
@@ -59,6 +82,13 @@ public class VehicleReportControllerImpl implements VehicleReportsController {
         return ResponseEntity.notFound().build();
     }
 
+    /**
+     * Create vehicle report response entity.
+     *
+     * @param request the request
+     * @return the response entity
+     * @throws ParseException the parse exception
+     */
     @Override
     @ResponseStatus(code = HttpStatus.CREATED)
     @ResponseBody
@@ -69,6 +99,13 @@ public class VehicleReportControllerImpl implements VehicleReportsController {
         );
     }
 
+    /**
+     * Update vehicle report response entity.
+     *
+     * @param request the request
+     * @return the response entity
+     * @throws ParseException the parse exception
+     */
     @Override
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
@@ -79,6 +116,12 @@ public class VehicleReportControllerImpl implements VehicleReportsController {
         );
     }
 
+    /**
+     * Delete vehicle report response entity.
+     *
+     * @param reportId the report id
+     * @return the response entity
+     */
     @Override
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @DeleteMapping(value = "/reports/{reportId}")

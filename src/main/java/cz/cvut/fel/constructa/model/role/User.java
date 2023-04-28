@@ -19,7 +19,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.*;
 
 /**
- * The type User.
+ * The User class represents a user in the system.
+ * It contains information about the user's role, login credentials, contact information,
+ * and the various reports and tasks associated with them.
  */
 @Data
 @Builder
@@ -29,7 +31,7 @@ import java.util.*;
 @Table(name = "employees")
 public class User implements UserDetails {
     /**
-     * The Id.
+     * The unique identifier for the user.
      */
 //    TODO do bakalarky napis o 2 moznostech extends user
 //    https://www.youtube.com/watch?v=KxqlJblhzfI&t=3595s 28:00
@@ -39,166 +41,161 @@ public class User implements UserDetails {
     private Long id;
 
     /**
-     * The Username.
+     * The username for the user.
      */
     @Column(name = "username", nullable = false)
     private String username;
 
     /**
-     * The Email.
+     * The email address for the user.
      */
     @Column(name = "email")
     private String email;
     /**
-     * The Password.
+     * The password for the user.
      */
     @Column(name = "password")
     private String password;
 
     /**
-     * The Phone.
+     * The phone number for the user.
      */
     @Column(name = "phone")
     private String phone;
 
     /**
-     * The Role.
+     * The role of the user in the system.
      */
-//    @Enumerated(EnumType.STRING)
-//    private List<Role> roles;
     @Enumerated(EnumType.STRING)
     private Role role;
 
     /**
-     * The Title before name.
+     * The title before name for the user.
      */
     @Column(name = "title_before_name")
     private String titleBeforeName;
 
     /**
-     * The Firstname.
+     * The first name of the user.
      */
 //    @Column(name = "firstname", nullable = false)
     @Column(name = "firstname")
     private String firstname;
 
     /**
-     * The Lastname.
+     * The last name of the user.
      */
 //    @Column(name = "lastname", nullable = false)
     @Column(name = "lastname")
     private String lastname;
 
     /**
-     * The Title after name.
+     * The title after name for the user.
      */
     @Column(name = "title_after_name")
     private String titleAfterName;
 
     /**
-     * The Bank account.
+     * The bank account number for the user.
      */
-//    @Column(name = "bank_account", nullable = false)
     @Column(name = "bank_account")
     private String bankAccount;
 
     /**
-     * The Date of acceptance.
+     * The date the user was accepted into the system.
      */
-//    @Column(name = "date_of_acceptance", nullable = false)
     @Column(name = "date_of_acceptance")
     private Date dateOfAcceptance;
 
     /**
-     * The Date of birth.
+     * The date of birth for the user.
      */
-//    @Column(name = "date_of_birth", nullable = false)
     @Column(name = "date_of_birth")
     private Date dateOfBirth;
 
     /**
-     * The Birth id.
+     * The birth ID for the user.
      */
 //    @Column(name = "birth_id", nullable = false)
     @Column(name = "birth_id")
     private String birthId;
 
     /**
-     * The Hour rate.
+     * The hourly rate for the user.
      */
     @Column(name = "hour_rate")
     private int hourRate;
 
     /**
-     * The Month salary.
+     * The monthly salary for the user.
      */
     @Column(name = "month_salary")
     private int monthSalary;
 
     /**
-     * The Created tasks.
+     * The list of tasks created by the user.
      */
     @OneToMany(mappedBy = "author")
     private List<Task> createdTasks = new ArrayList<>();
 
     /**
-     * The Assigned tasks.
+     * The list of tasks assigned to the user.
      */
     @OneToMany(mappedBy = "assignee")
     private List<Task> assignedTasks = new ArrayList<>();
 
     /**
-     * The Attendance.
+     * The User's attendance report.
      */
     @OneToMany(mappedBy = "reportingEmployee")
     private List<WorkReport> attendance = new ArrayList<>();
 
     /**
-     * The Finance reports.
+     * The User's finance reports.
      */
     @OneToMany(mappedBy = "salariedEmployee")
     private List<FinanceReport> financeReports = new ArrayList<>();
 
     /**
-     * The Projects.
+     * The list of projects managed by the user.
      */
     @OneToMany(mappedBy = "projectManager")
     private List<Project> projects = new ArrayList<>();
 
     /**
-     * The User address.
+     * The User's address.
      */
     @ManyToOne
     @JoinColumn(name = "location_id")
     private Location userAddress;
 
     /**
-     * The External project work.
+     * The list of external projects the user has worked on.
      */
     @OneToMany(mappedBy = "externalist")
     private List<ExternalistInProject> externalProjectWork = new ArrayList<>();
 
     /**
-     * The Vehicle reports.
+     * The list of vehicle reports submitted by the user.
      */
     @OneToMany(mappedBy = "driver")
     private List<VehicleReport> vehicleReports = new ArrayList<>();
 
     /**
-     * The Loans.
+     * The list of loans that the user has taken.
      */
     @OneToMany(mappedBy = "loaner")
     private List<Loan> loans = new ArrayList<>();
 
     /**
-     * The Company.
+     * The company that the user is associated with.
      */
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;
 
     /**
-     * The Responsible persons.
+     * The set of responsible persons in construction diaries that the user is associated with.
      */
     @ManyToMany
     @JoinTable(
@@ -209,7 +206,7 @@ public class User implements UserDetails {
     private Set<ResponsiblePersonInConstructionDiary> responsiblePersons = new HashSet<>();
 
     /**
-     * The User document links.
+     * The set of user document links.
      */
     @ManyToMany
     @JoinTable(
@@ -220,23 +217,10 @@ public class User implements UserDetails {
     private Set<Document> userDocumentLinks = new HashSet<>();
 
     /**
-     * The Constructions report.
+     * The list of construction reports that the user has executed.
      */
     @OneToMany(mappedBy = "executor")
     private List<ConstructionReport> constructionsReport = new ArrayList<>();
-
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        User user = (User) o;
-//        return hourRate == user.hourRate && monthSalary == user.monthSalary && id.equals(user.id) && username.equals(user.username) && email.equals(user.email) && password.equals(user.password) && roles.equals(user.roles) && Objects.equals(titleBeforeName, user.titleBeforeName) && Objects.equals(firstname, user.firstname) && lastname.equals(user.lastname) && Objects.equals(titleAfterName, user.titleAfterName) && Objects.equals(bankAccount, user.bankAccount) && dateOfAcceptance.equals(user.dateOfAcceptance) && dateOfBirth.equals(user.dateOfBirth) && birthId.equals(user.birthId);
-//    }
-
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(id, username, email, dateOfAcceptance, birthId);
-//    }
 
     /**
      * Gets authorities.

@@ -13,13 +13,24 @@ import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 import java.util.List;
 
+/**
+ * The type Company controller.
+ */
 @CrossOrigin
 @RestController
 @RequestMapping("/api/v1/companies")
 @RequiredArgsConstructor
 public class CompanyControllerImpl implements CompanyController {
+    /**
+     * The Company service.
+     */
     private final CompanyService companyService;
 
+    /**
+     * Gets companies.
+     *
+     * @return the companies
+     */
     @Override
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
@@ -30,6 +41,12 @@ public class CompanyControllerImpl implements CompanyController {
         );
     }
 
+    /**
+     * Gets companys.
+     *
+     * @param companyId the company id
+     * @return the companys
+     */
     @Override
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
@@ -44,6 +61,13 @@ public class CompanyControllerImpl implements CompanyController {
         return ResponseEntity.notFound().build();
     }
 
+    /**
+     * Create company response entity.
+     *
+     * @param request the request
+     * @return the response entity
+     * @throws ParseException the parse exception
+     */
     @Override
     @ResponseStatus(code = HttpStatus.CREATED)
     @ResponseBody
@@ -54,6 +78,13 @@ public class CompanyControllerImpl implements CompanyController {
         );
     }
 
+    /**
+     * Edit company response entity.
+     *
+     * @param request the request
+     * @return the response entity
+     * @throws ParseException the parse exception
+     */
     @Override
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
@@ -64,6 +95,12 @@ public class CompanyControllerImpl implements CompanyController {
         );
     }
 
+    /**
+     * Delete company response entity.
+     *
+     * @param companyId the company id
+     * @return the response entity
+     */
     @Override
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @DeleteMapping(value = "/{companyId}")

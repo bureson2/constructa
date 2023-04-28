@@ -13,13 +13,24 @@ import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 import java.util.List;
 
+/**
+ * The type Construction report controller.
+ */
 @CrossOrigin
 @RestController
 @RequestMapping("/api/v1/construction-reports")
 @RequiredArgsConstructor
 public class ConstructionReportControllerImpl implements ConstructionReportController {
+    /**
+     * The Construction report service.
+     */
     private final ConstructionReportService constructionReportService;
 
+    /**
+     * Gets construction reports.
+     *
+     * @return the construction reports
+     */
     @Override
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
@@ -30,6 +41,12 @@ public class ConstructionReportControllerImpl implements ConstructionReportContr
         );
     }
 
+    /**
+     * Gets construction reports by project id.
+     *
+     * @param projectId the project id
+     * @return the construction reports by project id
+     */
     @Override
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
@@ -40,6 +57,12 @@ public class ConstructionReportControllerImpl implements ConstructionReportContr
         );
     }
 
+    /**
+     * Gets construction report.
+     *
+     * @param constructionReportId the construction report id
+     * @return the construction report
+     */
     @Override
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
@@ -54,6 +77,13 @@ public class ConstructionReportControllerImpl implements ConstructionReportContr
         return ResponseEntity.notFound().build();
     }
 
+    /**
+     * Create construction report response entity.
+     *
+     * @param request the request
+     * @return the response entity
+     * @throws ParseException the parse exception
+     */
     @Override
     @ResponseStatus(code = HttpStatus.CREATED)
     @ResponseBody
@@ -64,6 +94,12 @@ public class ConstructionReportControllerImpl implements ConstructionReportContr
         );
     }
 
+    /**
+     * Delete construction report response entity.
+     *
+     * @param constructionReportId the construction report id
+     * @return the response entity
+     */
     @Override
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @DeleteMapping(value = "/{constructionReportId}")

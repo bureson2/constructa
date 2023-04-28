@@ -14,13 +14,24 @@ import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 import java.util.List;
 
+/**
+ * The type Vehicle controller.
+ */
 @CrossOrigin
 @RestController
 @RequestMapping("/api/v1/vehicles")
 @RequiredArgsConstructor
 public class VehicleControllerImpl implements VehicleController {
+    /**
+     * The Vehicle service.
+     */
     private final VehicleService vehicleService;
 
+    /**
+     * Gets vehicles.
+     *
+     * @return the vehicles
+     */
     @Override
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
@@ -31,6 +42,11 @@ public class VehicleControllerImpl implements VehicleController {
         );
     }
 
+    /**
+     * Gets input vehicles.
+     *
+     * @return the input vehicles
+     */
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
     @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -40,6 +56,12 @@ public class VehicleControllerImpl implements VehicleController {
         );
     }
 
+    /**
+     * Gets vehicle.
+     *
+     * @param vehicleId the vehicle id
+     * @return the vehicle
+     */
     @Override
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
@@ -52,6 +74,13 @@ public class VehicleControllerImpl implements VehicleController {
         return ResponseEntity.notFound().build();
     }
 
+    /**
+     * Create vehicle response entity.
+     *
+     * @param request the request
+     * @return the response entity
+     * @throws ParseException the parse exception
+     */
     @Override
     @ResponseStatus(code = HttpStatus.CREATED)
     @ResponseBody
@@ -62,6 +91,13 @@ public class VehicleControllerImpl implements VehicleController {
         );
     }
 
+    /**
+     * Update vehicle response entity.
+     *
+     * @param request the request
+     * @return the response entity
+     * @throws ParseException the parse exception
+     */
     @Override
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
@@ -72,6 +108,12 @@ public class VehicleControllerImpl implements VehicleController {
         );
     }
 
+    /**
+     * Delete vehicle response entity.
+     *
+     * @param vehicleId the vehicle id
+     * @return the response entity
+     */
     @Override
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @DeleteMapping(value = "/{vehicleId}")

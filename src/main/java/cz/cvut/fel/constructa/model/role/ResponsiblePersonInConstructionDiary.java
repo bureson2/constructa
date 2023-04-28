@@ -10,14 +10,16 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * The type Responsible person in construction diary.
+ * The ResponsiblePersonInConstructionDiary class represents a responsible person working on a construction diary.
+ * It contains information about the responsible person's role on the construction diary,
+ * the construction diary project object, and the set of responsible persons.
  */
 @Entity
 @Table(name = "responsible_persons_in_construction_diary")
 @Data
 public class ResponsiblePersonInConstructionDiary {
     /**
-     * The Id.
+     * The unique identifier for the responsible person in construction diary.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,20 +27,20 @@ public class ResponsiblePersonInConstructionDiary {
     private Long id;
 
     /**
-     * The Roles.
+     * The roles of the responsible person on the construction diary.
      */
     @Enumerated(EnumType.STRING)
     private List<ConstructionDiaryRole> roles;
 
     /**
-     * The Construction diary.
+     * The construction diary.
      */
     @ManyToOne
     @JoinColumn(name = "project_id")
     private Project constructionDiary;
 
     /**
-     * The Responsible persons.
+     * The set of responsible persons.
      */
     @ManyToMany(mappedBy = "responsiblePersons")
     private Set<User> responsiblePersons = new HashSet<>();

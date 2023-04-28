@@ -14,13 +14,24 @@ import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 import java.util.List;
 
+/**
+ * The type Task controller.
+ */
 @CrossOrigin
 @RestController
 @RequestMapping("/api/v1/tasks")
 @RequiredArgsConstructor
 public class TaskControllerImpl implements TaskController {
+    /**
+     * The Task service.
+     */
     private final TaskService taskService;
 
+    /**
+     * Gets tasks.
+     *
+     * @return the tasks
+     */
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -30,6 +41,11 @@ public class TaskControllerImpl implements TaskController {
         );
     }
 
+    /**
+     * Gets user tasks.
+     *
+     * @return the user tasks
+     */
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
     @GetMapping(value = "/my", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -39,6 +55,12 @@ public class TaskControllerImpl implements TaskController {
         );
     }
 
+    /**
+     * Gets task.
+     *
+     * @param taskId the task id
+     * @return the task
+     */
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
     @GetMapping(value = "/{taskId}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -50,6 +72,13 @@ public class TaskControllerImpl implements TaskController {
         return ResponseEntity.notFound().build();
     }
 
+    /**
+     * Create task response entity.
+     *
+     * @param request the request
+     * @return the response entity
+     * @throws ParseException the parse exception
+     */
     @ResponseStatus(code = HttpStatus.CREATED)
     @ResponseBody
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -59,6 +88,13 @@ public class TaskControllerImpl implements TaskController {
         );
     }
 
+    /**
+     * Edit task response entity.
+     *
+     * @param request the request
+     * @return the response entity
+     * @throws ParseException the parse exception
+     */
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -68,6 +104,12 @@ public class TaskControllerImpl implements TaskController {
         );
     }
 
+    /**
+     * Edit task state response entity.
+     *
+     * @param request the request
+     * @return the response entity
+     */
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
     @PostMapping(value = "/state",consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -77,6 +119,12 @@ public class TaskControllerImpl implements TaskController {
         );
     }
 
+    /**
+     * Delete task response entity.
+     *
+     * @param taskId the task id
+     * @return the response entity
+     */
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @DeleteMapping(value = "/{taskId}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long taskId) {

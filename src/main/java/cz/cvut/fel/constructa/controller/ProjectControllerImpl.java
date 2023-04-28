@@ -13,13 +13,24 @@ import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 import java.util.List;
 
+/**
+ * The type Project controller.
+ */
 @CrossOrigin
 @RestController
 @RequestMapping("/api/v1/projects")
 @RequiredArgsConstructor
 public class ProjectControllerImpl implements ProjectController {
+    /**
+     * The Project service.
+     */
     private final ProjectService projectService;
 
+    /**
+     * Gets projects.
+     *
+     * @return the projects
+     */
     @Override
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
@@ -28,6 +39,12 @@ public class ProjectControllerImpl implements ProjectController {
         return ResponseEntity.ok().body(projectService.getProjects());
     }
 
+    /**
+     * Gets projects.
+     *
+     * @param projectId the project id
+     * @return the projects
+     */
     @Override
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
@@ -40,6 +57,13 @@ public class ProjectControllerImpl implements ProjectController {
         return ResponseEntity.notFound().build();
     }
 
+    /**
+     * Create project response entity.
+     *
+     * @param request the request
+     * @return the response entity
+     * @throws ParseException the parse exception
+     */
     @Override
     @ResponseStatus(code = HttpStatus.CREATED)
     @ResponseBody
@@ -48,6 +72,13 @@ public class ProjectControllerImpl implements ProjectController {
         return ResponseEntity.ok().body(projectService.create(request));
     }
 
+    /**
+     * Edit project response entity.
+     *
+     * @param request the request
+     * @return the response entity
+     * @throws ParseException the parse exception
+     */
     @Override
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
@@ -56,6 +87,12 @@ public class ProjectControllerImpl implements ProjectController {
         return ResponseEntity.ok().body(projectService.update(request));
     }
 
+    /**
+     * Delete project response entity.
+     *
+     * @param projectId the project id
+     * @return the response entity
+     */
     @Override
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @DeleteMapping(value = "/{projectId}")

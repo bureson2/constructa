@@ -8,14 +8,16 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * The type Externalist in project.
+ * The ExternalistInProject class represents an external collaborator working on a project.
+ * It contains information about the externalist's role on the project, the externalist user object,
+ * and the project object.
  */
 @Entity
 @Table(name = "externalist_in_projects")
 @Data
 public class ExternalistInProject {
     /**
-     * The Id.
+     * The unique identifier for the externalist in project.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,20 +25,20 @@ public class ExternalistInProject {
     private Long id;
 
     /**
-     * The Roles.
+     * The roles of the externalist on the project.
      */
     @Enumerated(EnumType.STRING)
     private List<ExternalistRole> roles;
 
     /**
-     * The Externalist.
+     * The externalist user object.
      */
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User externalist;
 
     /**
-     * The Project.
+     * The project.
      */
     @ManyToOne
     @JoinColumn(name = "project_id")

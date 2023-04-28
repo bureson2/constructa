@@ -9,14 +9,16 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * The type Work report.
+ * The WorkReport class represents a report of work performed by an employee.
+ * It contains information about the time spent on the task, the location where the work was done,
+ * the reporting employee, the finance report associated with the work, and the type of work.
  */
 @Entity
 @Table(name = "work_reports")
 @Data
 public class WorkReport {
     /**
-     * The Id.
+     * The unique identifier for the work report.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,46 +26,46 @@ public class WorkReport {
     private Long id;
 
     /**
-     * The Time from.
+     * The start time of the work.
      */
     @Column(name = "time_from")
     private Date timeFrom;
 
     /**
-     * The Time to.
+     * The end time of the work.
      */
     @Column(name="time_to")
     private Date timeTo;
 
     /**
-     * The Minutes.
+     * The duration of the work in minutes.
      */
     @Column(name="minutes")
     private int minutes;
 
     /**
-     * The Reporting employee.
+     * The employee who reported the work.
      */
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User reportingEmployee;
 
     /**
-     * The Location.
+     * The location where the work was performed.
      */
     @ManyToOne
     @JoinColumn(name = "location_id")
     private Location location;
 
     /**
-     * The Finance report.
+     * The finance report associated with the work.
      */
     @ManyToOne
     @JoinColumn(name = "finance_report_id")
     private FinanceReport financeReport;
 
     /**
-     * The Type.
+     * The type of work performed.
      */
     @Enumerated(EnumType.STRING)
     private WorkReportType type;
