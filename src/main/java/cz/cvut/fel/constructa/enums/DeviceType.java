@@ -20,7 +20,7 @@ public enum DeviceType {
     /**
      * The Device type.
      */
-    private String deviceType;
+    private final String deviceType;
 
     /**
      * Instantiates a new Device type.

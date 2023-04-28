@@ -1,9 +1,6 @@
 package cz.cvut.fel.constructa.dto.request;
 
-import jakarta.persistence.Column;
 import lombok.Data;
-
-import java.util.Date;
 
 /**
  * The type Attendance request.

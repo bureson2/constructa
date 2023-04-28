@@ -20,7 +20,7 @@ public enum ConstructionDiaryReportState {
     /**
      * The Construction diary report state.
      */
-    private String constructionDiaryReportState;
+    private final String constructionDiaryReportState;
 
     /**
      * Instantiates a new Construction diary report state.

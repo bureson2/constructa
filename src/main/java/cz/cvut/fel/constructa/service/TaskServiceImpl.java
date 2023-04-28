@@ -108,7 +108,7 @@ public class TaskServiceImpl implements TaskService {
         return tasks.stream()
                 .map(taskMapper::convertToDto)
                 .collect(Collectors.toList());
-    };
+    }
 
     /**
      * Deletes a task by its ID.

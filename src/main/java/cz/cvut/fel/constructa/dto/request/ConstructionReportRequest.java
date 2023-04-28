@@ -1,7 +1,6 @@
 package cz.cvut.fel.constructa.dto.request;
 
 import cz.cvut.fel.constructa.enums.ConstructionDiaryReportState;
-import cz.cvut.fel.constructa.model.role.User;
 import lombok.Data;
 
 import java.util.Date;
@@ -12,7 +11,7 @@ import java.util.Date;
 @Data
 public class ConstructionReportRequest {
     /**
-     * The Id.
+     * The ID.
      */
     private Long id;
     /**

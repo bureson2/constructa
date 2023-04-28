@@ -13,7 +13,7 @@ import java.util.Date;
 @Builder
 public class VehicleRequest {
     /**
-     * The Id.
+     * The ID.
      */
     private Long id;
     /**

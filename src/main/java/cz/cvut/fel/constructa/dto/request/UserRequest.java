@@ -13,7 +13,7 @@ import java.util.Date;
 @Builder
 public class UserRequest {
     /**
-     * The Id.
+     * The ID.
      */
     private Long id;
     /**

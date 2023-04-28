@@ -10,7 +10,7 @@ import java.util.Date;
 @Data
 public class WorkReportDTO {
     /**
-     * The Id.
+     * The ID.
      */
     private Long id;
     /**

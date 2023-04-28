@@ -47,7 +47,7 @@ public class WorkReportControllerImpl implements WorkReportController {
     /**
      * Gets my work reports.
      *
-     * @return the my work reports
+     * @return my work reports
      */
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody

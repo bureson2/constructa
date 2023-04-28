@@ -1,6 +1,5 @@
 package cz.cvut.fel.constructa.dto.response;
 
-import cz.cvut.fel.constructa.enums.VehicleType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +12,7 @@ import java.util.Date;
 @Setter
 public class VehicleDTO {
     /**
-     * The Id.
+     * The ID.
      */
     private Long id;
     /**

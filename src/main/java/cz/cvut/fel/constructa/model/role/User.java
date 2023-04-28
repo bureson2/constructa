@@ -263,7 +263,7 @@ public class User implements UserDetails {
     }
 
     /**
-     * Is account non locked boolean.
+     * Is account non-locked boolean.
      *
      * @return the boolean
      */

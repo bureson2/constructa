@@ -2,17 +2,10 @@ package cz.cvut.fel.constructa.model.loan;
 
 import cz.cvut.fel.constructa.enums.DeviceState;
 import cz.cvut.fel.constructa.enums.DeviceType;
-import cz.cvut.fel.constructa.enums.Role;
-import cz.cvut.fel.constructa.model.role.ResponsiblePersonInConstructionDiary;
-import cz.cvut.fel.constructa.model.role.User;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**

@@ -12,7 +12,7 @@ import java.util.Date;
 @Setter
 public class ProjectDTO {
     /**
-     * The Id.
+     * The ID.
      */
     private Long id;
     /**

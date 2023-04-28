@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 public class VehicleInputDTO {
     /**
-     * The Id.
+     * The ID.
      */
     private Long id;
     /**

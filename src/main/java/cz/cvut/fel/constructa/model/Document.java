@@ -1,7 +1,6 @@
 package cz.cvut.fel.constructa.model;
 
 import cz.cvut.fel.constructa.enums.MultimediaType;
-import cz.cvut.fel.constructa.enums.ProjectState;
 import cz.cvut.fel.constructa.model.report.ConstructionReport;
 import cz.cvut.fel.constructa.model.role.User;
 import jakarta.persistence.*;

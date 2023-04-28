@@ -36,7 +36,7 @@ public interface WorkReportController {
     /**
      * Gets my work reports.
      *
-     * @return the my work reports
+     * @return my work reports
      */
     @GetMapping(value="/my", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<List<WorkReportDTO>> getMyWorkReports();

@@ -1,17 +1,15 @@
 package cz.cvut.fel.constructa.model.report;
 
 import cz.cvut.fel.constructa.enums.ConstructionDiaryReportState;
-import cz.cvut.fel.constructa.enums.WorkReportType;
-import cz.cvut.fel.constructa.model.*;
-import cz.cvut.fel.constructa.model.role.ExternalistInProject;
+import cz.cvut.fel.constructa.model.Document;
+import cz.cvut.fel.constructa.model.Project;
 import cz.cvut.fel.constructa.model.role.User;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A report about a construction site's work for a given day.

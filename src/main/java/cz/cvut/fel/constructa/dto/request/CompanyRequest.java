@@ -11,7 +11,7 @@ import lombok.Data;
 @Builder
 public class CompanyRequest {
     /**
-     * The Id.
+     * The ID.
      */
     private Long id;
     /**

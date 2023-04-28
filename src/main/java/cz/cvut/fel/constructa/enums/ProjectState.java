@@ -20,7 +20,7 @@ public enum ProjectState {
     /**
      * The Project state.
      */
-    private String projectState;
+    private final String projectState;
 
     /**
      * Instantiates a new Project state.

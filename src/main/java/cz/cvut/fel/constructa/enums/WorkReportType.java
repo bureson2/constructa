@@ -5,7 +5,7 @@ package cz.cvut.fel.constructa.enums;
  */
 public enum WorkReportType {
     /**
-     * Work report work report type.
+     * Standard daily work report type.
      */
     WORK_REPORT("Pracovní záznam"),
     /**
@@ -32,7 +32,7 @@ public enum WorkReportType {
     /**
      * The Work report type.
      */
-    private String workReportType;
+    private final String workReportType;
 
     /**
      * Instantiates a new Work report type.

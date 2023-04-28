@@ -117,7 +117,7 @@ public class WorkReportServiceImpl implements WorkReportService {
     }
 
     /**
-     * Record work report work report dto.
+     * Record work report.
      *
      * @param request the request
      * @return the work report dto
@@ -222,7 +222,7 @@ public class WorkReportServiceImpl implements WorkReportService {
     /**
      * Gets my work reports.
      *
-     * @return the my work reports
+     * @return my work reports
      */
     @Override
     public List<WorkReportDTO> getMyWorkReports() {

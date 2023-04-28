@@ -20,7 +20,7 @@ public enum ExternalistRole {
     /**
      * The Externalist role.
      */
-    private String externalistRole;
+    private final String externalistRole;
 
     /**
      * Instantiates a new Externalist role.

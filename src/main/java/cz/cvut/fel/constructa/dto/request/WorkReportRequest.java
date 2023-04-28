@@ -11,7 +11,7 @@ import java.util.Date;
 @Data
 public class WorkReportRequest {
     /**
-     * The Id.
+     * The ID.
      */
     private Long id;
     /**

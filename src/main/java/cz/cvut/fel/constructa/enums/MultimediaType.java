@@ -20,7 +20,7 @@ public enum MultimediaType {
     /**
      * The Multimedia type.
      */
-    private String multimediaType;
+    private final String multimediaType;
 
     /**
      * Instantiates a new Multimedia type.

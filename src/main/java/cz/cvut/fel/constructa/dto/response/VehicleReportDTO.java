@@ -12,7 +12,7 @@ import java.util.Date;
 @Setter
 public class VehicleReportDTO {
     /**
-     * The Id.
+     * The ID.
      */
     private Long id;
     /**

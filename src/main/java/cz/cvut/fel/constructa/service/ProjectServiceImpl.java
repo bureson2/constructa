@@ -84,7 +84,6 @@ public class ProjectServiceImpl implements ProjectService {
 
     /**
      * Returns a list of all projects in the database, mapped to DTO objects.
-     *
      * Note that this method returns all projects, which could potentially be a large amount of data.
      * Consider using pagination or filtering to limit the amount of data returned.
      *

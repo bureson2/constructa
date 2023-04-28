@@ -53,7 +53,7 @@ public enum Role {
     /**
      * The Role.
      */
-    private String role;
+    private final String role;
 
     /**
      * Instantiates a new Role.

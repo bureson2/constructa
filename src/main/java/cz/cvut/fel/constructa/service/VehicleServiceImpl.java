@@ -4,9 +4,7 @@ import cz.cvut.fel.constructa.dto.request.VehicleRequest;
 import cz.cvut.fel.constructa.dto.response.VehicleDTO;
 import cz.cvut.fel.constructa.dto.response.VehicleInputDTO;
 import cz.cvut.fel.constructa.mapper.VehicleMapper;
-import cz.cvut.fel.constructa.model.Company;
 import cz.cvut.fel.constructa.model.Vehicle;
-import cz.cvut.fel.constructa.repository.UserRepository;
 import cz.cvut.fel.constructa.repository.VehicleRepository;
 import cz.cvut.fel.constructa.service.interfaces.VehicleService;
 import lombok.RequiredArgsConstructor;
@@ -27,10 +25,7 @@ public class VehicleServiceImpl implements VehicleService {
      * The Vehicle dao.
      */
     private final VehicleRepository vehicleDao;
-    /**
-     * The User dao.
-     */
-    private final UserRepository userDao;
+
     /**
      * The Vehicle mapper.
      */

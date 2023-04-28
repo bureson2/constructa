@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 public class UserInputDTO {
     /**
-     * The Id.
+     * The ID.
      */
     private Long id;
     /**

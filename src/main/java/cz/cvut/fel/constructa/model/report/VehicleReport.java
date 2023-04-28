@@ -1,9 +1,14 @@
 package cz.cvut.fel.constructa.model.report;
 
-import cz.cvut.fel.constructa.model.*;
+import cz.cvut.fel.constructa.model.Company;
+import cz.cvut.fel.constructa.model.Project;
+import cz.cvut.fel.constructa.model.Vehicle;
 import cz.cvut.fel.constructa.model.role.User;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.HashSet;

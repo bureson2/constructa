@@ -24,7 +24,7 @@ public enum TaskState {
     /**
      * The Task state.
      */
-    private String taskState;
+    private final String taskState;
 
     /**
      * Instantiates a new Task state.

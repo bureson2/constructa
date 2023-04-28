@@ -20,7 +20,7 @@ public enum VehicleType {
     /**
      * The Vehicle type.
      */
-    private String vehicleType;
+    private final String vehicleType;
 
     /**
      * Instantiates a new Vehicle type.

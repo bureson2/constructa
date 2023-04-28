@@ -24,7 +24,7 @@ public enum DeviceState {
     /**
      * The Device state.
      */
-    private String deviceState;
+    private final String deviceState;
 
     /**
      * Instantiates a new Device state.

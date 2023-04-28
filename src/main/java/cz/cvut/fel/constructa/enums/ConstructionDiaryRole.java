@@ -36,7 +36,7 @@ public enum ConstructionDiaryRole {
     /**
      * The Construction diary role.
      */
-    private String constructionDiaryRole;
+    private final String constructionDiaryRole;
 
     /**
      * Instantiates a new Construction diary role.

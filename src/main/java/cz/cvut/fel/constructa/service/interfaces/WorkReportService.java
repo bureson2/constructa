@@ -32,7 +32,7 @@ public interface WorkReportService {
     void recordIllness(IllnessRequest request);
 
     /**
-     * Record work report work report dto.
+     * Record work report.
      *
      * @param request the request
      * @return the work report dto
@@ -64,7 +64,7 @@ public interface WorkReportService {
     /**
      * Gets my work reports.
      *
-     * @return the my work reports
+     * @return my work reports
      */
     List<WorkReportDTO> getMyWorkReports();
 

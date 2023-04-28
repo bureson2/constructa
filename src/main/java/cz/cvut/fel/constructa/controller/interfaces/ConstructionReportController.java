@@ -29,7 +29,7 @@ public interface ConstructionReportController {
      * @return the construction reports by project id
      */
     @GetMapping(value="project/{projectId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<ConstructionReportDTO>> getConstructionReportsByProjectId(Long projectId);
+    ResponseEntity<List<ConstructionReportDTO>> getConstructionReportsByProjectId(@PathVariable Long projectId);
 
     /**
      * Gets construction report.
