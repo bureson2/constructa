@@ -49,20 +49,20 @@ public class AuthenticationService {
      * @return the string
      */
     public static String generateUsername(String firstName, String lastName) {
-        // Odstraňte mezery v prvním a posledním jménu
+        // Remove spaces from the first and last name
         firstName = firstName.trim().replaceAll("\\s+","");
         lastName = lastName.trim().replaceAll("\\s+","");
 
-        // Náhodné číslo mezi 1 a 100
+        // Random number between 1 and 100
         Random random = new Random();
         int randomNumber = random.nextInt(100) + 1;
 
-        // Kombinace prvního a posledního jména s náhodným číslem
+        // Combination of first and last name with a random number
         String username = firstName.substring(0, Math.min(firstName.length(), 3)) +
                 lastName.substring(0, Math.min(lastName.length(), 3)) +
                 randomNumber;
 
-        // Vrátí výsledné uživatelské jméno
+        // Return the final username
         return username.toLowerCase();
     }
 

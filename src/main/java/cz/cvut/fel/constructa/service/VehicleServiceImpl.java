@@ -17,13 +17,32 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * The type Vehicle service.
+ */
 @Service
 @RequiredArgsConstructor
 public class VehicleServiceImpl implements VehicleService {
+    /**
+     * The Vehicle dao.
+     */
     private final VehicleRepository vehicleDao;
+    /**
+     * The User dao.
+     */
     private final UserRepository userDao;
+    /**
+     * The Vehicle mapper.
+     */
     private final VehicleMapper vehicleMapper;
 
+    /**
+     * Create vehicle dto.
+     *
+     * @param request the request
+     * @return the vehicle dto
+     * @throws ParseException the parse exception
+     */
     @Override
     public VehicleDTO create(VehicleRequest request) throws ParseException {
         Vehicle vehicle = vehicleMapper.convertToEntity(request);
@@ -31,12 +50,23 @@ public class VehicleServiceImpl implements VehicleService {
         return vehicleMapper.convertToDto(vehicle);
     }
 
+    /**
+     * Gets vehicle by id.
+     *
+     * @param id the id
+     * @return the vehicle by id
+     */
     @Override
     public VehicleDTO getVehicleById(Long id) {
         Optional<Vehicle> vehicle = vehicleDao.findById(id);
         return vehicle.map(vehicleMapper::convertToDto).orElse(null);
     }
 
+    /**
+     * Gets vehicles.
+     *
+     * @return the vehicles
+     */
     @Override
     public List<VehicleDTO> getVehicles() {
         List<Vehicle> vehicles = vehicleDao.findAll();
@@ -45,6 +75,11 @@ public class VehicleServiceImpl implements VehicleService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Gets input vehicles.
+     *
+     * @return the input vehicles
+     */
     @Override
     public List<VehicleInputDTO> getInputVehicles() {
         List<Vehicle> vehicles = vehicleDao.findAll();
@@ -53,6 +88,13 @@ public class VehicleServiceImpl implements VehicleService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Update vehicle dto.
+     *
+     * @param request the request
+     * @return the vehicle dto
+     * @throws ParseException the parse exception
+     */
     @Override
     public VehicleDTO update(VehicleRequest request) throws ParseException {
         Vehicle vehicle = vehicleMapper.convertToEntity(request);
@@ -60,6 +102,11 @@ public class VehicleServiceImpl implements VehicleService {
         return vehicleMapper.convertToDto(vehicle);
     }
 
+    /**
+     * Delete vehicle.
+     *
+     * @param id the id
+     */
     @Override
     public void deleteVehicle(Long id) {
         vehicleDao.deleteById(id);

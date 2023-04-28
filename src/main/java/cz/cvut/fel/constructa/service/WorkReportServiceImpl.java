@@ -26,16 +26,44 @@ import java.text.ParseException;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * The type Work report service.
+ */
 @Service
 @RequiredArgsConstructor
 public class WorkReportServiceImpl implements WorkReportService {
+    /**
+     * The User dao.
+     */
     private final UserRepository userDao;
+    /**
+     * The Work report dao.
+     */
     private final WorkReportRepository workReportDao;
+    /**
+     * The Location dao.
+     */
     private final LocationRepository locationDao;
+    /**
+     * The Work report mapper.
+     */
     private final WorkReportMapper workReportMapper;
+    /**
+     * The Location mapper.
+     */
     private final LocationMapper locationMapper;
+    /**
+     * The Authentication facade.
+     */
     private final AuthenticationFacade authenticationFacade;
 
+    /**
+     * Create work report dto.
+     *
+     * @param request the request
+     * @return the work report dto
+     * @throws ParseException the parse exception
+     */
     @Override
     public WorkReportDTO create(WorkReportRequest request) throws ParseException {
         WorkReport createdWorkReport = workReportMapper.convertToEntity(request);
@@ -45,6 +73,11 @@ public class WorkReportServiceImpl implements WorkReportService {
         return workReportMapper.convertToDto(createdWorkReport);
     }
 
+    /**
+     * Record illness.
+     *
+     * @param request the request
+     */
     @Override
     public void recordIllness(IllnessRequest request) {
 
@@ -83,6 +116,12 @@ public class WorkReportServiceImpl implements WorkReportService {
         }
     }
 
+    /**
+     * Record work report work report dto.
+     *
+     * @param request the request
+     * @return the work report dto
+     */
     @Override
     public WorkReportDTO recordWorkReport(AttendanceRequest request) {
 
@@ -116,6 +155,11 @@ public class WorkReportServiceImpl implements WorkReportService {
         return workReportMapper.convertToDto(workReport);
     }
 
+    /**
+     * Stop work report record.
+     *
+     * @param request the request
+     */
     @Override
     public void stopWorkReportRecord(StopAttendanceRequest request){
         Date today = new Date();
@@ -138,18 +182,35 @@ public class WorkReportServiceImpl implements WorkReportService {
         }
     }
 
+    /**
+     * Gets work report by id.
+     *
+     * @param id the id
+     * @return the work report by id
+     */
     @Override
     public WorkReportDTO getWorkReportById(Long id) {
         Optional<WorkReport> workReport = workReportDao.findAll().stream().filter(it -> it.getId().equals(id)).findFirst();
         return workReport.map(workReportMapper::convertToDto).orElse(null);
     }
 
+    /**
+     * Gets worklocation by id.
+     *
+     * @param id the id
+     * @return the worklocation by id
+     */
     @Override
     public LocationDTO getWorklocationById(Long id) {
         Optional<Location> location = locationDao.findAll().stream().filter(it -> it.getId().equals(id)).findFirst();
         return location.map(locationMapper::convertToDto).orElse(null);
     }
 
+    /**
+     * Gets work reports.
+     *
+     * @return the work reports
+     */
     @Override
     public List<WorkReportDTO> getWorkReports() {
         List<WorkReport> workReports = workReportDao.findAll();
@@ -158,6 +219,11 @@ public class WorkReportServiceImpl implements WorkReportService {
                         .collect(Collectors.toList());
     }
 
+    /**
+     * Gets my work reports.
+     *
+     * @return the my work reports
+     */
     @Override
     public List<WorkReportDTO> getMyWorkReports() {
         String authorEmail = authenticationFacade.getAuthentication().getName();
@@ -173,6 +239,12 @@ public class WorkReportServiceImpl implements WorkReportService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Gets work reports by reporting employee id.
+     *
+     * @param id the id
+     * @return the work reports by reporting employee id
+     */
     @Override
     public List<WorkReportDTO> getWorkReportsByReportingEmployeeId(Long id) {
         List<WorkReport> workReports = workReportDao.findWorkReportsByReportingEmployeeId(id);
@@ -181,11 +253,23 @@ public class WorkReportServiceImpl implements WorkReportService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Delete.
+     *
+     * @param id the id
+     */
     @Override
     public void delete(Long id) {
         workReportDao.deleteById(id);
     }
 
+    /**
+     * Update work report dto.
+     *
+     * @param request the request
+     * @return the work report dto
+     * @throws ParseException the parse exception
+     */
     @Override
     public WorkReportDTO update(WorkReportRequest request) throws ParseException {
         Optional<WorkReport> report = workReportDao.findById(request.getId());

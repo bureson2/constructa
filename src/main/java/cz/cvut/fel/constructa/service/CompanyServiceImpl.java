@@ -17,13 +17,32 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * A service class that provides CRUD operations for companies and their locations.
+ */
 @Service
 @RequiredArgsConstructor
 public class CompanyServiceImpl implements CompanyService {
+    /**
+     * The data access object for companies.
+     */
     private final CompanyRepository companyDao;
+    /**
+     * The data access object for locations.
+     */
     private final LocationRepository locationDao;
+    /**
+     * The mapper for converting between Company entities and CompanyDTOs.
+     */
     private final CompanyMapper companyMapper;
 
+    /**
+     * Creates a new company with the given details.
+     *
+     * @param request The details of the company to create.
+     * @return The newly created company.
+     * @throws ParseException if there is an error parsing the request data.
+     */
     @Override
     public CompanyDTO create(CompanyRequest request) throws ParseException {
         Location address = Location.builder()
@@ -40,6 +59,12 @@ public class CompanyServiceImpl implements CompanyService {
         return companyMapper.convertToDto(createdCompany);
     }
 
+    /**
+     * Retrieves a company by its ID.
+     *
+     * @param id The ID of the company to retrieve.
+     * @return The company with the given ID, or null if no such company exists.
+     */
     @Override
     public CompanyDTO getCompanyById(Long id) {
         Optional<Company> company = companyDao.findById(id);
@@ -47,6 +72,11 @@ public class CompanyServiceImpl implements CompanyService {
 
     }
 
+    /**
+     * Retrieves all companies.
+     *
+     * @return A list of all companies.
+     */
     @Override
     public List<CompanyDTO> getCompanies() {
         List<Company> companies = companyDao.findAll();
@@ -55,11 +85,23 @@ public class CompanyServiceImpl implements CompanyService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Deletes a company by its ID.
+     *
+     * @param id The ID of the company to delete.
+     */
     @Override
     public void delete(Long id) {
         companyDao.deleteById(id);
     }
 
+    /**
+     * Updates an existing company with the given details.
+     *
+     * @param request The details of the company to update.
+     * @return The updated company.
+     * @throws ParseException if there is an error parsing the request data.
+     */
     @Override
     public CompanyDTO update(CompanyRequest request) throws ParseException {
         Optional<Company> company = companyDao.findById(request.getId());

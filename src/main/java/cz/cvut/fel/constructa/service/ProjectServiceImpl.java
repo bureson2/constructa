@@ -20,14 +20,36 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * The service for managing projects.
+ */
 @Service
 @RequiredArgsConstructor
 public class ProjectServiceImpl implements ProjectService {
+    /**
+     * The repository for project entities.
+     */
     private final ProjectRepository projectDao;
+    /**
+     * The repository for user entities.
+     */
     private final UserRepository userDao;
+    /**
+     * The repository for location entities.
+     */
     private final LocationRepository locationDao;
+    /**
+     * The mapper for converting between ProjectRequest and Project entities.
+     */
     private final ProjectMapper projectMapper;
 
+    /**
+     * Creates a new project with the given parameters.
+     *
+     * @param request the request containing the data for the new project
+     * @return the created project DTO
+     * @throws ParseException if there is an error parsing the date in the request
+     */
     @Override
     public ProjectDTO create(ProjectRequest request) throws ParseException {
         Project createdProject = projectMapper.convertToEntity(request);
@@ -48,12 +70,26 @@ public class ProjectServiceImpl implements ProjectService {
         return projectMapper.convertToDto(createdProject);
     }
 
+    /**
+     * Gets the project with the given ID.
+     *
+     * @param id the ID of the project to retrieve
+     * @return the project DTO with the given ID, or null if no project with that ID exists
+     */
     @Override
     public ProjectDTO getProjectById(Long id) {
         Optional<Project> project = projectDao.findById(id);
         return project.map(projectMapper::convertToDto).orElse(null);
     }
 
+    /**
+     * Returns a list of all projects in the database, mapped to DTO objects.
+     *
+     * Note that this method returns all projects, which could potentially be a large amount of data.
+     * Consider using pagination or filtering to limit the amount of data returned.
+     *
+     * @return a list of all projects
+     */
     @Override
     public List<ProjectDTO> getProjects() {
         List<Project> projects = projectDao.findAll();
@@ -62,6 +98,13 @@ public class ProjectServiceImpl implements ProjectService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Updates an existing project.
+     *
+     * @param request the project request
+     * @return the updated project DTO
+     * @throws ParseException if there's a problem parsing the request
+     */
     @Override
     public ProjectDTO update(ProjectRequest request) throws ParseException {
         Optional<Project> project = projectDao.findById(request.getId());
@@ -99,6 +142,12 @@ public class ProjectServiceImpl implements ProjectService {
         return projectMapper.convertToDto(updatedProject);
     }
 
+
+    /**
+     * Deletes a project.
+     *
+     * @param id the project ID
+     */
     @Override
     public void delete(Long id) {
         projectDao.deleteById(id);

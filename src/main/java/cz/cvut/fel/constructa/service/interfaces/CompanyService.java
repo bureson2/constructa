@@ -7,46 +7,46 @@ import java.text.ParseException;
 import java.util.List;
 
 /**
- * The interface Company service.
+ * A service interface class that provides CRUD operations for companies.
  */
 public interface CompanyService {
     /**
-     * Create company dto.
+     * Creates a new company with the given details.
      *
-     * @param request the request
-     * @return the company dto
-     * @throws ParseException the parse exception
+     * @param request The details of the company to create.
+     * @return The newly created company.
+     * @throws ParseException if there is an error parsing the request data.
      */
     CompanyDTO create(CompanyRequest request) throws ParseException;
 
     /**
-     * Gets company by id.
+     * Retrieves a company by its ID.
      *
-     * @param id the id
-     * @return the company by id
+     * @param id The ID of the company to retrieve.
+     * @return The company with the given ID, or null if no such company exists.
      */
     CompanyDTO getCompanyById(Long id);
 
     /**
-     * Gets companies.
+     * Retrieves all companies.
      *
-     * @return the companies
+     * @return A list of all companies.
      */
     List<CompanyDTO> getCompanies();
 
     /**
-     * Delete.
+     * Deletes a company by its ID.
      *
-     * @param id the id
+     * @param id The ID of the company to delete.
      */
     void delete(Long id);
 
     /**
-     * Update company dto.
+     * Updates an existing company with the given details.
      *
-     * @param request the request
-     * @return the company dto
-     * @throws ParseException the parse exception
+     * @param request The details of the company to update.
+     * @return The updated company.
+     * @throws ParseException if there is an error parsing the request data.
      */
     CompanyDTO update(CompanyRequest request) throws ParseException;
 }

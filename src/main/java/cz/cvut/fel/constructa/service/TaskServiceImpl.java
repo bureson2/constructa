@@ -17,14 +17,36 @@ import java.text.ParseException;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * This class represents a service for managing tasks in a Spring application.
+ */
 @Service
 @RequiredArgsConstructor
 public class TaskServiceImpl implements TaskService {
+    /**
+     * The Task repository used for accessing task data.
+     */
     private final TaskRepository taskDao;
+    /**
+     * The User repository used for accessing user data.
+     */
     private final UserRepository userDao;
+    /**
+     * The Task mapper used for converting between Task and TaskDTO objects.
+     */
     private final TaskMapper taskMapper;
+    /**
+     * The Authentication facade used for getting the currently authenticated user.
+     */
     private final AuthenticationFacade authenticationFacade;
 
+    /**
+     * Creates a new task based on the provided TaskRequest object.
+     *
+     * @param request the TaskRequest object containing the task data.
+     * @return the created TaskDTO object.
+     * @throws ParseException if there is an error parsing the date in the TaskRequest object.
+     */
     @Override
     public TaskDTO create(TaskRequest request) throws ParseException {
         Task createdTask = taskMapper.convertToEntity(request);
@@ -42,13 +64,24 @@ public class TaskServiceImpl implements TaskService {
         return taskMapper.convertToDto(createdTask);
     }
 
+    /**
+     * Retrieves a task by its ID.
+     *
+     * @param id the ID of the task to retrieve.
+     * @return the TaskDTO object representing the retrieved task, or null if no task is found.
+     */
     @Override
-    public TaskDTO getTaskById(Long taskId) {
+    public TaskDTO getTaskById(Long id) {
 //        Optional<Task> task = taskDao.findById(taskId);
-        Optional<Task> task = taskDao.findAll().stream().filter(it -> it.getId().equals(taskId)).findFirst();
+        Optional<Task> task = taskDao.findAll().stream().filter(it -> it.getId().equals(id)).findFirst();
         return task.map(taskMapper::convertToDto).orElse(null);
     }
 
+    /**
+     * Retrieves a list of all tasks.
+     *
+     * @return the list of TaskDTO objects representing all tasks.
+     */
     @Override
     public List<TaskDTO> getTasks() {
         List<Task> tasks = taskDao.findAll();
@@ -57,6 +90,11 @@ public class TaskServiceImpl implements TaskService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Retrieves a list of tasks assigned to the currently authenticated user.
+     *
+     * @return the list of TaskDTO objects representing the user's assigned tasks.
+     */
     @Override
     public List<TaskDTO> getMyTasks(){
         String authorEmail = authenticationFacade.getAuthentication().getName();
@@ -72,11 +110,23 @@ public class TaskServiceImpl implements TaskService {
                 .collect(Collectors.toList());
     };
 
+    /**
+     * Deletes a task by its ID.
+     *
+     * @param id the ID of the task to delete.
+     */
     @Override
     public void delete(Long id) {
         taskDao.deleteById(id);
     }
 
+    /**
+     * Updates an existing task based on the provided TaskRequest object.
+     *
+     * @param request the TaskRequest object containing the updated task data.
+     * @return the updated TaskDTO object.
+     * @throws ParseException if there is an error parsing the date in the TaskRequest object.
+     */
     @Override
     public TaskDTO update(TaskRequest request) throws ParseException {
         Optional<Task> task = taskDao.findAll().stream().filter(it -> it.getId().equals(request.getId())).findFirst();
@@ -104,6 +154,12 @@ public class TaskServiceImpl implements TaskService {
         return taskMapper.convertToDto(updatedTask);
     }
 
+    /**
+     * Change task state task dto.
+     *
+     * @param request the request
+     * @return the task dto
+     */
     @Override
     public TaskDTO changeTaskState(TaskRequest request){
         Optional<Task> task = taskDao.findById(request.getId());

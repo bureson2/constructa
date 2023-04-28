@@ -11,49 +11,49 @@ import java.util.List;
  */
 public interface TaskService {
     /**
-     * Create task dto.
+     * Creates a new task based on the provided TaskRequest object.
      *
-     * @param request the request
-     * @return the task dto
-     * @throws ParseException the parse exception
+     * @param request the TaskRequest object containing the task data.
+     * @return the created TaskDTO object.
+     * @throws ParseException if there is an error parsing the date in the TaskRequest object.
      */
     TaskDTO create(TaskRequest request) throws ParseException;
 
     /**
-     * Gets task by id.
+     * Retrieves a task by its ID.
      *
-     * @param id the id
-     * @return the task by id
+     * @param id the ID of the task to retrieve.
+     * @return the TaskDTO object representing the retrieved task, or null if no task is found.
      */
     TaskDTO getTaskById(Long id);
 
     /**
-     * Gets tasks.
+     * Retrieves a list of all tasks.
      *
-     * @return the tasks
+     * @return the list of TaskDTO objects representing all tasks.
      */
     List<TaskDTO> getTasks();
 
     /**
-     * Gets my tasks.
+     * Retrieves a list of tasks assigned to the currently authenticated user.
      *
-     * @return the my tasks
+     * @return the list of TaskDTO objects representing the user's assigned tasks.
      */
     List<TaskDTO> getMyTasks();
 
     /**
-     * Delete.
+     * Deletes a task by its ID.
      *
-     * @param id the id
+     * @param id the ID of the task to delete.
      */
     void delete(Long id);
 
     /**
-     * Update task dto.
+     * Updates an existing task based on the provided TaskRequest object.
      *
-     * @param request the request
-     * @return the task dto
-     * @throws ParseException the parse exception
+     * @param request the TaskRequest object containing the updated task data.
+     * @return the updated TaskDTO object.
+     * @throws ParseException if there is an error parsing the date in the TaskRequest object.
      */
     TaskDTO update(TaskRequest request) throws ParseException;
 

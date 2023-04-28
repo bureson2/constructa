@@ -4,14 +4,14 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * The type Round time.
+ * A utility class for rounding time values to the nearest quarter hour.
  */
 public final class RoundTime {
     /**
-     * Gets rounded up minutes.
+     * Rounds up a date to the nearest quarter hour.
      *
      * @param date the date
-     * @return the rounded up minutes
+     * @return The number of minutes to add to the input date to round it up to the nearest quarter hour.
      */
     public static int getRoundedUpMinutes(Date date) {
         Calendar calendar = Calendar.getInstance();
@@ -28,10 +28,10 @@ public final class RoundTime {
     }
 
     /**
-     * Gets rounded down minutes.
+     * Rounds down a date to the nearest quarter hour.
      *
-     * @param date the date
-     * @return the rounded down minutes
+     * @param date The date to round down.
+     * @return The number of minutes to subtract from the input date to round it down to the nearest quarter hour.
      */
     public static int getRoundedDownMinutes(Date date) {
         Calendar calendar = Calendar.getInstance();
@@ -43,10 +43,10 @@ public final class RoundTime {
     }
 
     /**
-     * Sets to quarter hour.
+     * Rounds a number of minutes up to the nearest quarter hour.
      *
-     * @param minutes the minutes
-     * @return the to quarter hour
+     * @param minutes The number of minutes to round up.
+     * @return The rounded-up number of minutes.
      */
     public static int setToQuarterHour(int minutes) {
         int remainder = minutes % 15;
@@ -55,6 +55,4 @@ public final class RoundTime {
         }
         return minutes;
     }
-
-
 }

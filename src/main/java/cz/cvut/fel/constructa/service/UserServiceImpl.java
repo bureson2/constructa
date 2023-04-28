@@ -20,20 +20,46 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * The UserServiceImpl class implements the UserService interface and provides operations related to the User model.
+ */
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
+    /**
+     * The User dao.
+     */
     private final UserRepository userDao;
+    /**
+     * The Location dao.
+     */
     private final LocationRepository locationDao;
+    /**
+     * The Password encoder.
+     */
     private final PasswordEncoder passwordEncoder;
+    /**
+     * The User mapper.
+     */
     private final UserMapper userMapper;
 
+    /**
+     * Gets user by id.
+     *
+     * @param userId the user id
+     * @return the user by id
+     */
     @Override
     public UserDTO getUserById(Long userId) {
         Optional<User> user = userDao.findById(userId);
         return user.map(userMapper::convertToDto).orElse(null);
     }
 
+    /**
+     * Gets users.
+     *
+     * @return the users
+     */
     @Override
     public List<UserDTO> getUsers() {
         List<User> users = userDao.findAll();
@@ -42,6 +68,11 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Gets input users.
+     *
+     * @return the input users
+     */
     @Override
     public List<UserInputDTO> getInputUsers() {
         List<User> users = userDao.findAll();
@@ -50,11 +81,23 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Delete.
+     *
+     * @param userId the user id
+     */
     @Override
     public void delete(Long userId) {
         userDao.deleteById(userId);
     }
 
+    /**
+     * Update user dto.
+     *
+     * @param request the request
+     * @return the user dto
+     * @throws ParseException the parse exception
+     */
     @Override
     public UserDTO update(UserRequest request) throws ParseException {
         Optional<User> user = userDao.findById(request.getId());

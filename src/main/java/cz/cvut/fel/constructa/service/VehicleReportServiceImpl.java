@@ -20,15 +20,40 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * The type Vehicle report service.
+ */
 @Service
 @RequiredArgsConstructor
 public class VehicleReportServiceImpl implements VehicleReportService {
+    /**
+     * The Vehicle report dao.
+     */
     private final VehicleReportRepository vehicleReportDao;
+    /**
+     * The User dao.
+     */
     private final UserRepository userDao;
+    /**
+     * The Vehicle dao.
+     */
     private final VehicleRepository vehicleDao;
+    /**
+     * The Vehicle report mapper.
+     */
     private final VehicleReportMapper vehicleReportMapper;
+    /**
+     * The Authentication facade.
+     */
     private final AuthenticationFacade authenticationFacade;
 
+    /**
+     * Create vehicle report dto.
+     *
+     * @param request the request
+     * @return the vehicle report dto
+     * @throws ParseException the parse exception
+     */
     @Override
     public VehicleReportDTO create(VehicleReportRequest request) throws ParseException {
         VehicleReport createdReport = vehicleReportMapper.convertToEntity(request);
@@ -58,12 +83,24 @@ public class VehicleReportServiceImpl implements VehicleReportService {
         return vehicleReportMapper.convertToDto(createdReport);
     }
 
+    /**
+     * Gets vehicle report by id.
+     *
+     * @param id the id
+     * @return the vehicle report by id
+     */
     @Override
     public VehicleReportDTO getVehicleReportById(Long id) {
         Optional<VehicleReport> vehicleReport = vehicleReportDao.findAll().stream().filter(it -> it.getId().equals(id)).findFirst();
         return vehicleReport.map(vehicleReportMapper::convertToDto).orElse(null);
     }
 
+    /**
+     * Gets vehicle reports by vehicle id.
+     *
+     * @param id the id
+     * @return the vehicle reports by vehicle id
+     */
     @Override
     public List<VehicleReportDTO> getVehicleReportsByVehicleId(Long id) {
         List<VehicleReport> vehicleReports = vehicleReportDao.findVehicleReportByVehicleId(id);
@@ -72,6 +109,11 @@ public class VehicleReportServiceImpl implements VehicleReportService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Gets vehicle reports.
+     *
+     * @return the vehicle reports
+     */
     @Override
     public List<VehicleReportDTO> getVehicleReports() {
         List<VehicleReport> vehicleReports = vehicleReportDao.findAll();
@@ -80,11 +122,23 @@ public class VehicleReportServiceImpl implements VehicleReportService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Delete vehicle report.
+     *
+     * @param id the id
+     */
     @Override
     public void deleteVehicleReport(Long id) {
         vehicleReportDao.deleteById(id);
     }
 
+    /**
+     * Update vehicle report dto.
+     *
+     * @param request the request
+     * @return the vehicle report dto
+     * @throws ParseException the parse exception
+     */
     @Override
     public VehicleReportDTO update(VehicleReportRequest request) throws ParseException {
 

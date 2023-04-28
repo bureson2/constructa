@@ -12,49 +12,49 @@ import java.util.List;
  */
 public interface ConstructionReportService {
     /**
-     * Create construction report dto.
+     * Creates a new construction report based on the provided request.
      *
-     * @param request the request
-     * @return the construction report dto
-     * @throws ParseException the parse exception
+     * @param request the construction report request
+     * @return the created construction report DTO
+     * @throws ParseException if there was an error parsing a date in the request
      */
     ConstructionReportDTO create(ConstructionReportRequest request) throws ParseException;
 
     /**
-     * Gets construction reportt by id.
+     * Retrieves the construction report with the specified ID.
      *
-     * @param id the id
-     * @return the construction reportt by id
+     * @param id the ID of the construction report to retrieve
+     * @return the construction report DTO, or null if no such report exists
      */
     ConstructionReportDTO getConstructionReporttById(Long id);
 
     /**
-     * Gets construction reports.
+     * Retrieves all construction reports.
      *
-     * @return the construction reports
+     * @return a list of all construction report DTOs
      */
     List<ConstructionReportDTO> getConstructionReports();
 
-    /**
-     * Gets construction reports by project id.
+     /**
+     * Retrieves all construction reports for the project with the specified ID.
      *
-     * @param projectId the project id
-     * @return the construction reports by project id
+     * @param projectId the ID of the project for which to retrieve reports
+     * @return a list of all construction report DTOs for the specified project
      */
     List<ConstructionReportDTO> getConstructionReportsByProjectId(Long projectId);
 
     /**
-     * Delete.
+     * Deletes the construction report with the specified ID.
      *
-     * @param id the id
+     * @param id the ID of the construction report to delete
      */
     void delete(Long id);
 
     /**
-     * Update construction report.
+     * Updates the specified construction report.
      *
-     * @param constructionReport the construction report
-     * @return the construction report
+     * @param constructionReport the construction report to update
+     * @return the updated construction report
      */
     ConstructionReport update(ConstructionReportRequest constructionReport);
 }
