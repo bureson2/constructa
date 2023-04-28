@@ -14,14 +14,14 @@ import lombok.Setter;
 import java.util.*;
 
 /**
- * The type Construction report.
+ * A report about a construction site's work for a given day.
  */
 @Entity
 @Table(name = "construction_reports")
 @Data
 public class ConstructionReport {
     /**
-     * The Id.
+     * The unique identifier of this report.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,31 +29,31 @@ public class ConstructionReport {
     private Long id;
 
     /**
-     * The Task name.
+     * The name of the task that this report is about.
      */
     @Column(name = "task_name")
     private String taskName;
 
     /**
-     * The Note.
+     * Additional notes related to the report.
      */
     @Column(name = "note")
     private String note;
 
     /**
-     * The Weather.
+     * The weather condition during the work.
      */
     @Column(name = "weather_description")
     private String weather;
 
     /**
-     * The Date.
+     * The date when the work was performed and this report was written.
      */
     @Column(name = "date")
     private Date date;
 
     /**
-     * The Construction document links.
+     * The set of documents related to the construction project, included in this report.
      */
     @ManyToMany
     @JoinTable(
@@ -64,27 +64,21 @@ public class ConstructionReport {
     private Set<Document> constructionDocumentLinks = new HashSet<>();
 
     /**
-     * The Construction images.
-     */
-    @OneToMany(mappedBy = "report")
-    private List<Image> constructionImages = new ArrayList<>();
-
-    /**
-     * The Executor.
+     * The user who wrote this report.
      */
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User executor;
 
     /**
-     * The Project.
+     * The project that this report is related to.
      */
     @ManyToOne
     @JoinColumn(name = "project_id")
     private Project project;
 
     /**
-     * The State.
+     * The state of this report, indicating if it is draft, final or cancelled.
      */
     @Enumerated(EnumType.STRING)
     private ConstructionDiaryReportState state;

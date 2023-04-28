@@ -10,14 +10,14 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * The type Vehicle.
+ * Class representing a vehicle.
  */
 @Entity
 @Table(name = "vehicles")
 @Data
 public class Vehicle {
     /**
-     * The Id.
+     * The identifier of the vehicle.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,60 +25,59 @@ public class Vehicle {
     private Long id;
 
     /**
-     * The Factory.
+     * The factory that produced the vehicle.
      */
     @Column(name="factory", nullable = false)
     private String factory;
 
     /**
-     * The Name.
+     * The name or model of the vehicle.
      */
-//    model
-    @Column(name="name", nullable = false)
+    @Column(name="model", nullable = false)
     private String name;
 
     /**
-     * The Vin code.
+     * The VIN code of the vehicle.
      */
     @Column(name="vin_code", nullable = false)
     private String vinCode;
 
     /**
-     * The Registration number.
+     * The registration number of the vehicle.
      */
     @Column(name="registration_number", nullable = false)
     private String registrationNumber;
 
     /**
-     * The Condition motorcycle watch.
+     * The condition of the vehicle's motorcycle watch.
      */
     @Column(name = "condition_motorcycle_watch", nullable = false)
     private Double conditionMotorcycleWatch;
 
     /**
-     * The Mileage.
+     * The mileage of the vehicle.
      */
     @Column(name = "mileage", nullable = false)
     private Double mileage;
     /**
-     * The Bought at.
+     * The date when the vehicle was bought.
      */
     @Column(name = "bought_at", nullable = false)
     private Date boughtAt;
     /**
-     * The Created at.
+     * The date when the vehicle was created.
      */
     @Column(name = "created_at", nullable = false)
     private Date createdAt;
 
     /**
-     * The Vehicle reports.
+     * The reports associated with the vehicle.
      */
     @OneToMany(mappedBy = "vehicle")
     private List<VehicleReport> vehicleReports = new ArrayList<>();
 
     /**
-     * The Type.
+     * The type of the vehicle.
      */
     @Enumerated(EnumType.STRING)
     private VehicleType type;

@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 /**
- * The type Task.
+ * Class representing a task.
  */
 @Data
 @Builder
@@ -21,7 +21,7 @@ import java.util.Date;
 @Table(name = "tasks")
 public class Task {
     /**
-     * The Id.
+     * The identifier of the task.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,69 +29,69 @@ public class Task {
     private Long id;
 
     /**
-     * The Date of creation.
+     * The date when the task was created.
      */
     @Column(name = "date_of_creation")
     private Date dateOfCreation = new Date();
 
     /**
-     * The Name.
+     * The name of the task.
      */
     @Column(name = "name")
     private String name;
 
     /**
-     * The Description.
+     * The description of the task.
      */
     @Column(name="description")
     private String description;
 
     /**
-     * The Location name.
+     * The name of the location associated with the task.
      */
     @Column(name="location_name")
     private String locationName;
 
     /**
-     * The Latitude.
+     * The latitude of the location associated with the task.
      */
     @Column(name="latitude")
     private Double latitude;
 
     /**
-     * The Longitude.
+     * The longitude of the location associated with the task.
      */
     @Column(name="longitude")
     private Double longitude;
 
     /**
-     * The Time from.
+     * The start time of the task.
      */
     @Column(name = "time_from")
         private Date timeFrom;
 
     /**
-     * The Time to.
+     * The end time of the task.
      */
     @Column(name="time_to")
     private Date timeTo;
 
     /**
-     * The Author.
+     * The author of the task.
      */
     @ManyToOne
     @JoinColumn(name = "author_id")
     private User author;
 
     /**
-     * The Assignee.
+     * The assignee of the task.
      */
     @ManyToOne
     @JoinColumn(name = "assignee_id")
     private User assignee;
 
     /**
-     * The State.
+     * The state of the task.
      */
     @Enumerated(EnumType.STRING)
     private TaskState state;

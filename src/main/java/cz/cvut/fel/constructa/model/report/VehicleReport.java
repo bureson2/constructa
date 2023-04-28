@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * The type Vehicle report.
+ * This class represents a vehicle report entity.
  */
 @Entity
 @Table(name = "vehicle_reports")
@@ -20,7 +20,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class VehicleReport {
     /**
-     * The Id.
+     * The ID of the vehicle report.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,13 +28,13 @@ public class VehicleReport {
     private Long id;
 
     /**
-     * The Original condition motorcycle watch.
+     * The original condition of the motorcycle watch.
      */
     @Column(name = "original_condition_motorcycle_watch")
     private Double originalConditionMotorcycleWatch;
 
     /**
-     * The Afterwork condition motorcycle watch.
+     * The after-work condition of the motorcycle watch.
      */
     @Column(name = "afterwork_condition_motorcycle_watch")
     private Double afterworkConditionMotorcycleWatch;
@@ -52,58 +52,58 @@ public class VehicleReport {
     private String cargoType;
 
     /**
-     * The Distance.
+     * The distance traveled.
      */
     @Column(name = "distance")
     private Double distance;
 
     /**
-     * The Purchase of fuel litres.
+     * The amount of fuel purchased in litres.
      */
     @Column(name = "purchase_of_fuel_litres")
     private Double purchaseOfFuelLitres;
 
     /**
-     * The Time from.
+     * The start time of the report.
      */
     @Column(name = "time_from")
     private Date timeFrom;
 
     /**
-     * The Time to.
+     * The end time of the report.
      */
     @Column(name = "time_to")
     private Date timeTo;
 
     /**
-     * The Description.
+     * A description of the report.
      */
     @Column(name = "description")
     private String description;
 
     /**
-     * The Vehicle.
+     * The vehicle associated with this report.
      */
     @ManyToOne
     @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
 
     /**
-     * The Construction diary.
+     * The construction diary associated with this report.
      */
     @ManyToOne
     @JoinColumn(name = "project_id")
     private Project constructionDiary;
 
     /**
-     * The Driver.
+     * The driver associated with this report.
      */
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User driver;
 
     /**
-     * The Transport contractors.
+     * The transport contractors associated with this report.
      */
     @ManyToMany
     @JoinTable(

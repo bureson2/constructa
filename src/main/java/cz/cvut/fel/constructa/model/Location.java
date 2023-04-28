@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The type Location.
+ * Class representing a location.
  */
 @Entity
 @Table(name = "locations")
@@ -23,73 +23,73 @@ import java.util.List;
 @AllArgsConstructor
 public class Location {
     /**
-     * The Id.
+     * The location identifier.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "location_id", nullable = false)
     private Long id;
     /**
-     * The City.
+     * The city where the location is situated.
      */
     @Column(name = "city")
     private String city;
     /**
-     * The Street.
+     * The street where the location is situated.
      */
     @Column(name = "street")
     private String street;
     /**
-     * The Descriptive number.
+     * The descriptive number of the location.
      */
     @Column(name = "descriptive_number")
     private String descriptiveNumber;
     /**
-     * The Country.
+     * The country where the location is situated.
      */
     @Column(name = "country")
     private String country;
     /**
-     * The Post code.
+     * The post code of the location.
      */
     @Column(name = "postCode")
     private String postCode;
     /**
-     * The Latitude.
+     * The latitude of the location.
      */
     @Column(name="latitude")
     private Double latitude;
     /**
-     * The Longitude.
+     * The longitude of the location.
      */
     @Column(name="longitude")
     private Double longitude;
     /**
-     * The Work reports.
+     * The list of work reports associated with the location.
      */
     @OneToMany(mappedBy = "location")
     private List<WorkReport> workReports = new ArrayList<>();
 
     /**
-     * The Company.
+     * The company with the address at the location.
      */
     @OneToOne(mappedBy = "companyAddress")
     private Company company;
 
     /**
-     * The Warehouse.
+     * The warehouse with the address at the location.
      */
     @OneToOne(mappedBy = "warehouseAddress")
     private Warehouse warehouse;
 
     /**
-     * The Project.
+     * The project with the address at the location.
      */
     @OneToOne(mappedBy = "projectAddress")
     private Project project;
 
     /**
-     * The Residents.
+     * The list of residents who have their address at the location.
      */
     @OneToMany(mappedBy = "userAddress")
     private List<User> residents = new ArrayList<>();

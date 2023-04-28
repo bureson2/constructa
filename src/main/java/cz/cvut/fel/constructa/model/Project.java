@@ -14,80 +14,80 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * The type Project.
+ * Class representing a project.
  */
 @Entity
 @Table(name = "projects")
 @Data
 public class Project {
     /**
-     * The Id.
+     * The project identifier.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "project_id", nullable = false)
     private Long id;
     /**
-     * The Name.
+     * The name of the project.
      */
     @Column(name = "name", nullable = false)
     private String name;
     /**
-     * The Bulding facility.
+     * The name of the building facility associated with the project.
      */
     @Column(name = "buildingFacility", nullable = false)
     private String buldingFacility;
     /**
-     * The Started at.
+     * The date when the project started.
      */
     @Column(name = "started_at", nullable = false)
     private Date startedAt;
     /**
-     * The Deadline.
+     * The deadline for the project.
      */
     @Column(name = "deadline", nullable = false)
     private Date deadline;
 
     /**
-     * The State.
+     * The state of the project.
      */
     @Enumerated(EnumType.STRING)
     private ProjectState state;
 
     /**
-     * The Project manager.
+     * The project manager responsible for the project.
      */
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User projectManager;
 
     /**
-     * The External workers.
+     * The list of external workers involved in the project.
      */
     @OneToMany(mappedBy = "project")
     private List<ExternalistInProject> externalWorkers = new ArrayList<>();
 
     /**
-     * The Project address.
+     * The address of the project.
      */
     @OneToOne
     @JoinColumn(name = "location_id", referencedColumnName = "location_id", nullable = false)
     private Location projectAddress;
 
     /**
-     * The Construction reports.
+     * The list of construction reports associated with the project.
      */
     @OneToMany(mappedBy = "project")
     private List<ConstructionReport> constructionReports = new ArrayList<>();
 
     /**
-     * The Vehicle reports.
+     * The list of vehicle reports associated with the project.
      */
     @OneToMany(mappedBy = "constructionDiary")
     private List<VehicleReport> vehicleReports = new ArrayList<>();
 
     /**
-     * The Responsible person.
+     * The list of responsible persons in the construction diary associated with the project.
      */
     @OneToMany(mappedBy = "constructionDiary")
     private List<ResponsiblePersonInConstructionDiary> responsiblePerson = new ArrayList<>();

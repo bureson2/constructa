@@ -11,14 +11,14 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * The type Company.
+ * Class representing a company.
  */
 @Entity
 @Table(name = "companies")
 @Data
 public class Company {
     /**
-     * The Id.
+     * The company identifier.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,44 +26,44 @@ public class Company {
     private Long id;
 
     /**
-     * The Name.
+     * The name of the company.
      */
     @Column(name = "name", nullable = false)
     private String name;
 
     /**
-     * The Din.
+     * The VAT identification number of the company.
      */
     @Column(name = "din", nullable = false)
     private String din;
 
     /**
-     * The Cin.
+     * The commercial register identification number of the company.
      */
     @Column(name = "cin", nullable = false)
     private String cin;
 
     /**
-     * The Phone.
+     * The phone number of the company.
      */
     @Column(name = "phone", nullable = false)
     private String phone;
 
     /**
-     * The Company address.
+     * The address of the company.
      */
     @OneToOne
     @JoinColumn(name = "location_id", referencedColumnName = "location_id", nullable = false)
     private Location companyAddress;
 
     /**
-     * The Externalist.
+     * The list of externalists working for the company.
      */
     @OneToMany(mappedBy = "company")
     private List<User> externalist = new ArrayList<>();
 
     /**
-     * The Contractors transport reports.
+     * The set of vehicle reports for which the company is a transport contractor.
      */
     @ManyToMany(mappedBy = "transportContractors")
     private Set<VehicleReport> contractors_transport_reports = new HashSet<>();
