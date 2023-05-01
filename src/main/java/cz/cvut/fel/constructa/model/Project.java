@@ -8,6 +8,8 @@ import cz.cvut.fel.constructa.model.role.ResponsiblePersonInConstructionDiary;
 import cz.cvut.fel.constructa.model.role.User;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -65,6 +67,7 @@ public class Project {
      * The list of external workers involved in the project.
      */
     @OneToMany(mappedBy = "project")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private List<ExternalistInProject> externalWorkers = new ArrayList<>();
 
     /**
@@ -72,23 +75,27 @@ public class Project {
      */
     @OneToOne
     @JoinColumn(name = "location_id", referencedColumnName = "location_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Location projectAddress;
 
     /**
      * The list of construction reports associated with the project.
      */
     @OneToMany(mappedBy = "project")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private List<ConstructionReport> constructionReports = new ArrayList<>();
 
     /**
      * The list of vehicle reports associated with the project.
      */
     @OneToMany(mappedBy = "constructionDiary")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private List<VehicleReport> vehicleReports = new ArrayList<>();
 
     /**
      * The list of responsible persons in the construction diary associated with the project.
      */
     @OneToMany(mappedBy = "constructionDiary")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private List<ResponsiblePersonInConstructionDiary> responsiblePerson = new ArrayList<>();
 }

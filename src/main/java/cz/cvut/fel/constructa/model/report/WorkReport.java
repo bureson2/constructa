@@ -5,6 +5,8 @@ import cz.cvut.fel.constructa.model.Location;
 import cz.cvut.fel.constructa.model.role.User;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Date;
 
@@ -28,26 +30,27 @@ public class WorkReport {
     /**
      * The start time of the work.
      */
-    @Column(name = "time_from")
+    @Column(name = "time_from", nullable = false)
     private Date timeFrom;
 
     /**
      * The end time of the work.
      */
-    @Column(name="time_to")
+    @Column(name="time_to", nullable = false)
     private Date timeTo;
 
     /**
      * The duration of the work in minutes.
      */
-    @Column(name="minutes")
+    @Column(name="minutes", nullable = false)
     private int minutes;
 
     /**
      * The employee who reported the work.
      */
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User reportingEmployee;
 
     /**
@@ -55,6 +58,7 @@ public class WorkReport {
      */
     @ManyToOne
     @JoinColumn(name = "location_id")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Location location;
 
     /**
@@ -62,6 +66,7 @@ public class WorkReport {
      */
     @ManyToOne
     @JoinColumn(name = "finance_report_id")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private FinanceReport financeReport;
 
     /**

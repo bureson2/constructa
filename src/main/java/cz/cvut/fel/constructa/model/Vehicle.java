@@ -4,6 +4,8 @@ import cz.cvut.fel.constructa.enums.VehicleType;
 import cz.cvut.fel.constructa.model.report.VehicleReport;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -74,6 +76,7 @@ public class Vehicle {
      * The reports associated with the vehicle.
      */
     @OneToMany(mappedBy = "vehicle")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private List<VehicleReport> vehicleReports = new ArrayList<>();
 
     /**

@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Date;
 
@@ -37,7 +39,7 @@ public class Task {
     /**
      * The name of the task.
      */
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
     /**
@@ -81,13 +83,15 @@ public class Task {
      */
     @ManyToOne
     @JoinColumn(name = "author_id")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private User author;
 
     /**
      * The assignee of the task.
      */
     @ManyToOne
-    @JoinColumn(name = "assignee_id")
+    @JoinColumn(name = "assignee_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private User assignee;
 
     /**

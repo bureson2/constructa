@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -71,13 +73,13 @@ public class VehicleReport {
     /**
      * The start time of the report.
      */
-    @Column(name = "time_from")
+    @Column(name = "time_from", nullable = false)
     private Date timeFrom;
 
     /**
      * The end time of the report.
      */
-    @Column(name = "time_to")
+    @Column(name = "time_to", nullable = false)
     private Date timeTo;
 
     /**
@@ -90,7 +92,8 @@ public class VehicleReport {
      * The vehicle associated with this report.
      */
     @ManyToOne
-    @JoinColumn(name = "vehicle_id")
+    @JoinColumn(name = "vehicle_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Vehicle vehicle;
 
     /**
@@ -98,6 +101,7 @@ public class VehicleReport {
      */
     @ManyToOne
     @JoinColumn(name = "project_id")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Project constructionDiary;
 
     /**
@@ -105,6 +109,7 @@ public class VehicleReport {
      */
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private User driver;
 
     /**
@@ -116,6 +121,7 @@ public class VehicleReport {
             joinColumns = { @JoinColumn(name = "vehicle_report_id") },
             inverseJoinColumns = { @JoinColumn(name = "company_id") }
     )
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Set<Company> transportContractors = new HashSet<>();
 
 }

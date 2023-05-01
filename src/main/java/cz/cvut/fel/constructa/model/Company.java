@@ -4,6 +4,8 @@ import cz.cvut.fel.constructa.model.report.VehicleReport;
 import cz.cvut.fel.constructa.model.role.User;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -54,18 +56,21 @@ public class Company {
      */
     @OneToOne
     @JoinColumn(name = "location_id", referencedColumnName = "location_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Location companyAddress;
 
     /**
      * The list of externalists working for the company.
      */
     @OneToMany(mappedBy = "company")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private List<User> externalist = new ArrayList<>();
 
     /**
      * The set of vehicle reports for which the company is a transport contractor.
      */
     @ManyToMany(mappedBy = "transportContractors")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Set<VehicleReport> contractors_transport_reports = new HashSet<>();
 
 }

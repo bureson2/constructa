@@ -3,6 +3,8 @@ package cz.cvut.fel.constructa.model.report;
 import cz.cvut.fel.constructa.model.role.User;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,13 +28,13 @@ public class FinanceReport {
     /**
      * The start time of the reporting period.
      */
-    @Column(name = "time_from")
+    @Column(name = "time_from", nullable = false)
     private Date timeFrom;
 
     /**
      * The end time of the reporting period.
      */
-    @Column(name="time_to")
+    @Column(name="time_to", nullable = false)
     private Date timeTo;
 
     /**
@@ -45,6 +47,7 @@ public class FinanceReport {
      * The list of work reports for the reporting period.
      */
     @OneToMany(mappedBy = "financeReport")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<WorkReport> attendance = new ArrayList<>();
 
     /**
@@ -52,5 +55,6 @@ public class FinanceReport {
      */
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User salariedEmployee;
 }

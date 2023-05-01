@@ -3,6 +3,8 @@ package cz.cvut.fel.constructa.model.loan;
 import cz.cvut.fel.constructa.model.Location;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,7 @@ public class Warehouse {
      * The list of devices stored in the warehouse.
      */
     @OneToMany(mappedBy = "warehouse")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private List<Device> devices = new ArrayList<>();
 
     /**
@@ -33,5 +36,6 @@ public class Warehouse {
      */
     @OneToOne
     @JoinColumn(name = "location_id", referencedColumnName = "location_id")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Location warehouseAddress;
 }

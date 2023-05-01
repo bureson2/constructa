@@ -4,6 +4,8 @@ import cz.cvut.fel.constructa.enums.DeviceState;
 import cz.cvut.fel.constructa.enums.DeviceType;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -26,7 +28,7 @@ public class Device {
     /**
      * The name of the device.
      */
-    @Column(name="name")
+    @Column(name="name", nullable = false)
     private String name;
 
     /**
@@ -46,11 +48,13 @@ public class Device {
      */
     @ManyToOne
     @JoinColumn(name = "warehouse_id")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Warehouse warehouse;
 
     /**
      * The set of loans that this device has been a part of.
      */
     @ManyToMany(mappedBy = "loanedDevices")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Set<Loan> realizedLoans = new HashSet<>();
 }

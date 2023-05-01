@@ -3,6 +3,8 @@ package cz.cvut.fel.constructa.model.loan;
 import cz.cvut.fel.constructa.model.role.User;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -26,7 +28,7 @@ public class Loan {
     /**
      * The starting time of the loan.
      */
-    @Column(name="time_from")
+    @Column(name="time_from", nullable = false)
     private Date timeFrom;
 
     /**
@@ -40,6 +42,7 @@ public class Loan {
      */
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private User loaner;
 
     /**
@@ -51,5 +54,6 @@ public class Loan {
             joinColumns = { @JoinColumn(name = "loan_id") },
             inverseJoinColumns = { @JoinColumn(name = "device_id") }
     )
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Set<Device> loanedDevices = new HashSet<>();
 }

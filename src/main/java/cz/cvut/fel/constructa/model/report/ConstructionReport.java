@@ -6,6 +6,8 @@ import cz.cvut.fel.constructa.model.Project;
 import cz.cvut.fel.constructa.model.role.User;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -35,19 +37,19 @@ public class ConstructionReport {
     /**
      * Additional notes related to the report.
      */
-    @Column(name = "note")
+    @Column(name = "note", nullable = false)
     private String note;
 
     /**
      * The weather condition during the work.
      */
-    @Column(name = "weather_description")
+    @Column(name = "weather_description", nullable = false)
     private String weather;
 
     /**
      * The date when the work was performed and this report was written.
      */
-    @Column(name = "date")
+    @Column(name = "date", nullable = false)
     private Date date;
 
     /**
@@ -59,6 +61,7 @@ public class ConstructionReport {
             joinColumns = { @JoinColumn(name = "construction_report_id") },
             inverseJoinColumns = { @JoinColumn(name = "document_id") }
     )
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Set<Document> constructionDocumentLinks = new HashSet<>();
 
     /**
@@ -66,6 +69,7 @@ public class ConstructionReport {
      */
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private User executor;
 
     /**
@@ -73,6 +77,7 @@ public class ConstructionReport {
      */
     @ManyToOne
     @JoinColumn(name = "project_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Project project;
 
     /**
