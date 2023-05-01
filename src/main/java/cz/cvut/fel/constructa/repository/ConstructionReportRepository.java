@@ -3,7 +3,9 @@ package cz.cvut.fel.constructa.repository;
 import cz.cvut.fel.constructa.model.report.ConstructionReport;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
 import java.util.List;
+import org.springframework.data.domain.Sort;
 
 /**
  * The interface Construction report repository.
@@ -16,6 +18,5 @@ public interface ConstructionReportRepository extends JpaRepository<Construction
      * @param id the id
      * @return the list
      */
-//    List<ConstructionReport> findConstructionReportsByProjectId(Long id);
-List<ConstructionReport> findAllByProjectId(Long id);
+    List<ConstructionReport> findAllByProjectId(Long id, Sort sort);
 }

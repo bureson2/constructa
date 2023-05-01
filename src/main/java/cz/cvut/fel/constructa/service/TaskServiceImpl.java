@@ -11,6 +11,7 @@ import cz.cvut.fel.constructa.repository.UserRepository;
 import cz.cvut.fel.constructa.security.AuthenticationFacade;
 import cz.cvut.fel.constructa.service.interfaces.TaskService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -84,7 +85,8 @@ public class TaskServiceImpl implements TaskService {
      */
     @Override
     public List<TaskDTO> getTasks() {
-        List<Task> tasks = taskDao.findAll();
+        Sort sortByDate = Sort.by(Sort.Direction.DESC, "timeTo");
+        List<Task> tasks = taskDao.findAll(sortByDate);
         return tasks.stream()
                 .map(taskMapper::convertToDto)
                 .collect(Collectors.toList());
@@ -97,12 +99,14 @@ public class TaskServiceImpl implements TaskService {
      */
     @Override
     public List<TaskDTO> getMyTasks(){
+        Sort sortByDate = Sort.by(Sort.Direction.DESC, "timeTo");
+
         String authorEmail = authenticationFacade.getAuthentication().getName();
         Optional<User> assignee = userDao.findByEmail(authorEmail);
         List<Task> tasks = new ArrayList<>();
 
         if(assignee.isPresent()) {
-            tasks = taskDao.findTaskByAssigneeId(assignee.get().getId());
+            tasks = taskDao.findTaskByAssigneeId(assignee.get().getId(), sortByDate);
         }
 
         return tasks.stream()

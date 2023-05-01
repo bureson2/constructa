@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.springframework.data.domain.Sort;
 
 /**
  * The UserServiceImpl class implements the UserService interface and provides operations related to the User model.
@@ -62,7 +63,8 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public List<UserDTO> getUsers() {
-        List<User> users = userDao.findAll();
+        Sort sortByName = Sort.by(Sort.Direction.ASC, "lastname");
+        List<User> users = userDao.findAll(sortByName);
         return users.stream()
                 .map(userMapper::convertToDto)
                 .collect(Collectors.toList());
@@ -75,7 +77,8 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public List<UserInputDTO> getInputUsers() {
-        List<User> users = userDao.findAll();
+        Sort sortByName = Sort.by(Sort.Direction.ASC, "lastname");
+        List<User> users = userDao.findAll(sortByName);
         return users.stream()
                 .map(userMapper::convertToInputDto)
                 .collect(Collectors.toList());

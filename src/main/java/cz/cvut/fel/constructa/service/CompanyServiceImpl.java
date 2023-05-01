@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.springframework.data.domain.Sort;
 
 /**
  * A service class that provides CRUD operations for companies and their locations.
@@ -79,7 +80,8 @@ public class CompanyServiceImpl implements CompanyService {
      */
     @Override
     public List<CompanyDTO> getCompanies() {
-        List<Company> companies = companyDao.findAll();
+        Sort sortByName = Sort.by(Sort.Direction.ASC, "name");
+        List<Company> companies = companyDao.findAll(sortByName);
         return companies.stream()
                 .map(companyMapper::convertToDto)
                 .collect(Collectors.toList());

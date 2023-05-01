@@ -18,6 +18,7 @@ import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.springframework.data.domain.Sort;
 
 /**
  * Service class that handles construction reports.
@@ -97,7 +98,8 @@ public class ConstructionReportImpl implements ConstructionReportService {
      */
     @Override
     public List<ConstructionReportDTO> getConstructionReports() {
-        List<ConstructionReport> constructionReports = constructionReportDao.findAll();
+        Sort sortByDate = Sort.by(Sort.Direction.DESC, "date");
+        List<ConstructionReport> constructionReports = constructionReportDao.findAll(sortByDate);
         return constructionReports.stream()
                 .map(constructionReportMapper::convertToDto)
                 .collect(Collectors.toList());
@@ -111,7 +113,8 @@ public class ConstructionReportImpl implements ConstructionReportService {
      */
     @Override
     public List<ConstructionReportDTO> getConstructionReportsByProjectId(Long projectId) {
-        List<ConstructionReport> constructionReports = constructionReportDao.findAllByProjectId(projectId);
+        Sort sortByDate = Sort.by(Sort.Direction.DESC, "date");
+        List<ConstructionReport> constructionReports = constructionReportDao.findAllByProjectId(projectId, sortByDate);
         return constructionReports.stream()
                 .map(constructionReportMapper::convertToDto)
                 .collect(Collectors.toList());

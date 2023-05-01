@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.springframework.data.domain.Sort;
 
 /**
  * The service for managing projects.
@@ -91,7 +92,8 @@ public class ProjectServiceImpl implements ProjectService {
      */
     @Override
     public List<ProjectDTO> getProjects() {
-        List<Project> projects = projectDao.findAll();
+        Sort sortByName = Sort.by(Sort.Direction.ASC, "name");
+        List<Project> projects = projectDao.findAll(sortByName);
         return projects.stream()
                 .map(projectMapper::convertToDto)
                 .collect(Collectors.toList());

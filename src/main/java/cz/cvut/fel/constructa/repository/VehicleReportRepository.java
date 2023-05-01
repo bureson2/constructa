@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import org.springframework.data.domain.Sort;
 
 /**
  * The interface Vehicle report repository.
@@ -17,5 +18,5 @@ public interface VehicleReportRepository extends JpaRepository<VehicleReport, Lo
      * @param vehicleId the vehicle id
      * @return the list
      */
-    List<VehicleReport> findVehicleReportByVehicleId(Long vehicleId);
+    List<VehicleReport> findVehicleReportByVehicleId(Long vehicleId, Sort sort);
 }

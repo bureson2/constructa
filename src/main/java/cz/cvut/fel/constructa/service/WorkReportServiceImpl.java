@@ -20,6 +20,7 @@ import cz.cvut.fel.constructa.service.interfaces.WorkReportService;
 import cz.cvut.fel.constructa.service.util.DistanceCalculator;
 import cz.cvut.fel.constructa.service.util.RoundTime;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -226,12 +227,13 @@ public class WorkReportServiceImpl implements WorkReportService {
      */
     @Override
     public List<WorkReportDTO> getMyWorkReports() {
+        Sort sortByDate = Sort.by(Sort.Direction.DESC, "timeTo");
         String authorEmail = authenticationFacade.getAuthentication().getName();
         Optional<User> author = userDao.findByEmail(authorEmail);
         List<WorkReport> reports = new ArrayList<>();
 
         if(author.isPresent()) {
-            reports = workReportDao.findWorkReportsByReportingEmployeeId(author.get().getId());
+            reports = workReportDao.findWorkReportsByReportingEmployeeId(author.get().getId(), sortByDate);
         }
 
         return reports.stream()
@@ -247,7 +249,8 @@ public class WorkReportServiceImpl implements WorkReportService {
      */
     @Override
     public List<WorkReportDTO> getWorkReportsByReportingEmployeeId(Long id) {
-        List<WorkReport> workReports = workReportDao.findWorkReportsByReportingEmployeeId(id);
+        Sort sortByDate = Sort.by(Sort.Direction.DESC, "timeTo");
+        List<WorkReport> workReports = workReportDao.findWorkReportsByReportingEmployeeId(id, sortByDate);
         return workReports.stream()
                 .map(workReportMapper::convertToDto)
                 .collect(Collectors.toList());

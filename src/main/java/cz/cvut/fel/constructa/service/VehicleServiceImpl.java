@@ -8,6 +8,7 @@ import cz.cvut.fel.constructa.model.Vehicle;
 import cz.cvut.fel.constructa.repository.VehicleRepository;
 import cz.cvut.fel.constructa.service.interfaces.VehicleService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -64,7 +65,8 @@ public class VehicleServiceImpl implements VehicleService {
      */
     @Override
     public List<VehicleDTO> getVehicles() {
-        List<Vehicle> vehicles = vehicleDao.findAll();
+        Sort sortByName = Sort.by(Sort.Direction.ASC, "registrationNumber");
+        List<Vehicle> vehicles = vehicleDao.findAll(sortByName);
         return vehicles.stream()
                 .map(vehicleMapper::convertToDto)
                 .collect(Collectors.toList());

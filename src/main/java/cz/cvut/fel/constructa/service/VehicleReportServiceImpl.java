@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.springframework.data.domain.Sort;
 
 /**
  * The type Vehicle report service.
@@ -103,7 +104,8 @@ public class VehicleReportServiceImpl implements VehicleReportService {
      */
     @Override
     public List<VehicleReportDTO> getVehicleReportsByVehicleId(Long id) {
-        List<VehicleReport> vehicleReports = vehicleReportDao.findVehicleReportByVehicleId(id);
+        Sort sortByDate = Sort.by(Sort.Direction.DESC, "date");
+        List<VehicleReport> vehicleReports = vehicleReportDao.findVehicleReportByVehicleId(id, sortByDate);
         return vehicleReports.stream()
                 .map(vehicleReportMapper::convertToDto)
                 .collect(Collectors.toList());
