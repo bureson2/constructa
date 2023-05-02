@@ -90,7 +90,7 @@ public class Task {
      * The assignee of the task.
      */
     @ManyToOne
-    @JoinColumn(name = "assignee_id", nullable = false)
+    @JoinColumn(name = "assignee_id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private User assignee;
 

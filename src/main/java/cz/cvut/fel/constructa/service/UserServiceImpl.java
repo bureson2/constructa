@@ -5,9 +5,9 @@ import cz.cvut.fel.constructa.dto.response.UserDTO;
 import cz.cvut.fel.constructa.dto.response.UserInputDTO;
 import cz.cvut.fel.constructa.mapper.UserMapper;
 import cz.cvut.fel.constructa.model.Location;
+import cz.cvut.fel.constructa.model.Task;
 import cz.cvut.fel.constructa.model.role.User;
-import cz.cvut.fel.constructa.repository.LocationRepository;
-import cz.cvut.fel.constructa.repository.UserRepository;
+import cz.cvut.fel.constructa.repository.*;
 import cz.cvut.fel.constructa.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -35,6 +35,15 @@ public class UserServiceImpl implements UserService {
      * The Location dao.
      */
     private final LocationRepository locationDao;
+    private final ProjectRepository projectDao;
+    private final WorkReportRepository workReportDao;
+    private final ConstructionReportRepository constructionReportDao;
+    private final VehicleRepository vehicleDao;
+
+    /**
+     * The Task dao.
+     */
+    private final TaskRepository taskDao;
     /**
      * The Password encoder.
      */
@@ -91,6 +100,13 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public void delete(Long userId) {
+        taskDao.setAssigneeToNullByUserId(userId);
+        taskDao.setAuthorToNullByUserId(userId);
+        workReportDao.deleteByReportingEmployeeId(userId);
+        constructionReportDao.setExecutorToNullByUserId(userId);
+        projectDao.setProjectManagerToNullByUserId(userId);
+        vehicleDao.setDriverToNullByUserId(userId);
+
         userDao.deleteById(userId);
     }
 

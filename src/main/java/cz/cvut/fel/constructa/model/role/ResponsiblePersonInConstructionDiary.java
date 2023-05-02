@@ -4,6 +4,8 @@ import cz.cvut.fel.constructa.enums.ConstructionDiaryRole;
 import cz.cvut.fel.constructa.model.Project;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.HashSet;
 import java.util.List;
@@ -37,11 +39,13 @@ public class ResponsiblePersonInConstructionDiary {
      */
     @ManyToOne
     @JoinColumn(name = "project_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Project constructionDiary;
 
     /**
      * The set of responsible persons.
      */
     @ManyToMany(mappedBy = "responsiblePersons")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<User> responsiblePersons = new HashSet<>();
 }

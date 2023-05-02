@@ -60,7 +60,8 @@ public class Project {
      * The project manager responsible for the project.
      */
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private User projectManager;
 
     /**

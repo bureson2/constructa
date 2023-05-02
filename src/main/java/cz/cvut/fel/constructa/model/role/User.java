@@ -12,6 +12,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -36,7 +38,7 @@ public class User implements UserDetails {
 //    TODO do bakalarky napis o 2 moznostech extends user
 //    https://www.youtube.com/watch?v=KxqlJblhzfI&t=3595s 28:00
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", nullable = false)
     private Long id;
 
@@ -136,30 +138,35 @@ public class User implements UserDetails {
      * The list of tasks created by the user.
      */
     @OneToMany(mappedBy = "author")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private List<Task> createdTasks = new ArrayList<>();
 
     /**
      * The list of tasks assigned to the user.
      */
     @OneToMany(mappedBy = "assignee")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private List<Task> assignedTasks = new ArrayList<>();
 
     /**
      * The User's attendance report.
      */
     @OneToMany(mappedBy = "reportingEmployee")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private List<WorkReport> attendance = new ArrayList<>();
 
     /**
      * The User's finance reports.
      */
     @OneToMany(mappedBy = "salariedEmployee")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private List<FinanceReport> financeReports = new ArrayList<>();
 
     /**
      * The list of projects managed by the user.
      */
     @OneToMany(mappedBy = "projectManager")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private List<Project> projects = new ArrayList<>();
 
     /**
@@ -167,24 +174,28 @@ public class User implements UserDetails {
      */
     @ManyToOne
     @JoinColumn(name = "location_id")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Location userAddress;
 
     /**
      * The list of external projects the user has worked on.
      */
     @OneToMany(mappedBy = "externalist")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private List<ExternalistInProject> externalProjectWork = new ArrayList<>();
 
     /**
      * The list of vehicle reports submitted by the user.
      */
     @OneToMany(mappedBy = "driver")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private List<VehicleReport> vehicleReports = new ArrayList<>();
 
     /**
      * The list of loans that the user has taken.
      */
     @OneToMany(mappedBy = "loaner")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private List<Loan> loans = new ArrayList<>();
 
     /**
@@ -192,6 +203,7 @@ public class User implements UserDetails {
      */
     @ManyToOne
     @JoinColumn(name = "company_id")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Company company;
 
     /**
@@ -203,6 +215,7 @@ public class User implements UserDetails {
             joinColumns = { @JoinColumn(name = "user_id") },
             inverseJoinColumns = { @JoinColumn(name = "responsible_person_id") }
     )
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Set<ResponsiblePersonInConstructionDiary> responsiblePersons = new HashSet<>();
 
     /**
@@ -214,12 +227,14 @@ public class User implements UserDetails {
             joinColumns = { @JoinColumn(name = "user_id") },
             inverseJoinColumns = { @JoinColumn(name = "document_id") }
     )
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Set<Document> userDocumentLinks = new HashSet<>();
 
     /**
      * The list of construction reports that the user has executed.
      */
     @OneToMany(mappedBy = "executor")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private List<ConstructionReport> constructionsReport = new ArrayList<>();
 
     /**
@@ -290,5 +305,28 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", phone='" + phone + '\'' +
+                ", role=" + role +
+                ", titleBeforeName='" + titleBeforeName + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", titleAfterName='" + titleAfterName + '\'' +
+                ", bankAccount='" + bankAccount + '\'' +
+                ", dateOfAcceptance=" + dateOfAcceptance +
+                ", dateOfBirth=" + dateOfBirth +
+                ", birthId='" + birthId + '\'' +
+                ", hourRate=" + hourRate +
+                ", monthSalary=" + monthSalary +
+                ", userAddress=" + userAddress +
+                '}';
     }
 }

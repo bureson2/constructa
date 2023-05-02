@@ -4,6 +4,8 @@ import cz.cvut.fel.constructa.enums.ExternalistRole;
 import cz.cvut.fel.constructa.model.Project;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.List;
 
@@ -35,6 +37,7 @@ public class ExternalistInProject {
      */
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User externalist;
 
     /**
@@ -42,7 +45,6 @@ public class ExternalistInProject {
      */
     @ManyToOne
     @JoinColumn(name = "project_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Project project;
-
-
 }

@@ -101,4 +101,15 @@ public class Location {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<User> residents = new ArrayList<>();
 
+    @Override
+    public String toString() {
+        return "Location{" +
+                "id=" + id +
+                ", city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                ", descriptiveNumber='" + descriptiveNumber + '\'' +
+                ", country='" + country + '\'' +
+                ", postCode='" + postCode + '\'' +
+                '}';
+    }
 }
