@@ -3,14 +3,20 @@ package cz.cvut.fel.constructa.controller;
 import cz.cvut.fel.constructa.controller.interfaces.ProjectController;
 import cz.cvut.fel.constructa.dto.request.ProjectRequest;
 import cz.cvut.fel.constructa.dto.response.ProjectDTO;
+import cz.cvut.fel.constructa.security.AuthenticationFacade;
 import cz.cvut.fel.constructa.service.interfaces.ProjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -22,9 +28,26 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProjectControllerImpl implements ProjectController {
     /**
+     * The Authentication facade.
+     */
+    private final AuthenticationFacade authenticationFacade;
+
+    /**
      * The Project service.
      */
     private final ProjectService projectService;
+
+    /**
+     * Has permission boolean.
+     *
+     * @param requiredRoles the required roles
+     * @return the boolean
+     */
+    private boolean hasPermission(List<GrantedAuthority> requiredRoles){
+        Authentication authentication = authenticationFacade.getAuthentication();
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        return authorities.stream().anyMatch(requiredRoles::contains);
+    }
 
     /**
      * Gets projects.
@@ -69,7 +92,16 @@ public class ProjectControllerImpl implements ProjectController {
     @ResponseBody
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProjectDTO> createProject(@RequestBody ProjectRequest request) throws ParseException {
-        return ResponseEntity.ok().body(projectService.create(request));
+        List<GrantedAuthority> requiredRoles = Arrays.asList(
+                new SimpleGrantedAuthority("ROLE_ADMIN"),
+                new SimpleGrantedAuthority("ROLE_MANAGER")
+        );
+
+        if (hasPermission(requiredRoles)) {
+            return ResponseEntity.ok().body(projectService.create(request));
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
     }
 
     /**
@@ -84,7 +116,16 @@ public class ProjectControllerImpl implements ProjectController {
     @ResponseBody
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProjectDTO> editProject(@RequestBody ProjectRequest request) throws ParseException {
-        return ResponseEntity.ok().body(projectService.update(request));
+        List<GrantedAuthority> requiredRoles = Arrays.asList(
+                new SimpleGrantedAuthority("ROLE_ADMIN"),
+                new SimpleGrantedAuthority("ROLE_MANAGER")
+        );
+
+        if (hasPermission(requiredRoles)) {
+            return ResponseEntity.ok().body(projectService.update(request));
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
     }
 
     /**
@@ -97,7 +138,16 @@ public class ProjectControllerImpl implements ProjectController {
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @DeleteMapping(value = "/{projectId}")
     public ResponseEntity<Void> deleteProject(@PathVariable Long projectId) {
-        projectService.delete(projectId);
-        return ResponseEntity.noContent().build();
+        List<GrantedAuthority> requiredRoles = Arrays.asList(
+                new SimpleGrantedAuthority("ROLE_ADMIN"),
+                new SimpleGrantedAuthority("ROLE_MANAGER")
+        );
+
+        if (hasPermission(requiredRoles)) {
+            projectService.delete(projectId);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
     }
 }

@@ -34,4 +34,10 @@ public interface ConstructionReportRepository extends JpaRepository<Construction
     @Modifying
     @Query("UPDATE ConstructionReport cr SET cr.executor = null WHERE cr.executor.id = :userId")
     void setExecutorToNullByUserId(@Param("userId") Long userId);
+
+    //    todo to test
+    @Transactional
+    @Modifying
+    @Query("DELETE FROM ConstructionReport cr WHERE cr.project.id = :projectId")
+    void deleteByprojectId(@Param("projectId") Long projectId);
 }

@@ -180,6 +180,18 @@ public class WorkReportServiceImpl implements WorkReportService {
 
             workReport.setMinutes(RoundTime.setToQuarterHour(minutes));
             workReportDao.save(workReport);
+
+            if(request.getLatitude() == null || request.getLongitude() == null){
+//          notify manager about missing location
+                return;
+            }
+
+            Location location = workReport.getLocation();
+            double metres = DistanceCalculator.haversineDistance(location.getLatitude(),location.getLongitude(), request.getLatitude(), request.getLongitude());
+            if(metres < 100){
+//          notify manager about wrong location
+                return;
+            }
         }
     }
 

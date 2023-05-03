@@ -7,14 +7,20 @@ import cz.cvut.fel.constructa.dto.request.StopAttendanceRequest;
 import cz.cvut.fel.constructa.dto.request.WorkReportRequest;
 import cz.cvut.fel.constructa.dto.response.LocationDTO;
 import cz.cvut.fel.constructa.dto.response.WorkReportDTO;
+import cz.cvut.fel.constructa.security.AuthenticationFacade;
 import cz.cvut.fel.constructa.service.interfaces.WorkReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -26,9 +32,26 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WorkReportControllerImpl implements WorkReportController {
     /**
+     * The Authentication facade.
+     */
+    private final AuthenticationFacade authenticationFacade;
+
+    /**
      * The Work report service.
      */
     private final WorkReportService workReportService;
+
+    /**
+     * Has permission boolean.
+     *
+     * @param requiredRoles the required roles
+     * @return the boolean
+     */
+    private boolean hasPermission(List<GrantedAuthority> requiredRoles){
+        Authentication authentication = authenticationFacade.getAuthentication();
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        return authorities.stream().anyMatch(requiredRoles::contains);
+    }
 
     /**
      * Gets work reports.
@@ -68,9 +91,19 @@ public class WorkReportControllerImpl implements WorkReportController {
     @ResponseBody
     @GetMapping(value="/user/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<WorkReportDTO>> getUsersWorkReports(@PathVariable Long userId) {
-        return ResponseEntity.ok().body(
-                workReportService.getWorkReportsByReportingEmployeeId(userId)
+        List<GrantedAuthority> requiredRoles = Arrays.asList(
+                new SimpleGrantedAuthority("ROLE_ADMIN"),
+                new SimpleGrantedAuthority("ROLE_MANAGER"),
+                new SimpleGrantedAuthority("ROLE_REPORTER")
         );
+
+        if (hasPermission(requiredRoles)) {
+            return ResponseEntity.ok().body(
+                    workReportService.getWorkReportsByReportingEmployeeId(userId)
+            );
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
     }
 
     /**
@@ -170,7 +203,6 @@ public class WorkReportControllerImpl implements WorkReportController {
         return ResponseEntity.noContent().build();
     }
 
-
     /**
      * Update work report response entity.
      *
@@ -182,9 +214,18 @@ public class WorkReportControllerImpl implements WorkReportController {
     @ResponseBody
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<WorkReportDTO> updateWorkReport(@RequestBody WorkReportRequest request) throws ParseException {
-        return ResponseEntity.ok().body(
-                workReportService.update(request)
+        List<GrantedAuthority> requiredRoles = Arrays.asList(
+                new SimpleGrantedAuthority("ROLE_ADMIN"),
+                new SimpleGrantedAuthority("ROLE_MANAGER")
         );
+
+        if (hasPermission(requiredRoles)) {
+            return ResponseEntity.ok().body(
+                    workReportService.update(request)
+            );
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
     }
 
     /**
@@ -196,7 +237,16 @@ public class WorkReportControllerImpl implements WorkReportController {
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @DeleteMapping(value = "/{workReportId}")
     public ResponseEntity<Void> deleteWorkReport(@PathVariable Long workReportId) {
-        workReportService.delete(workReportId);
-        return ResponseEntity.noContent().build();
+        List<GrantedAuthority> requiredRoles = Arrays.asList(
+                new SimpleGrantedAuthority("ROLE_ADMIN"),
+                new SimpleGrantedAuthority("ROLE_MANAGER")
+                );
+
+        if (hasPermission(requiredRoles)) {
+            workReportService.delete(workReportId);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
     }
 }

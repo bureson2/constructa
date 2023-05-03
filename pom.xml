@@ -19,15 +19,6 @@
     </properties>
     <dependencies>
 
-        <!-- https://mvnrepository.com/artifact/com.opencsv/opencsv -->
-        <dependency>
-            <groupId>com.opencsv</groupId>
-            <artifactId>opencsv</artifactId>
-            <version>5.7.1</version>
-        </dependency>
-
-
-
         <dependency>
             <groupId>io.github.cdimascio</groupId>
             <artifactId>java-dotenv</artifactId>
@@ -50,7 +41,7 @@
             <scope>provided</scope>
         </dependency>
 
-<!--        dependency for authentization and authorization     -->
+        <!--        dependency for authentization and authorization     -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
@@ -110,6 +101,11 @@
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20090211</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>6.0.2</version>
         </dependency>
     </dependencies>
 

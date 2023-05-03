@@ -11,4 +11,14 @@ public class StopAttendanceRequest {
      * The Time.
      */
     int time;
+
+    /**
+     * The Longitude.
+     */
+    private Double longitude;
+
+    /**
+     * The Latitude.
+     */
+    private Double latitude;
 }

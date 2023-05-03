@@ -104,7 +104,7 @@ public class VehicleReportServiceImpl implements VehicleReportService {
      */
     @Override
     public List<VehicleReportDTO> getVehicleReportsByVehicleId(Long id) {
-        Sort sortByDate = Sort.by(Sort.Direction.DESC, "date");
+        Sort sortByDate = Sort.by(Sort.Direction.DESC, "timeTo");
         List<VehicleReport> vehicleReports = vehicleReportDao.findVehicleReportByVehicleId(id, sortByDate);
         return vehicleReports.stream()
                 .map(vehicleReportMapper::convertToDto)

@@ -3,14 +3,20 @@ package cz.cvut.fel.constructa.controller;
 import cz.cvut.fel.constructa.controller.interfaces.ConstructionReportController;
 import cz.cvut.fel.constructa.dto.request.ConstructionReportRequest;
 import cz.cvut.fel.constructa.dto.response.ConstructionReportDTO;
+import cz.cvut.fel.constructa.security.AuthenticationFacade;
 import cz.cvut.fel.constructa.service.interfaces.ConstructionReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -22,9 +28,26 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ConstructionReportControllerImpl implements ConstructionReportController {
     /**
+     * The Authentication facade.
+     */
+    private final AuthenticationFacade authenticationFacade;
+
+    /**
      * The Construction report service.
      */
     private final ConstructionReportService constructionReportService;
+
+    /**
+     * Has permission boolean.
+     *
+     * @param requiredRoles the required roles
+     * @return the boolean
+     */
+    private boolean hasPermission(List<GrantedAuthority> requiredRoles){
+        Authentication authentication = authenticationFacade.getAuthentication();
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        return authorities.stream().anyMatch(requiredRoles::contains);
+    }
 
     /**
      * Gets construction reports.
@@ -89,9 +112,19 @@ public class ConstructionReportControllerImpl implements ConstructionReportContr
     @ResponseBody
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ConstructionReportDTO> createConstructionReport(@RequestBody ConstructionReportRequest request) throws ParseException {
-        return ResponseEntity.ok().body(
-                constructionReportService.create(request)
+        List<GrantedAuthority> requiredRoles = Arrays.asList(
+                new SimpleGrantedAuthority("ROLE_ADMIN"),
+                new SimpleGrantedAuthority("ROLE_MANAGER"),
+                new SimpleGrantedAuthority("ROLE_CONSTRUCTION_MANAGER")
         );
+
+        if (hasPermission(requiredRoles)) {
+            return ResponseEntity.ok().body(
+                    constructionReportService.create(request)
+            );
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
     }
 
     /**
@@ -104,8 +137,17 @@ public class ConstructionReportControllerImpl implements ConstructionReportContr
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @DeleteMapping(value = "/{constructionReportId}")
     public ResponseEntity<Void> deleteConstructionReport(@PathVariable Long constructionReportId) {
-        constructionReportService.delete(constructionReportId);
-        return ResponseEntity.noContent().build();
-    }
+        List<GrantedAuthority> requiredRoles = Arrays.asList(
+                new SimpleGrantedAuthority("ROLE_ADMIN"),
+                new SimpleGrantedAuthority("ROLE_MANAGER"),
+                new SimpleGrantedAuthority("ROLE_CONSTRUCTION_MANAGER")
+        );
 
+        if (hasPermission(requiredRoles)) {
+            constructionReportService.delete(constructionReportId);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+    }
 }

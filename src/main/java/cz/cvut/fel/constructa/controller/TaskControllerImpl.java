@@ -3,14 +3,18 @@ package cz.cvut.fel.constructa.controller;
 import cz.cvut.fel.constructa.controller.interfaces.TaskController;
 import cz.cvut.fel.constructa.dto.request.TaskRequest;
 import cz.cvut.fel.constructa.dto.response.TaskDTO;
+import cz.cvut.fel.constructa.security.AuthenticationFacade;
 import cz.cvut.fel.constructa.service.interfaces.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -22,9 +26,26 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TaskControllerImpl implements TaskController {
     /**
+     * The Authentication facade.
+     */
+    private final AuthenticationFacade authenticationFacade;
+
+    /**
      * The Task service.
      */
     private final TaskService taskService;
+
+    /**
+     * Has permission boolean.
+     *
+     * @param requiredRoles the required roles
+     * @return the boolean
+     */
+    private boolean hasPermission(List<GrantedAuthority> requiredRoles){
+        Authentication authentication = authenticationFacade.getAuthentication();
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        return authorities.stream().anyMatch(requiredRoles::contains);
+    }
 
     /**
      * Gets tasks.

@@ -1,7 +1,7 @@
 
 -- Import locations
 COPY location (location_id, city, country, descriptive_number, latitude, longitude, post_code, street)
-    FROM 'example_data/locations.csv' WITH (FORMAT csv, HEADER, DELIMITER ',', QUOTE '"');
+    FROM 'example_data/locations.csv' WITH (FORMAT csv, HEADER, DELIMITER ',', QUOTE '');
 
 
 -- -- Import users

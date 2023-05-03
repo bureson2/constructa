@@ -6,14 +6,20 @@ import cz.cvut.fel.constructa.dto.response.CompanyDTO;
 import cz.cvut.fel.constructa.dto.response.VehicleReportDTO;
 import cz.cvut.fel.constructa.mapper.VehicleReportMapper;
 import cz.cvut.fel.constructa.model.report.VehicleReport;
+import cz.cvut.fel.constructa.security.AuthenticationFacade;
 import cz.cvut.fel.constructa.service.interfaces.VehicleReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,9 +33,26 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class VehicleReportControllerImpl implements VehicleReportsController {
     /**
+     * The Authentication facade.
+     */
+    private final AuthenticationFacade authenticationFacade;
+
+    /**
      * The Vehicle report service.
      */
     private final VehicleReportService vehicleReportService;
+
+    /**
+     * Has permission boolean.
+     *
+     * @param requiredRoles the required roles
+     * @return the boolean
+     */
+    private boolean hasPermission(List<GrantedAuthority> requiredRoles){
+        Authentication authentication = authenticationFacade.getAuthentication();
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        return authorities.stream().anyMatch(requiredRoles::contains);
+    }
 
     /**
      * Gets vehicle reports.
@@ -111,9 +134,19 @@ public class VehicleReportControllerImpl implements VehicleReportsController {
     @ResponseBody
     @PutMapping(value="/reports", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<VehicleReportDTO> updateVehicleReport(@RequestBody VehicleReportRequest request) throws ParseException {
-        return ResponseEntity.ok().body(
-                vehicleReportService.update(request)
+        List<GrantedAuthority> requiredRoles = Arrays.asList(
+                new SimpleGrantedAuthority("ROLE_ADMIN"),
+                new SimpleGrantedAuthority("ROLE_MANAGER"),
+                new SimpleGrantedAuthority("ROLE_REPORTER")
         );
+
+        if (hasPermission(requiredRoles)) {
+            return ResponseEntity.ok().body(
+                    vehicleReportService.update(request)
+            );
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
     }
 
     /**
@@ -126,8 +159,18 @@ public class VehicleReportControllerImpl implements VehicleReportsController {
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @DeleteMapping(value = "/reports/{reportId}")
     public ResponseEntity<Void> deleteVehicleReport(@PathVariable Long reportId) {
-        vehicleReportService.deleteVehicleReport(reportId);
-        return ResponseEntity.noContent().build();
+        List<GrantedAuthority> requiredRoles = Arrays.asList(
+                new SimpleGrantedAuthority("ROLE_ADMIN"),
+                new SimpleGrantedAuthority("ROLE_MANAGER"),
+                new SimpleGrantedAuthority("ROLE_REPORTER")
+        );
+
+        if (hasPermission(requiredRoles)) {
+            vehicleReportService.deleteVehicleReport(reportId);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
     }
 
 
