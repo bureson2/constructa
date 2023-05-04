@@ -1,4 +1,4 @@
-package cz.cvut.fel.constructa.service;
+package cz.cvut.fel.constructa.service.squaretest.util;
 
 import cz.cvut.fel.constructa.dto.request.ConstructionReportRequest;
 import cz.cvut.fel.constructa.dto.response.ConstructionReportDTO;
@@ -18,11 +18,13 @@ import cz.cvut.fel.constructa.repository.ConstructionReportRepository;
 import cz.cvut.fel.constructa.repository.ProjectRepository;
 import cz.cvut.fel.constructa.repository.UserRepository;
 import cz.cvut.fel.constructa.security.AuthenticationFacade;
+import cz.cvut.fel.constructa.service.ConstructionReportImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Sort;
 
 import java.text.ParseException;
 import java.util.*;
@@ -681,7 +683,7 @@ class ConstructionReportImplTest {
         project.setName("name");
         constructionReport.setProject(project);
         final List<ConstructionReport> constructionReports = List.of(constructionReport);
-        when(mockConstructionReportDao.findAll()).thenReturn(constructionReports);
+        when(mockConstructionReportDao.findAll(Sort.by("properties"))).thenReturn(constructionReports);
 
         // Configure ConstructionReportMapper.convertToDto(...).
         final ConstructionReportDTO constructionReportDTO1 = new ConstructionReportDTO();
@@ -713,7 +715,7 @@ class ConstructionReportImplTest {
     @Test
     void testGetConstructionReports_ConstructionReportRepositoryReturnsNoItems() {
         // Setup
-        when(mockConstructionReportDao.findAll()).thenReturn(Collections.emptyList());
+        when(mockConstructionReportDao.findAll(Sort.by("properties"))).thenReturn(Collections.emptyList());
 
         // Run the test
         final List<ConstructionReportDTO> result = constructionReportImplUnderTest.getConstructionReports();
@@ -764,7 +766,7 @@ class ConstructionReportImplTest {
         project.setName("name");
         constructionReport.setProject(project);
         final List<ConstructionReport> constructionReports = List.of(constructionReport);
-        when(mockConstructionReportDao.findAllByProjectId(0L)).thenReturn(constructionReports);
+        when(mockConstructionReportDao.findAllByProjectId(0L, Sort.by("properties"))).thenReturn(constructionReports);
 
         // Configure ConstructionReportMapper.convertToDto(...).
         final ConstructionReportDTO constructionReportDTO1 = new ConstructionReportDTO();
@@ -797,7 +799,8 @@ class ConstructionReportImplTest {
     @Test
     void testGetConstructionReportsByProjectId_ConstructionReportRepositoryReturnsNoItems() {
         // Setup
-        when(mockConstructionReportDao.findAllByProjectId(0L)).thenReturn(Collections.emptyList());
+        when(mockConstructionReportDao.findAllByProjectId(0L, Sort.by("properties")))
+                .thenReturn(Collections.emptyList());
 
         // Run the test
         final List<ConstructionReportDTO> result = constructionReportImplUnderTest.getConstructionReportsByProjectId(

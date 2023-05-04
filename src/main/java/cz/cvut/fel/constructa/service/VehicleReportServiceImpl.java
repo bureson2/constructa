@@ -150,13 +150,7 @@ public class VehicleReportServiceImpl implements VehicleReportService {
 
         if (report.isPresent()) {
             driver = report.get().getDriver();
-            if (!Objects.equals(driver.getId(), request.getDriver())) {
-                report.get().setDriver(userDao.findById(request.getDriver()).get());
-            }
             vehicle = report.get().getVehicle();
-            if (!Objects.equals(vehicle.getId(), request.getVehicle())) {
-                report.get().setVehicle(vehicleDao.findById(request.getVehicle()).get());
-            }
         }
         VehicleReport updatedVehicleReport = vehicleReportMapper.convertToEntity(request);
         updatedVehicleReport.setVehicle(vehicle);

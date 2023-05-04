@@ -1,5 +1,7 @@
-package cz.cvut.fel.constructa.service.util;
+package cz.cvut.fel.constructa.service.squaretest.util;
 
+import cz.cvut.fel.constructa.service.util.RoundTime;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Calendar;
@@ -11,7 +13,7 @@ class RoundTimeTest {
 
     @Test
     void testGetRoundedUpMinutes() {
-        assertThat(RoundTime.getRoundedUpMinutes(new GregorianCalendar(2020, Calendar.JANUARY, 1).getTime()))
+        Assertions.assertThat(RoundTime.getRoundedUpMinutes(new GregorianCalendar(2020, Calendar.JANUARY, 1).getTime()))
                 .isEqualTo(0);
     }
 

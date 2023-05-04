@@ -1,4 +1,4 @@
-package cz.cvut.fel.constructa.service;
+package cz.cvut.fel.constructa.service.squaretest.util;
 
 import cz.cvut.fel.constructa.dto.request.VehicleReportRequest;
 import cz.cvut.fel.constructa.dto.response.VehicleDTO;
@@ -12,11 +12,13 @@ import cz.cvut.fel.constructa.repository.UserRepository;
 import cz.cvut.fel.constructa.repository.VehicleReportRepository;
 import cz.cvut.fel.constructa.repository.VehicleRepository;
 import cz.cvut.fel.constructa.security.AuthenticationFacade;
+import cz.cvut.fel.constructa.service.VehicleReportServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Sort;
 
 import java.text.ParseException;
 import java.util.*;
@@ -587,7 +589,7 @@ class VehicleReportServiceImplTest {
                         .id(0L)
                         .build())
                 .build());
-        when(mockVehicleReportDao.findVehicleReportByVehicleId(0L)).thenReturn(vehicleReports);
+        when(mockVehicleReportDao.findVehicleReportByVehicleId(0L, Sort.by("properties"))).thenReturn(vehicleReports);
 
         // Configure VehicleReportMapper.convertToDto(...).
         final VehicleReportDTO vehicleReportDTO = new VehicleReportDTO();
@@ -624,7 +626,8 @@ class VehicleReportServiceImplTest {
     @Test
     void testGetVehicleReportsByVehicleId_VehicleReportRepositoryReturnsNoItems() {
         // Setup
-        when(mockVehicleReportDao.findVehicleReportByVehicleId(0L)).thenReturn(Collections.emptyList());
+        when(mockVehicleReportDao.findVehicleReportByVehicleId(0L, Sort.by("properties")))
+                .thenReturn(Collections.emptyList());
 
         // Run the test
         final List<VehicleReportDTO> result = vehicleReportServiceImplUnderTest.getVehicleReportsByVehicleId(0L);

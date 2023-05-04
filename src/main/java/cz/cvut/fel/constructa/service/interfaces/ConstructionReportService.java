@@ -2,7 +2,6 @@ package cz.cvut.fel.constructa.service.interfaces;
 
 import cz.cvut.fel.constructa.dto.request.ConstructionReportRequest;
 import cz.cvut.fel.constructa.dto.response.ConstructionReportDTO;
-import cz.cvut.fel.constructa.model.report.ConstructionReport;
 
 import java.text.ParseException;
 import java.util.List;
@@ -56,5 +55,5 @@ public interface ConstructionReportService {
      * @param constructionReport the construction report to update
      * @return the updated construction report
      */
-    ConstructionReport update(ConstructionReportRequest constructionReport);
+    ConstructionReportDTO update(ConstructionReportRequest constructionReport);
 }

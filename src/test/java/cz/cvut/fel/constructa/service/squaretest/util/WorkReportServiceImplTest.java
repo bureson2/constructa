@@ -1,4 +1,4 @@
-package cz.cvut.fel.constructa.service;
+package cz.cvut.fel.constructa.service.squaretest.util;
 
 import cz.cvut.fel.constructa.dto.request.AttendanceRequest;
 import cz.cvut.fel.constructa.dto.request.IllnessRequest;
@@ -18,11 +18,13 @@ import cz.cvut.fel.constructa.repository.LocationRepository;
 import cz.cvut.fel.constructa.repository.UserRepository;
 import cz.cvut.fel.constructa.repository.WorkReportRepository;
 import cz.cvut.fel.constructa.security.AuthenticationFacade;
+import cz.cvut.fel.constructa.service.WorkReportServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Sort;
 
 import java.text.ParseException;
 import java.util.*;
@@ -731,6 +733,8 @@ class WorkReportServiceImplTest {
         // Setup
         final StopAttendanceRequest request = new StopAttendanceRequest();
         request.setTime(0);
+        request.setLongitude(0.0);
+        request.setLatitude(0.0);
 
         when(mockAuthenticationFacade.getAuthentication()).thenReturn(null);
 
@@ -818,6 +822,8 @@ class WorkReportServiceImplTest {
         // Setup
         final StopAttendanceRequest request = new StopAttendanceRequest();
         request.setTime(0);
+        request.setLongitude(0.0);
+        request.setLatitude(0.0);
 
         when(mockAuthenticationFacade.getAuthentication()).thenReturn(null);
         when(mockUserDao.findByEmail("email")).thenReturn(Optional.empty());
@@ -833,6 +839,8 @@ class WorkReportServiceImplTest {
         // Setup
         final StopAttendanceRequest request = new StopAttendanceRequest();
         request.setTime(0);
+        request.setLongitude(0.0);
+        request.setLatitude(0.0);
 
         when(mockAuthenticationFacade.getAuthentication()).thenReturn(null);
 
@@ -1185,7 +1193,7 @@ class WorkReportServiceImplTest {
         workReport.setFinanceReport(financeReport);
         workReport.setType(WorkReportType.WORK_REPORT);
         final List<WorkReport> workReports = List.of(workReport);
-        when(mockWorkReportDao.findWorkReportsByReportingEmployeeId(0L)).thenReturn(workReports);
+        when(mockWorkReportDao.findWorkReportsByReportingEmployeeId(0L, Sort.by("properties"))).thenReturn(workReports);
 
         // Configure WorkReportMapper.convertToDto(...).
         final WorkReportDTO workReportDTO1 = new WorkReportDTO();
@@ -1238,7 +1246,8 @@ class WorkReportServiceImplTest {
                 .build());
         when(mockUserDao.findByEmail("email")).thenReturn(user);
 
-        when(mockWorkReportDao.findWorkReportsByReportingEmployeeId(0L)).thenReturn(Collections.emptyList());
+        when(mockWorkReportDao.findWorkReportsByReportingEmployeeId(0L, Sort.by("properties")))
+                .thenReturn(Collections.emptyList());
 
         // Run the test
         final List<WorkReportDTO> result = workReportServiceImplUnderTest.getMyWorkReports();
@@ -1300,7 +1309,7 @@ class WorkReportServiceImplTest {
         workReport.setFinanceReport(financeReport);
         workReport.setType(WorkReportType.WORK_REPORT);
         final List<WorkReport> workReports = List.of(workReport);
-        when(mockWorkReportDao.findWorkReportsByReportingEmployeeId(0L)).thenReturn(workReports);
+        when(mockWorkReportDao.findWorkReportsByReportingEmployeeId(0L, Sort.by("properties"))).thenReturn(workReports);
 
         // Configure WorkReportMapper.convertToDto(...).
         final WorkReportDTO workReportDTO1 = new WorkReportDTO();
@@ -1332,7 +1341,8 @@ class WorkReportServiceImplTest {
     @Test
     void testGetWorkReportsByReportingEmployeeId_WorkReportRepositoryReturnsNoItems() {
         // Setup
-        when(mockWorkReportDao.findWorkReportsByReportingEmployeeId(0L)).thenReturn(Collections.emptyList());
+        when(mockWorkReportDao.findWorkReportsByReportingEmployeeId(0L, Sort.by("properties")))
+                .thenReturn(Collections.emptyList());
 
         // Run the test
         final List<WorkReportDTO> result = workReportServiceImplUnderTest.getWorkReportsByReportingEmployeeId(0L);

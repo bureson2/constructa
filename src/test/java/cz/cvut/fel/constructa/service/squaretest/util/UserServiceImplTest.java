@@ -1,4 +1,4 @@
-package cz.cvut.fel.constructa.service;
+package cz.cvut.fel.constructa.service.squaretest.util;
 
 import cz.cvut.fel.constructa.dto.request.UserRequest;
 import cz.cvut.fel.constructa.dto.response.UserDTO;
@@ -6,13 +6,14 @@ import cz.cvut.fel.constructa.dto.response.UserInputDTO;
 import cz.cvut.fel.constructa.mapper.UserMapper;
 import cz.cvut.fel.constructa.model.Location;
 import cz.cvut.fel.constructa.model.role.User;
-import cz.cvut.fel.constructa.repository.LocationRepository;
-import cz.cvut.fel.constructa.repository.UserRepository;
+import cz.cvut.fel.constructa.repository.*;
+import cz.cvut.fel.constructa.service.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.text.ParseException;
@@ -31,6 +32,16 @@ class UserServiceImplTest {
     @Mock
     private LocationRepository mockLocationDao;
     @Mock
+    private ProjectRepository mockProjectDao;
+    @Mock
+    private WorkReportRepository mockWorkReportDao;
+    @Mock
+    private ConstructionReportRepository mockConstructionReportDao;
+    @Mock
+    private VehicleRepository mockVehicleDao;
+    @Mock
+    private TaskRepository mockTaskDao;
+    @Mock
     private PasswordEncoder mockPasswordEncoder;
     @Mock
     private UserMapper mockUserMapper;
@@ -39,8 +50,8 @@ class UserServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        userServiceImplUnderTest = new UserServiceImpl(mockUserDao, mockLocationDao, mockPasswordEncoder,
-                mockUserMapper);
+        userServiceImplUnderTest = new UserServiceImpl(mockUserDao, mockLocationDao, mockProjectDao, mockWorkReportDao,
+                mockConstructionReportDao, mockVehicleDao, mockTaskDao, mockPasswordEncoder, mockUserMapper);
     }
 
     @Test
@@ -125,7 +136,7 @@ class UserServiceImplTest {
                         .postCode("postCode")
                         .build())
                 .build());
-        when(mockUserDao.findAll()).thenReturn(users);
+        when(mockUserDao.findAll(Sort.by("properties"))).thenReturn(users);
 
         // Configure UserMapper.convertToDto(...).
         final UserDTO userDTO = new UserDTO();
@@ -166,7 +177,7 @@ class UserServiceImplTest {
     @Test
     void testGetUsers_UserRepositoryReturnsNoItems() {
         // Setup
-        when(mockUserDao.findAll()).thenReturn(Collections.emptyList());
+        when(mockUserDao.findAll(Sort.by("properties"))).thenReturn(Collections.emptyList());
 
         // Run the test
         final List<UserDTO> result = userServiceImplUnderTest.getUsers();
@@ -191,7 +202,7 @@ class UserServiceImplTest {
                         .postCode("postCode")
                         .build())
                 .build());
-        when(mockUserDao.findAll()).thenReturn(users);
+        when(mockUserDao.findAll(Sort.by("properties"))).thenReturn(users);
 
         // Configure UserMapper.convertToInputDto(...).
         final UserInputDTO userInputDTO = new UserInputDTO();
@@ -220,7 +231,7 @@ class UserServiceImplTest {
     @Test
     void testGetInputUsers_UserRepositoryReturnsNoItems() {
         // Setup
-        when(mockUserDao.findAll()).thenReturn(Collections.emptyList());
+        when(mockUserDao.findAll(Sort.by("properties"))).thenReturn(Collections.emptyList());
 
         // Run the test
         final List<UserInputDTO> result = userServiceImplUnderTest.getInputUsers();
@@ -236,6 +247,12 @@ class UserServiceImplTest {
         userServiceImplUnderTest.delete(0L);
 
         // Verify the results
+        verify(mockTaskDao).setAssigneeToNullByUserId(0L);
+        verify(mockTaskDao).setAuthorToNullByUserId(0L);
+        verify(mockWorkReportDao).deleteByReportingEmployeeId(0L);
+        verify(mockConstructionReportDao).setExecutorToNullByUserId(0L);
+        verify(mockProjectDao).setProjectManagerToNullByUserId(0L);
+        verify(mockVehicleDao).setDriverToNullByUserId(0L);
         verify(mockUserDao).deleteById(0L);
     }
 

@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 import java.text.ParseException;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * The type Work report service.
@@ -296,6 +297,13 @@ public class WorkReportServiceImpl implements WorkReportService {
             location = report.get().getLocation();
         }
         WorkReport updatedReport = workReportMapper.convertToEntity(request);
+
+        long diffInMillis = request.getTimeTo().getTime() - request.getTimeFrom().getTime();
+        int diffInMinutes = (int) TimeUnit.MILLISECONDS.toMinutes(diffInMillis);
+        diffInMinutes -= 30;
+        diffInMinutes = RoundTime.setToQuarterHour(diffInMinutes);
+        updatedReport.setMinutes(diffInMinutes);
+
         updatedReport.setReportingEmployee(employee);
         updatedReport.setLocation(location);
         updatedReport = workReportDao.save(updatedReport);

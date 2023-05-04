@@ -1,4 +1,4 @@
-package cz.cvut.fel.constructa.service;
+package cz.cvut.fel.constructa.service.squaretest.util;
 
 import cz.cvut.fel.constructa.dto.request.VehicleRequest;
 import cz.cvut.fel.constructa.dto.response.VehicleDTO;
@@ -8,11 +8,13 @@ import cz.cvut.fel.constructa.mapper.VehicleMapper;
 import cz.cvut.fel.constructa.model.Vehicle;
 import cz.cvut.fel.constructa.model.report.VehicleReport;
 import cz.cvut.fel.constructa.repository.VehicleRepository;
+import cz.cvut.fel.constructa.service.VehicleServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Sort;
 
 import java.text.ParseException;
 import java.util.*;
@@ -172,7 +174,7 @@ class VehicleServiceImplTest {
         vehicle.setVehicleReports(List.of(VehicleReport.builder().build()));
         vehicle.setType(VehicleType.CAR);
         final List<Vehicle> vehicles = List.of(vehicle);
-        when(mockVehicleDao.findAll()).thenReturn(vehicles);
+        when(mockVehicleDao.findAll(Sort.by("properties"))).thenReturn(vehicles);
 
         // Configure VehicleMapper.convertToDto(...).
         final VehicleDTO vehicleDTO = new VehicleDTO();
@@ -198,7 +200,7 @@ class VehicleServiceImplTest {
     @Test
     void testGetVehicles_VehicleRepositoryReturnsNoItems() {
         // Setup
-        when(mockVehicleDao.findAll()).thenReturn(Collections.emptyList());
+        when(mockVehicleDao.findAll(Sort.by("properties"))).thenReturn(Collections.emptyList());
 
         // Run the test
         final List<VehicleDTO> result = vehicleServiceImplUnderTest.getVehicles();

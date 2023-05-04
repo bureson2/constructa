@@ -1,4 +1,4 @@
-package cz.cvut.fel.constructa.service;
+package cz.cvut.fel.constructa.service.squaretest.util;
 
 import cz.cvut.fel.constructa.dto.request.TaskRequest;
 import cz.cvut.fel.constructa.dto.response.TaskDTO;
@@ -10,11 +10,13 @@ import cz.cvut.fel.constructa.model.role.User;
 import cz.cvut.fel.constructa.repository.TaskRepository;
 import cz.cvut.fel.constructa.repository.UserRepository;
 import cz.cvut.fel.constructa.security.AuthenticationFacade;
+import cz.cvut.fel.constructa.service.TaskServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Sort;
 
 import java.text.ParseException;
 import java.util.*;
@@ -435,7 +437,7 @@ class TaskServiceImplTest {
                         .build())
                 .state(TaskState.NEW)
                 .build());
-        when(mockTaskDao.findAll()).thenReturn(tasks);
+        when(mockTaskDao.findAll(Sort.by("properties"))).thenReturn(tasks);
 
         // Configure TaskMapper.convertToDto(...).
         final TaskDTO taskDTO = new TaskDTO();
@@ -476,7 +478,7 @@ class TaskServiceImplTest {
     @Test
     void testGetTasks_TaskRepositoryReturnsNoItems() {
         // Setup
-        when(mockTaskDao.findAll()).thenReturn(Collections.emptyList());
+        when(mockTaskDao.findAll(Sort.by("properties"))).thenReturn(Collections.emptyList());
 
         // Run the test
         final List<TaskDTO> result = taskServiceImplUnderTest.getTasks();
@@ -508,7 +510,7 @@ class TaskServiceImplTest {
                         .build())
                 .state(TaskState.NEW)
                 .build());
-        when(mockTaskDao.findTaskByAssigneeId(0L)).thenReturn(tasks);
+        when(mockTaskDao.findTaskByAssigneeId(0L, Sort.by("properties"))).thenReturn(tasks);
 
         // Configure TaskMapper.convertToDto(...).
         final TaskDTO taskDTO = new TaskDTO();
@@ -570,7 +572,7 @@ class TaskServiceImplTest {
                 .build());
         when(mockUserDao.findByEmail("email")).thenReturn(user);
 
-        when(mockTaskDao.findTaskByAssigneeId(0L)).thenReturn(Collections.emptyList());
+        when(mockTaskDao.findTaskByAssigneeId(0L, Sort.by("properties"))).thenReturn(Collections.emptyList());
 
         // Run the test
         final List<TaskDTO> result = taskServiceImplUnderTest.getMyTasks();

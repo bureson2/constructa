@@ -50,6 +50,9 @@ public interface ConstructionReportController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<ConstructionReportDTO> createConstructionReport(@RequestBody ConstructionReportRequest request) throws ParseException;
 
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<ConstructionReportDTO> updateConstructionReport(@RequestBody ConstructionReportRequest request) throws ParseException;
+
     /**
      * Delete construction report response entity.
      *

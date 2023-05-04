@@ -1,4 +1,4 @@
-package cz.cvut.fel.constructa.service;
+package cz.cvut.fel.constructa.service.squaretest.util;
 
 import cz.cvut.fel.constructa.dto.request.ProjectRequest;
 import cz.cvut.fel.constructa.dto.response.ProjectDTO;
@@ -14,11 +14,13 @@ import cz.cvut.fel.constructa.model.role.User;
 import cz.cvut.fel.constructa.repository.LocationRepository;
 import cz.cvut.fel.constructa.repository.ProjectRepository;
 import cz.cvut.fel.constructa.repository.UserRepository;
+import cz.cvut.fel.constructa.service.ProjectServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Sort;
 
 import java.text.ParseException;
 import java.util.*;
@@ -424,7 +426,7 @@ class ProjectServiceImplTest {
         constructionReport.setTaskName("taskName");
         project.setConstructionReports(List.of(constructionReport));
         final List<Project> projects = List.of(project);
-        when(mockProjectDao.findAll()).thenReturn(projects);
+        when(mockProjectDao.findAll(Sort.by("properties"))).thenReturn(projects);
 
         // Configure ProjectMapper.convertToDto(...).
         final ProjectDTO projectDTO = new ProjectDTO();
@@ -455,7 +457,7 @@ class ProjectServiceImplTest {
     @Test
     void testGetProjects_ProjectRepositoryReturnsNoItems() {
         // Setup
-        when(mockProjectDao.findAll()).thenReturn(Collections.emptyList());
+        when(mockProjectDao.findAll(Sort.by("properties"))).thenReturn(Collections.emptyList());
 
         // Run the test
         final List<ProjectDTO> result = projectServiceImplUnderTest.getProjects();

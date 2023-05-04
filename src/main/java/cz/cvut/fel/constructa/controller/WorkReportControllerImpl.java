@@ -155,9 +155,18 @@ public class WorkReportControllerImpl implements WorkReportController {
     @ResponseBody
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<WorkReportDTO> createWorkReport(@RequestBody WorkReportRequest request) throws ParseException {
-        return ResponseEntity.ok().body(
-                workReportService.create(request)
+        List<GrantedAuthority> requiredRoles = Arrays.asList(
+                new SimpleGrantedAuthority("ROLE_ADMIN"),
+                new SimpleGrantedAuthority("ROLE_MANAGER")
         );
+
+        if (hasPermission(requiredRoles)) {
+            return ResponseEntity.ok().body(
+                    workReportService.create(request)
+            );
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
     }
 
     /**

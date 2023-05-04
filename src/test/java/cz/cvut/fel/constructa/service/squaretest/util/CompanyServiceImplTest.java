@@ -1,4 +1,4 @@
-package cz.cvut.fel.constructa.service;
+package cz.cvut.fel.constructa.service.squaretest.util;
 
 import cz.cvut.fel.constructa.dto.request.CompanyRequest;
 import cz.cvut.fel.constructa.dto.response.CompanyDTO;
@@ -10,11 +10,13 @@ import cz.cvut.fel.constructa.model.report.VehicleReport;
 import cz.cvut.fel.constructa.model.role.User;
 import cz.cvut.fel.constructa.repository.CompanyRepository;
 import cz.cvut.fel.constructa.repository.LocationRepository;
+import cz.cvut.fel.constructa.service.CompanyServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Sort;
 
 import java.text.ParseException;
 import java.util.Collections;
@@ -272,7 +274,7 @@ class CompanyServiceImplTest {
         company.setExternalist(List.of(User.builder().build()));
         company.setContractors_transport_reports(Set.of(VehicleReport.builder().build()));
         final List<Company> companies = List.of(company);
-        when(mockCompanyDao.findAll()).thenReturn(companies);
+        when(mockCompanyDao.findAll(Sort.by("properties"))).thenReturn(companies);
 
         // Configure CompanyMapper.convertToDto(...).
         final CompanyDTO companyDTO = new CompanyDTO();
@@ -301,7 +303,7 @@ class CompanyServiceImplTest {
     @Test
     void testGetCompanies_CompanyRepositoryReturnsNoItems() {
         // Setup
-        when(mockCompanyDao.findAll()).thenReturn(Collections.emptyList());
+        when(mockCompanyDao.findAll(Sort.by("properties"))).thenReturn(Collections.emptyList());
 
         // Run the test
         final List<CompanyDTO> result = companyServiceImplUnderTest.getCompanies();

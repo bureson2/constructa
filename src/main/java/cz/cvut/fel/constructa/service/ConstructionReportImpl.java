@@ -130,14 +130,25 @@ public class ConstructionReportImpl implements ConstructionReportService {
         constructionReportDao.deleteById(id);
     }
 
+
     /**
-     * Updates the specified construction report.
+     * Update construction report dto.
      *
-     * @param constructionReport the construction report to update
-     * @return the updated construction report
+     * @param request the request
+     * @return the construction report dto
      */
     @Override
-    public ConstructionReport update(ConstructionReportRequest constructionReport) {
+    public ConstructionReportDTO update(ConstructionReportRequest request) {
+        Optional<ConstructionReport> constructionReport = constructionReportDao.findById(request.getId());
+        if(constructionReport.isPresent()){
+            ConstructionReport toUpdate = constructionReport.get();
+            if(request.getState() != null) toUpdate.setState(request.getState());
+            if(request.getNote() != null) toUpdate.setNote(request.getNote());
+            if(request.getTaskName() != null) toUpdate.setTaskName(request.getTaskName());
+            if(request.getWeather() != null) toUpdate.setWeather(request.getWeather());
+            if(request.getDate() != null) toUpdate.setDate(request.getDate());
+            constructionReportDao.save(toUpdate);
+        }
         return null;
     }
 }

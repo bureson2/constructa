@@ -46,6 +46,7 @@ public class ConstructionReportControllerImpl implements ConstructionReportContr
     private boolean hasPermission(List<GrantedAuthority> requiredRoles){
         Authentication authentication = authenticationFacade.getAuthentication();
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        System.out.println(authorities.toArray()[0]);
         return authorities.stream().anyMatch(requiredRoles::contains);
     }
 
@@ -121,6 +122,33 @@ public class ConstructionReportControllerImpl implements ConstructionReportContr
         if (hasPermission(requiredRoles)) {
             return ResponseEntity.ok().body(
                     constructionReportService.create(request)
+            );
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+    }
+
+    /**
+     * Update construction report response entity.
+     *
+     * @param request the request
+     * @return the response entity
+     * @throws ParseException the parse exception
+     */
+    @Override
+    @ResponseStatus(code = HttpStatus.CREATED)
+    @ResponseBody
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ConstructionReportDTO> updateConstructionReport(@RequestBody ConstructionReportRequest request) throws ParseException {
+        List<GrantedAuthority> requiredRoles = Arrays.asList(
+                new SimpleGrantedAuthority("ROLE_ADMIN"),
+                new SimpleGrantedAuthority("ROLE_MANAGER"),
+                new SimpleGrantedAuthority("ROLE_CONSTRUCTION_MANAGER")
+        );
+
+        if (hasPermission(requiredRoles)) {
+            return ResponseEntity.ok().body(
+                    constructionReportService.update(request)
             );
         } else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();

@@ -7,7 +7,7 @@ public enum ConstructionDiaryReportState {
     /**
      * Finished construction diary report state.
      */
-    FINISHED("Dokončeno"),
+        FINISHED("Dokončeno"),
     /**
      * In progress construction diary report state.
      */
