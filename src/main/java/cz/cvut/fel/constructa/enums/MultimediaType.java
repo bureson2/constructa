@@ -7,11 +7,11 @@ public enum MultimediaType {
     /**
      * Photo multimedia type.
      */
-    PHOTO("Photo"),
+    IMAGE("Obrázek"),
     /**
      * Document multimedia type.
      */
-    DOCUMENT("Document"),
+    DOCUMENT("Dokument"),
     /**
      * Video multimedia type.
      */

@@ -71,6 +71,6 @@ public class Company {
      */
     @ManyToMany(mappedBy = "transportContractors")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
-    private Set<VehicleReport> contractors_transport_reports = new HashSet<>();
+    private Set<VehicleReport> contractorsTransportReports = new HashSet<>();
 
 }

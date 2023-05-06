@@ -29,8 +29,8 @@ public class Document {
     /**
      * The link to the document.
      */
-    @Column(name = "link", nullable = false)
-    private String link;
+    @Column(name = "url", nullable = false)
+    private String url;
 
     /**
      * The set of construction reports to which the document is linked.
