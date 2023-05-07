@@ -45,19 +45,33 @@ public class SecurityConfiguration {
                 .and()
                 .authorizeHttpRequests()
 
-                .requestMatchers("/api/v1/permissions").permitAll()
-                .requestMatchers("/api/v1/auth/authenticate").permitAll()
-                .requestMatchers("/api/v1/auth/register").hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER")
-
-                .requestMatchers("/api/v1/companies/**").authenticated()
-                .requestMatchers("/api/v1/construction-reports/**").authenticated()
-                .requestMatchers("/api/v1/projects/**").authenticated()
-                .requestMatchers("/api/v1/tasks/**").authenticated()
-                .requestMatchers("/api/v1/users/**").authenticated()
-                .requestMatchers("/api/v1/vehicles/**").authenticated()
-
-                .requestMatchers("/api/v1/work-reports/user/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER", "ROLE_REPORTER")
-                .requestMatchers("/api/v1/work-reports/**").authenticated()
+                .requestMatchers(
+                        "/api/v1/permissions",
+                        "/api/v1/auth/authenticate",
+                        // swagger enables
+                        "/v3/api-docs/**",
+                        "/swagger-resources/**",
+                        "/configuration/ui",
+                        "/configuration/security",
+                        "/swagger-ui/**",
+                        "/webjars/**",
+                        "/swagger-ui.html"
+                ).permitAll()
+                .requestMatchers(
+                        "/api/v1/auth/register"
+                ).hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER")
+                .requestMatchers(
+                        "/api/v1/companies/**",
+                        "/api/v1/construction-reports/**",
+                        "/api/v1/projects/**",
+                        "/api/v1/tasks/**",
+                        "/api/v1/users/**",
+                        "/api/v1/vehicles/**",
+                        "/api/v1/work-reports/**"
+                        ).authenticated()
+                .requestMatchers(
+                        "/api/v1/work-reports/user/**"
+                ).hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER", "ROLE_REPORTER")
 
                 .and()
                 .sessionManagement()
