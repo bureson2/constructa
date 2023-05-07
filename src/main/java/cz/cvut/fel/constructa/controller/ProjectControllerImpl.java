@@ -5,6 +5,8 @@ import cz.cvut.fel.constructa.dto.request.ProjectRequest;
 import cz.cvut.fel.constructa.dto.response.ProjectDTO;
 import cz.cvut.fel.constructa.security.AuthenticationFacade;
 import cz.cvut.fel.constructa.service.interfaces.ProjectService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,6 +27,8 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping("/api/v1/projects")
+@SecurityRequirement(name="bearerAuth")
+@Tag(name = "Projects")
 @RequiredArgsConstructor
 public class ProjectControllerImpl implements ProjectController {
     /**

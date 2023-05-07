@@ -5,6 +5,8 @@ import cz.cvut.fel.constructa.dto.request.ConstructionReportRequest;
 import cz.cvut.fel.constructa.dto.response.ConstructionReportDTO;
 import cz.cvut.fel.constructa.security.AuthenticationFacade;
 import cz.cvut.fel.constructa.service.interfaces.ConstructionReportService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,6 +27,8 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping("/api/v1/construction-reports")
+@SecurityRequirement(name="bearerAuth")
+@Tag(name = "Construction reports")
 @RequiredArgsConstructor
 public class ConstructionReportControllerImpl implements ConstructionReportController {
     /**

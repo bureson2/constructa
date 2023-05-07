@@ -5,6 +5,8 @@ import cz.cvut.fel.constructa.dto.request.TaskRequest;
 import cz.cvut.fel.constructa.dto.response.TaskDTO;
 import cz.cvut.fel.constructa.security.AuthenticationFacade;
 import cz.cvut.fel.constructa.service.interfaces.TaskService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,6 +25,8 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping("/api/v1/tasks")
+@SecurityRequirement(name="bearerAuth")
+@Tag(name = "Tasks")
 @RequiredArgsConstructor
 public class TaskControllerImpl implements TaskController {
     /**

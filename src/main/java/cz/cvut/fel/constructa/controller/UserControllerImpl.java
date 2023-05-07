@@ -6,6 +6,8 @@ import cz.cvut.fel.constructa.dto.response.UserDTO;
 import cz.cvut.fel.constructa.dto.response.UserInputDTO;
 import cz.cvut.fel.constructa.security.AuthenticationFacade;
 import cz.cvut.fel.constructa.service.interfaces.UserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,6 +28,8 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping("/api/v1/users")
+@SecurityRequirement(name="bearerAuth")
+@Tag(name = "Users")
 @RequiredArgsConstructor
 public class UserControllerImpl implements UserController {
     /**

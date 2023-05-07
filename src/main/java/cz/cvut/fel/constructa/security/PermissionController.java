@@ -1,5 +1,6 @@
 package cz.cvut.fel.constructa.security;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -7,18 +8,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
 /**
  * The type Permission controller.
  */
+@CrossOrigin
 @RestController
 @RequiredArgsConstructor
+@Tag(name = "Permissions")
 public class PermissionController {
     /**
      * The Authentication facade.

@@ -8,6 +8,8 @@ import cz.cvut.fel.constructa.mapper.VehicleReportMapper;
 import cz.cvut.fel.constructa.model.report.VehicleReport;
 import cz.cvut.fel.constructa.security.AuthenticationFacade;
 import cz.cvut.fel.constructa.service.interfaces.VehicleReportService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -30,6 +32,8 @@ import java.util.stream.Collectors;
 @CrossOrigin
 @RestController
 @RequestMapping("/api/v1/vehicles")
+@SecurityRequirement(name="bearerAuth")
+@Tag(name = "Vehicle reports")
 @RequiredArgsConstructor
 public class VehicleReportControllerImpl implements VehicleReportsController {
     /**

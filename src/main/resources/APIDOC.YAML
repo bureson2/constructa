@@ -1,0 +1,1639 @@
+openapi: 3.0.1
+info:
+  title: Constructa OpenApi specification
+  description: OpenApi documentation for Constructa BE
+  contact:
+    name: Ondřej Bureš
+    url: 'https://digitalnoodles.cz/'
+    email: bureson2@fel.cvut.cz
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080/'
+    description: Local ENV
+security:
+  - bearerAuth: []
+paths:
+  /api/v1/work-reports:
+    get:
+      tags:
+        - Work reports
+      operationId: getWorkReports
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkReportDTO'
+      security:
+        - bearerAuth: []
+    put:
+      tags:
+        - Work reports
+      operationId: updateWorkReport
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkReportRequest'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/WorkReportDTO'
+      security:
+        - bearerAuth: []
+    post:
+      tags:
+        - Work reports
+      operationId: createWorkReport
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkReportRequest'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/WorkReportDTO'
+      security:
+        - bearerAuth: []
+  /api/v1/vehicles:
+    get:
+      tags:
+        - Vehicles
+      operationId: getVehicles
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VehicleDTO'
+      security:
+        - bearerAuth: []
+    put:
+      tags:
+        - Vehicles
+      operationId: updateVehicle
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VehicleRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/VehicleDTO'
+      security:
+        - bearerAuth: []
+    post:
+      tags:
+        - Vehicles
+      operationId: createVehicle
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VehicleRequest'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/VehicleDTO'
+      security:
+        - bearerAuth: []
+  /api/v1/vehicles/reports:
+    get:
+      tags:
+        - Vehicle reports
+      operationId: getVehicleReports
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VehicleReportDTO'
+      security:
+        - bearerAuth: []
+    put:
+      tags:
+        - Vehicle reports
+      operationId: updateVehicleReport
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VehicleReportRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/VehicleReportDTO'
+      security:
+        - bearerAuth: []
+    post:
+      tags:
+        - Vehicle reports
+      operationId: createVehicleReport
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VehicleReportRequest'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/VehicleReportDTO'
+      security:
+        - bearerAuth: []
+  /api/v1/users:
+    get:
+      tags:
+        - Users
+      operationId: getUsers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserDTO'
+      security:
+        - bearerAuth: []
+    put:
+      tags:
+        - Users
+      operationId: updateUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDTO'
+      security:
+        - bearerAuth: []
+  /api/v1/tasks:
+    get:
+      tags:
+        - Tasks
+      operationId: getTasks
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TaskDTO'
+      security:
+        - bearerAuth: []
+    put:
+      tags:
+        - Tasks
+      operationId: editTask
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/TaskDTO'
+      security:
+        - bearerAuth: []
+    post:
+      tags:
+        - Tasks
+      operationId: createTask
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskRequest'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/TaskDTO'
+      security:
+        - bearerAuth: []
+  /api/v1/projects:
+    get:
+      tags:
+        - Projects
+      operationId: getProjects
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectDTO'
+      security:
+        - bearerAuth: []
+    put:
+      tags:
+        - Projects
+      operationId: editProject
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ProjectDTO'
+      security:
+        - bearerAuth: []
+    post:
+      tags:
+        - Projects
+      operationId: createProject
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectRequest'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ProjectDTO'
+      security:
+        - bearerAuth: []
+  /api/v1/construction-reports:
+    get:
+      tags:
+        - Construction reports
+      operationId: getConstructionReports
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ConstructionReportDTO'
+      security:
+        - bearerAuth: []
+    put:
+      tags:
+        - Construction reports
+      operationId: updateConstructionReport
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConstructionReportRequest'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ConstructionReportDTO'
+      security:
+        - bearerAuth: []
+    post:
+      tags:
+        - Construction reports
+      operationId: createConstructionReport
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConstructionReportRequest'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ConstructionReportDTO'
+      security:
+        - bearerAuth: []
+  /api/v1/companies:
+    get:
+      tags:
+        - Companies
+      operationId: getCompanies
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CompanyDTO'
+      security:
+        - bearerAuth: []
+    put:
+      tags:
+        - Companies
+      operationId: editCompany
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CompanyDTO'
+      security:
+        - bearerAuth: []
+    post:
+      tags:
+        - Companies
+      operationId: createCompany
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyRequest'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CompanyDTO'
+      security:
+        - bearerAuth: []
+  /api/v1/work-reports/illness:
+    post:
+      tags:
+        - Work reports
+      operationId: recordIllness
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IllnessRequest'
+        required: true
+      responses:
+        '201':
+          description: Created
+      security:
+        - bearerAuth: []
+  /api/v1/work-reports/end-work:
+    post:
+      tags:
+        - Work reports
+      operationId: stopRecordAttendance
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StopAttendanceRequest'
+        required: true
+      responses:
+        '201':
+          description: Created
+      security:
+        - bearerAuth: []
+  /api/v1/work-reports/attendance:
+    post:
+      tags:
+        - Work reports
+      operationId: recordAttendance
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AttendanceRequest'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/WorkReportDTO'
+      security:
+        - bearerAuth: []
+  /api/v1/tasks/state:
+    post:
+      tags:
+        - Tasks
+      operationId: editTaskState
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/TaskDTO'
+      security:
+        - bearerAuth: []
+  /api/v1/auth/register:
+    post:
+      tags:
+        - Authentization
+      operationId: register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/AuthenticationResponse'
+  /api/v1/auth/authenticate:
+    post:
+      tags:
+        - Authentization
+      operationId: authenticate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthenticationRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/AuthenticationResponse'
+  '/api/v1/work-reports/{workReportId}':
+    get:
+      tags:
+        - Work reports
+      operationId: getWorkReport
+      parameters:
+        - name: workReportId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkReportDTO'
+      security:
+        - bearerAuth: []
+    delete:
+      tags:
+        - Work reports
+      operationId: deleteWorkReport
+      parameters:
+        - name: workReportId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: No Content
+      security:
+        - bearerAuth: []
+  '/api/v1/work-reports/user/{userId}':
+    get:
+      tags:
+        - Work reports
+      operationId: getUsersWorkReports
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkReportDTO'
+      security:
+        - bearerAuth: []
+  /api/v1/work-reports/my:
+    get:
+      tags:
+        - Work reports
+      operationId: getMyWorkReports
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkReportDTO'
+      security:
+        - bearerAuth: []
+  '/api/v1/work-reports/location/{locationId}':
+    get:
+      tags:
+        - Work reports
+      operationId: getWorkLocation
+      parameters:
+        - name: locationId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationDTO'
+      security:
+        - bearerAuth: []
+  '/api/v1/vehicles/{vehicleId}':
+    get:
+      tags:
+        - Vehicles
+      operationId: getVehicle
+      parameters:
+        - name: vehicleId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleDTO'
+      security:
+        - bearerAuth: []
+    delete:
+      tags:
+        - Vehicles
+      operationId: deleteVehicle
+      parameters:
+        - name: vehicleId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: No Content
+      security:
+        - bearerAuth: []
+  '/api/v1/vehicles/{carId}/reports':
+    get:
+      tags:
+        - Vehicle reports
+      operationId: getVehicleReportsByVehicle
+      parameters:
+        - name: carId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VehicleReportDTO'
+      security:
+        - bearerAuth: []
+  /api/v1/vehicles/search:
+    get:
+      tags:
+        - Vehicles
+      operationId: getInputVehicles
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VehicleInputDTO'
+      security:
+        - bearerAuth: []
+  '/api/v1/vehicles/reports/{vehicleReportId}':
+    get:
+      tags:
+        - Vehicle reports
+      operationId: getVehicleReport
+      parameters:
+        - name: vehicleReportId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleReportDTO'
+      security:
+        - bearerAuth: []
+  '/api/v1/users/{userId}':
+    get:
+      tags:
+        - Users
+      operationId: getUser
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDTO'
+      security:
+        - bearerAuth: []
+    delete:
+      tags:
+        - Users
+      operationId: deleteUser
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: No Content
+      security:
+        - bearerAuth: []
+  /api/v1/users/search:
+    get:
+      tags:
+        - Users
+      operationId: getInputUsers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserInputDTO'
+      security:
+        - bearerAuth: []
+  '/api/v1/tasks/{taskId}':
+    get:
+      tags:
+        - Tasks
+      operationId: getTask
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskDTO'
+      security:
+        - bearerAuth: []
+    delete:
+      tags:
+        - Tasks
+      operationId: deleteTask
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: No Content
+      security:
+        - bearerAuth: []
+  /api/v1/tasks/my:
+    get:
+      tags:
+        - Tasks
+      operationId: getUserTasks
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TaskDTO'
+      security:
+        - bearerAuth: []
+  '/api/v1/projects/{projectId}':
+    get:
+      tags:
+        - Projects
+      operationId: getProjects_1
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectDTO'
+      security:
+        - bearerAuth: []
+    delete:
+      tags:
+        - Projects
+      operationId: deleteProject
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: No Content
+      security:
+        - bearerAuth: []
+  /api/v1/permissions:
+    get:
+      tags:
+        - Permissions
+      operationId: getPermission
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  '/api/v1/construction-reports/{constructionReportId}':
+    get:
+      tags:
+        - Construction reports
+      operationId: getConstructionReport
+      parameters:
+        - name: constructionReportId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConstructionReportDTO'
+      security:
+        - bearerAuth: []
+    delete:
+      tags:
+        - Construction reports
+      operationId: deleteConstructionReport
+      parameters:
+        - name: constructionReportId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: No Content
+      security:
+        - bearerAuth: []
+  '/api/v1/construction-reports/project/{projectId}':
+    get:
+      tags:
+        - Construction reports
+      operationId: getConstructionReportsByProjectId
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ConstructionReportDTO'
+      security:
+        - bearerAuth: []
+  '/api/v1/companies/{companyId}':
+    get:
+      tags:
+        - Companies
+      operationId: getCompanys
+      parameters:
+        - name: companyId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyDTO'
+      security:
+        - bearerAuth: []
+    delete:
+      tags:
+        - Companies
+      operationId: deleteCompany
+      parameters:
+        - name: companyId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: No Content
+      security:
+        - bearerAuth: []
+  '/api/v1/vehicles/reports/{reportId}':
+    delete:
+      tags:
+        - Vehicle reports
+      operationId: deleteVehicleReport
+      parameters:
+        - name: reportId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: No Content
+      security:
+        - bearerAuth: []
+components:
+  schemas:
+    WorkReportRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        timeFrom:
+          type: string
+          format: date-time
+        timeTo:
+          type: string
+          format: date-time
+        minutes:
+          type: integer
+          format: int32
+        type:
+          type: string
+          enum:
+            - WORK_REPORT
+            - HOLIDAY
+            - SICK_NOTE
+            - MATERNITY_LEAVE
+            - UNPAID_VACATION
+            - SICK_DAY
+        userId:
+          type: integer
+          format: int64
+    LocationDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        city:
+          type: string
+        street:
+          type: string
+        descriptiveNumber:
+          type: string
+        name:
+          type: string
+        country:
+          type: string
+        postCode:
+          type: string
+    UserDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        username:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        role:
+          type: string
+        titleBeforeName:
+          type: string
+        firstname:
+          type: string
+        lastname:
+          type: string
+        titleAfterName:
+          type: string
+        bankAccount:
+          type: string
+        dateOfAcceptance:
+          type: string
+          format: date-time
+        dateOfBirth:
+          type: string
+          format: date-time
+        birthId:
+          type: string
+        hourRate:
+          type: integer
+          format: int32
+        monthSalary:
+          type: integer
+          format: int32
+        address:
+          $ref: '#/components/schemas/LocationDTO'
+    WorkReportDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        timeFrom:
+          type: string
+          format: date-time
+        timeTo:
+          type: string
+          format: date-time
+        minutes:
+          type: integer
+          format: int32
+        reportingEmployee:
+          $ref: '#/components/schemas/UserDTO'
+        location:
+          $ref: '#/components/schemas/LocationDTO'
+        type:
+          type: string
+    VehicleRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        factory:
+          type: string
+        name:
+          type: string
+        registrationNumber:
+          type: string
+        conditionMotorcycleWatch:
+          type: number
+          format: double
+        mileage:
+          type: number
+          format: double
+        type:
+          type: string
+          enum:
+            - CAR
+            - VEHICLE
+            - TRAILER
+        boughtAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        qrCode:
+          type: string
+        vinCode:
+          type: string
+    VehicleDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        factory:
+          type: string
+        name:
+          type: string
+        registrationNumber:
+          type: string
+        conditionMotorcycleWatch:
+          type: number
+          format: double
+        mileage:
+          type: number
+          format: double
+        type:
+          type: string
+        boughtAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        qrCode:
+          type: string
+        vinCode:
+          type: string
+    VehicleReportRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        originalConditionMotorcycleWatch:
+          type: number
+          format: double
+        afterworkConditionMotorcycleWatch:
+          type: number
+          format: double
+        cargoMass:
+          type: integer
+          format: int32
+        cargoType:
+          type: string
+        distance:
+          type: number
+          format: double
+        purchaseOfFuelLitres:
+          type: number
+          format: double
+        timeFrom:
+          type: string
+          format: date-time
+        timeTo:
+          type: string
+          format: date-time
+        description:
+          type: string
+        vehicle:
+          type: integer
+          format: int64
+        driver:
+          type: integer
+          format: int64
+    VehicleReportDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        originalConditionMotorcycleWatch:
+          type: number
+          format: double
+        afterworkConditionMotorcycleWatch:
+          type: number
+          format: double
+        cargoMass:
+          type: integer
+          format: int32
+        cargoType:
+          type: string
+        distance:
+          type: number
+          format: double
+        purchaseOfFuelLitres:
+          type: number
+          format: double
+        timeFrom:
+          type: string
+          format: date-time
+        timeTo:
+          type: string
+          format: date-time
+        description:
+          type: string
+        vehicle:
+          $ref: '#/components/schemas/VehicleDTO'
+        driver:
+          $ref: '#/components/schemas/UserDTO'
+    UserRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        titleBeforeName:
+          type: string
+        firstname:
+          type: string
+        lastname:
+          type: string
+        titleAfterName:
+          type: string
+        bankAccount:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date-time
+        birthId:
+          type: string
+        hourRate:
+          type: integer
+          format: int32
+        monthSalary:
+          type: integer
+          format: int32
+        phone:
+          type: string
+        role:
+          type: string
+          enum:
+            - ROLE_ADMIN
+            - ROLE_MANAGER
+            - ROLE_REPORTER
+            - ROLE_WAREHOUSE_MANAGER
+            - ROLE_MECHANICAL_ENGINEER
+            - ROLE_CONSTRUCTION_MANAGER
+            - ROLE_DRIVER
+            - ROLE_WORKER
+            - ROLE_EMPLOYEE
+            - ROLE_EXTERNALIST
+            - ROLE_FIRED
+        country:
+          type: string
+        city:
+          type: string
+        street:
+          type: string
+        descriptiveNumber:
+          type: string
+        postCode:
+          type: string
+    TaskRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        timeFrom:
+          type: string
+          format: date-time
+        timeTo:
+          type: string
+          format: date-time
+        locationName:
+          type: string
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        state:
+          type: string
+        userId:
+          type: integer
+          format: int64
+    TaskDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        dateOfCreation:
+          type: string
+          format: date-time
+        name:
+          type: string
+        description:
+          type: string
+        timeFrom:
+          type: string
+          format: date-time
+        timeTo:
+          type: string
+          format: date-time
+        assignee:
+          $ref: '#/components/schemas/UserDTO'
+        author:
+          $ref: '#/components/schemas/UserDTO'
+        locationName:
+          type: string
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        state:
+          type: string
+    ProjectRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        buldingFacility:
+          type: string
+        state:
+          type: string
+          enum:
+            - FINISHED
+            - IN_PREPARATION
+            - IN_REALIZATION
+        userId:
+          type: integer
+          format: int64
+        startedAt:
+          type: string
+          format: date-time
+        deadline:
+          type: string
+          format: date-time
+        country:
+          type: string
+        city:
+          type: string
+        street:
+          type: string
+        descriptiveNumber:
+          type: string
+        postCode:
+          type: string
+    ProjectDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        buldingFacility:
+          type: string
+        state:
+          type: string
+        projectManager:
+          $ref: '#/components/schemas/UserDTO'
+        projectAddress:
+          $ref: '#/components/schemas/LocationDTO'
+        startedAt:
+          type: string
+          format: date-time
+        deadline:
+          type: string
+          format: date-time
+    ConstructionReportRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        taskName:
+          type: string
+        note:
+          type: string
+        weather:
+          type: string
+        date:
+          type: string
+          format: date-time
+        executorId:
+          type: integer
+          format: int64
+        state:
+          type: string
+          enum:
+            - FINISHED
+            - IN_PROGRESS
+            - BLOCKED
+        projectId:
+          type: integer
+          format: int64
+    ConstructionReportDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        taskName:
+          type: string
+        note:
+          type: string
+        weather:
+          type: string
+        date:
+          type: string
+          format: date-time
+        executor:
+          $ref: '#/components/schemas/UserDTO'
+        state:
+          type: string
+    CompanyRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        din:
+          type: string
+        cin:
+          type: string
+        phone:
+          type: string
+        country:
+          type: string
+        city:
+          type: string
+        street:
+          type: string
+        descriptiveNumber:
+          type: string
+        postCode:
+          type: string
+    CompanyDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        din:
+          type: string
+        cin:
+          type: string
+        phone:
+          type: string
+        companyAddress:
+          $ref: '#/components/schemas/LocationDTO'
+    IllnessRequest:
+      type: object
+      properties:
+        timeFrom:
+          type: string
+          format: date-time
+        timeTo:
+          type: string
+          format: date-time
+    StopAttendanceRequest:
+      type: object
+      properties:
+        time:
+          type: integer
+          format: int32
+        longitude:
+          type: number
+          format: double
+        latitude:
+          type: number
+          format: double
+    AttendanceRequest:
+      type: object
+      properties:
+        locationId:
+          type: integer
+          format: int64
+        longitude:
+          type: number
+          format: double
+        latitude:
+          type: number
+          format: double
+    RegisterRequest:
+      type: object
+      properties:
+        titleBeforeName:
+          type: string
+        firstname:
+          type: string
+        lastname:
+          type: string
+        titleAfterName:
+          type: string
+        bankAccount:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date-time
+        birthId:
+          type: string
+        hourRate:
+          type: integer
+          format: int32
+        monthSalary:
+          type: integer
+          format: int32
+        phone:
+          type: string
+        role:
+          type: string
+          enum:
+            - ROLE_ADMIN
+            - ROLE_MANAGER
+            - ROLE_REPORTER
+            - ROLE_WAREHOUSE_MANAGER
+            - ROLE_MECHANICAL_ENGINEER
+            - ROLE_CONSTRUCTION_MANAGER
+            - ROLE_DRIVER
+            - ROLE_WORKER
+            - ROLE_EMPLOYEE
+            - ROLE_EXTERNALIST
+            - ROLE_FIRED
+        country:
+          type: string
+        city:
+          type: string
+        street:
+          type: string
+        descriptiveNumber:
+          type: string
+        postCode:
+          type: string
+    AuthenticationResponse:
+      type: object
+      properties:
+        token:
+          type: string
+    AuthenticationRequest:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+    VehicleInputDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        factory:
+          type: string
+        name:
+          type: string
+        registrationNumber:
+          type: string
+        type:
+          type: string
+          enum:
+            - CAR
+            - VEHICLE
+            - TRAILER
+    UserInputDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        firstname:
+          type: string
+        lastname:
+          type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      description: JWT auth description
+      in: header
+      scheme: bearer
+      bearerFormat: JWT
