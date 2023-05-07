@@ -12,6 +12,7 @@ import cz.cvut.fel.constructa.repository.VehicleRepository;
 import cz.cvut.fel.constructa.security.AuthenticationFacade;
 import cz.cvut.fel.constructa.service.interfaces.VehicleReportService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -25,6 +26,7 @@ import org.springframework.data.domain.Sort;
  * The type Vehicle report service.
  */
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class VehicleReportServiceImpl implements VehicleReportService {
     /**
@@ -81,6 +83,9 @@ public class VehicleReportServiceImpl implements VehicleReportService {
         }
 
         createdReport = vehicleReportDao.save(createdReport);
+
+        log.info("User {} create vehicle report for vehicle with id {}.", createdReport.getDriver().getUsername(), createdReport.getVehicle().getId());
+
         return vehicleReportMapper.convertToDto(createdReport);
     }
 
@@ -132,6 +137,7 @@ public class VehicleReportServiceImpl implements VehicleReportService {
     @Override
     public void deleteVehicleReport(Long id) {
         vehicleReportDao.deleteById(id);
+        log.info("Vehicle report with id {} was deleted.", id);
     }
 
     /**

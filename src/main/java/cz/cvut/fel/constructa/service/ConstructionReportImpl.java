@@ -12,6 +12,7 @@ import cz.cvut.fel.constructa.repository.UserRepository;
 import cz.cvut.fel.constructa.security.AuthenticationFacade;
 import cz.cvut.fel.constructa.service.interfaces.ConstructionReportService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -24,6 +25,7 @@ import org.springframework.data.domain.Sort;
  * Service class that handles construction reports.
  */
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class ConstructionReportImpl implements ConstructionReportService {
     /**
@@ -75,6 +77,8 @@ public class ConstructionReportImpl implements ConstructionReportService {
         Optional<Project> project = projectDao.findById(request.getProjectId());
         project.ifPresent(constructionReport::setProject);
         ConstructionReport createdReport = constructionReportDao.save(constructionReport);
+
+        log.info("User {} created new construction report with id {}.", createdReport.getExecutor().getUsername(), createdReport.getId());
 
         return constructionReportMapper.convertToDto(createdReport);
     }
@@ -128,8 +132,8 @@ public class ConstructionReportImpl implements ConstructionReportService {
     @Override
     public void delete(Long id) {
         constructionReportDao.deleteById(id);
+        log.info("Construction report with id {} was deleted.", id);
     }
-
 
     /**
      * Update construction report dto.

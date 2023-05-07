@@ -6,6 +6,7 @@ import cz.cvut.fel.constructa.repository.LocationRepository;
 import cz.cvut.fel.constructa.repository.UserRepository;
 import cz.cvut.fel.constructa.security.JwtService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,6 +19,7 @@ import java.util.Random;
  * The type Authentication service.
  */
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class AuthenticationService {
     /**
@@ -40,6 +42,9 @@ public class AuthenticationService {
      * The Auth manager.
      */
     private final AuthenticationManager authManager;
+
+//    private static final Logger logger = LogManager.getLogger(AuthenticationController.class);
+
 
     /**
      * Generate username string.
@@ -100,7 +105,11 @@ public class AuthenticationService {
                 .role(request.getRole())
                 .userAddress(address)
                 .build();
-        userDao.save(user);
+
+        User createdUser = userDao.save(user);
+
+        log.info("New user {} was registred.", createdUser.getUsername());
+
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
@@ -123,6 +132,9 @@ public class AuthenticationService {
         var user = userDao.findByEmail(request.getEmail())
                 .orElseThrow();
         var jwtToken = jwtService.generateToken(user);
+
+        log.info("User {} was logged in.", user.getUsername());
+
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();

@@ -10,6 +10,7 @@ import cz.cvut.fel.constructa.model.role.User;
 import cz.cvut.fel.constructa.repository.*;
 import cz.cvut.fel.constructa.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,7 @@ import org.springframework.data.domain.Sort;
  * The UserServiceImpl class implements the UserService interface and provides operations related to the User model.
  */
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     /**
@@ -108,6 +110,8 @@ public class UserServiceImpl implements UserService {
         vehicleDao.setDriverToNullByUserId(userId);
 
         userDao.deleteById(userId);
+        log.info("User with id {} was deleted.", userId);
+
     }
 
     /**

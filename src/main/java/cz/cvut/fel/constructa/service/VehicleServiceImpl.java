@@ -8,6 +8,7 @@ import cz.cvut.fel.constructa.model.Vehicle;
 import cz.cvut.fel.constructa.repository.VehicleRepository;
 import cz.cvut.fel.constructa.service.interfaces.VehicleService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
  * The type Vehicle service.
  */
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class VehicleServiceImpl implements VehicleService {
     /**
@@ -43,6 +45,9 @@ public class VehicleServiceImpl implements VehicleService {
     public VehicleDTO create(VehicleRequest request) throws ParseException {
         Vehicle vehicle = vehicleMapper.convertToEntity(request);
         vehicle = vehicleDao.save(vehicle);
+
+        log.info("New vehicle with id {} was added.", vehicle.getId());
+
         return vehicleMapper.convertToDto(vehicle);
     }
 
@@ -107,5 +112,6 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public void deleteVehicle(Long id) {
         vehicleDao.deleteById(id);
+        log.info("Vehicle with id {} was deleted.", id);
     }
 }

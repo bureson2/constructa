@@ -20,6 +20,7 @@ import cz.cvut.fel.constructa.service.interfaces.WorkReportService;
 import cz.cvut.fel.constructa.service.util.DistanceCalculator;
 import cz.cvut.fel.constructa.service.util.RoundTime;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,7 @@ import java.util.concurrent.TimeUnit;
  * The type Work report service.
  */
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class WorkReportServiceImpl implements WorkReportService {
     /**
@@ -72,6 +74,9 @@ public class WorkReportServiceImpl implements WorkReportService {
         Optional<User> user = userDao.findById(request.getUserId());
         user.ifPresent(createdWorkReport::setReportingEmployee);
         createdWorkReport = workReportDao.save(createdWorkReport);
+
+        log.info("New workreport for user {} was added.", createdWorkReport.getReportingEmployee().getUsername());
+
         return workReportMapper.convertToDto(createdWorkReport);
     }
 
@@ -116,6 +121,9 @@ public class WorkReportServiceImpl implements WorkReportService {
 
             workReportDao.save(workReport);
         }
+
+        log.info("User {} inform about illnes between from {} to {}", authorEmail, request.getTimeFrom(), request.getTimeTo());
+
     }
 
     /**
@@ -145,14 +153,18 @@ public class WorkReportServiceImpl implements WorkReportService {
 
             if(request.getLatitude() == null || request.getLongitude() == null){
 //                notify manager about missing location
+                log.warn("User {} start attendance without GPS location", authorEmail);
                 return workReportMapper.convertToDto(workReport);
             }
 
             double metres = DistanceCalculator.haversineDistance(location.get().getLatitude(),location.get().getLongitude(), request.getLatitude(), request.getLongitude());
             if(metres < 100){
 //                notify manager about wrong location
+                log.warn("User {} start attendance with distance difference {} metres", authorEmail, metres);
             }
         }
+
+        log.info("User {} start attendance", authorEmail);
 
         return workReportMapper.convertToDto(workReport);
     }
@@ -184,6 +196,7 @@ public class WorkReportServiceImpl implements WorkReportService {
 
             if(request.getLatitude() == null || request.getLongitude() == null){
 //          notify manager about missing location
+                log.warn("User {} stop attendance without GPS location", authorEmail);
                 return;
             }
 
@@ -191,8 +204,11 @@ public class WorkReportServiceImpl implements WorkReportService {
             double metres = DistanceCalculator.haversineDistance(location.getLatitude(),location.getLongitude(), request.getLatitude(), request.getLongitude());
             if(metres < 100){
 //          notify manager about wrong location
+                log.warn("User {} stop attendance with distance difference {} metres", authorEmail, metres);
                 return;
             }
+
+            log.info("User {} stop attendance", authorEmail);
         }
     }
 
@@ -277,6 +293,7 @@ public class WorkReportServiceImpl implements WorkReportService {
     @Override
     public void delete(Long id) {
         workReportDao.deleteById(id);
+        log.info("Work report with id {} was deleted.", id);
     }
 
     /**

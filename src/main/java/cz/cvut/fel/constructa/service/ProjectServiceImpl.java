@@ -12,6 +12,7 @@ import cz.cvut.fel.constructa.repository.ProjectRepository;
 import cz.cvut.fel.constructa.repository.UserRepository;
 import cz.cvut.fel.constructa.service.interfaces.ProjectService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -25,6 +26,7 @@ import org.springframework.data.domain.Sort;
  * The service for managing projects.
  */
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class ProjectServiceImpl implements ProjectService {
     /**
@@ -68,6 +70,9 @@ public class ProjectServiceImpl implements ProjectService {
         locationDao.save(address);
         createdProject.setProjectAddress(address);
         createdProject = projectDao.save(createdProject);
+
+        log.info("New project with id {} was added.", createdProject.getId());
+
         return projectMapper.convertToDto(createdProject);
     }
 
@@ -152,5 +157,6 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public void delete(Long id) {
         projectDao.deleteById(id);
+        log.info("Project with id {} was deleted.", id);
     }
 }

@@ -11,6 +11,7 @@ import cz.cvut.fel.constructa.repository.UserRepository;
 import cz.cvut.fel.constructa.security.AuthenticationFacade;
 import cz.cvut.fel.constructa.service.interfaces.TaskService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
  * This class represents a service for managing tasks in a Spring application.
  */
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class TaskServiceImpl implements TaskService {
     /**
@@ -61,6 +63,8 @@ public class TaskServiceImpl implements TaskService {
         author.ifPresent(createdTask::setAuthor);
 
         createdTask = taskDao.save(createdTask);
+
+        log.info("User {} create task for user {}.", createdTask.getAuthor().getUsername(), createdTask.getAssignee().getUsername());
 
         return taskMapper.convertToDto(createdTask);
     }
@@ -122,6 +126,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void delete(Long id) {
         taskDao.deleteById(id);
+        log.info("Task with id {} was deleted.", id);
     }
 
     /**

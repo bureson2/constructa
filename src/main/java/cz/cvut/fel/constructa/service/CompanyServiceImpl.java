@@ -9,6 +9,7 @@ import cz.cvut.fel.constructa.repository.CompanyRepository;
 import cz.cvut.fel.constructa.repository.LocationRepository;
 import cz.cvut.fel.constructa.service.interfaces.CompanyService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -22,6 +23,7 @@ import org.springframework.data.domain.Sort;
  * A service class that provides CRUD operations for companies and their locations.
  */
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class CompanyServiceImpl implements CompanyService {
     /**
@@ -57,6 +59,9 @@ public class CompanyServiceImpl implements CompanyService {
         Company company = companyMapper.convertToEntity(request);
         company.setCompanyAddress(address);
         Company createdCompany = companyDao.save(company);
+
+        log.info("New company with id {} was added.", createdCompany.getId());
+
         return companyMapper.convertToDto(createdCompany);
     }
 
@@ -95,6 +100,7 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public void delete(Long id) {
         companyDao.deleteById(id);
+        log.info("Company with id {} was deleted.", id);
     }
 
     /**
