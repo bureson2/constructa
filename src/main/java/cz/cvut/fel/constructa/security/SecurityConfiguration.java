@@ -68,7 +68,7 @@ public class SecurityConfiguration {
                         "/api/v1/users/**",
                         "/api/v1/vehicles/**",
                         "/api/v1/work-reports/**"
-                        ).authenticated()
+                ).authenticated()
                 .requestMatchers(
                         "/api/v1/work-reports/user/**"
                 ).hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER", "ROLE_REPORTER")

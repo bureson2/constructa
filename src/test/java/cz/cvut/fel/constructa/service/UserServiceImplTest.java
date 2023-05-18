@@ -1,4 +1,4 @@
-package cz.cvut.fel.constructa.service.squaretest.util;
+package cz.cvut.fel.constructa.service;
 
 import cz.cvut.fel.constructa.dto.request.UserRequest;
 import cz.cvut.fel.constructa.dto.response.UserDTO;
@@ -7,7 +7,6 @@ import cz.cvut.fel.constructa.mapper.UserMapper;
 import cz.cvut.fel.constructa.model.Location;
 import cz.cvut.fel.constructa.model.role.User;
 import cz.cvut.fel.constructa.repository.*;
-import cz.cvut.fel.constructa.service.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,6 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceImplTest {
@@ -136,7 +136,7 @@ class UserServiceImplTest {
                         .postCode("postCode")
                         .build())
                 .build());
-        when(mockUserDao.findAll(Sort.by("properties"))).thenReturn(users);
+        when(mockUserDao.findAll(Sort.by("lastname"))).thenReturn(users);
 
         // Configure UserMapper.convertToDto(...).
         final UserDTO userDTO = new UserDTO();
@@ -172,19 +172,28 @@ class UserServiceImplTest {
         final List<UserDTO> result = userServiceImplUnderTest.getUsers();
 
         // Verify the results
+        assertThat(result).isNotNull();
+        assertThat(result).hasSize(1);
+        UserDTO retrievedUserDTO = result.get(0);
+        assertThat(retrievedUserDTO.getUsername()).isEqualTo("username");
+        assertThat(retrievedUserDTO.getFirstname()).isEqualTo("firstname");
+        assertThat(retrievedUserDTO.getLastname()).isEqualTo("lastname");
     }
+
 
     @Test
     void testGetUsers_UserRepositoryReturnsNoItems() {
         // Setup
-        when(mockUserDao.findAll(Sort.by("properties"))).thenReturn(Collections.emptyList());
+        when(mockUserDao.findAll(Sort.by("lastname"))).thenReturn(Collections.emptyList());
 
         // Run the test
         final List<UserDTO> result = userServiceImplUnderTest.getUsers();
 
         // Verify the results
-        assertThat(result).isEqualTo(Collections.emptyList());
+        assertThat(result).isNotNull();
+        assertThat(result).isEmpty();
     }
+
 
     @Test
     void testGetInputUsers() {
@@ -202,43 +211,42 @@ class UserServiceImplTest {
                         .postCode("postCode")
                         .build())
                 .build());
-        when(mockUserDao.findAll(Sort.by("properties"))).thenReturn(users);
+        when(mockUserDao.findAll(any(Sort.class))).thenReturn(users);
 
         // Configure UserMapper.convertToInputDto(...).
         final UserInputDTO userInputDTO = new UserInputDTO();
         userInputDTO.setId(0L);
         userInputDTO.setFirstname("firstname");
         userInputDTO.setLastname("lastname");
-        when(mockUserMapper.convertToInputDto(User.builder()
-                .username("username")
-                .password("password")
-                .dateOfAcceptance(new GregorianCalendar(2020, Calendar.JANUARY, 1).getTime())
-                .userAddress(Location.builder()
-                        .city("city")
-                        .street("street")
-                        .descriptiveNumber("descriptiveNumber")
-                        .country("country")
-                        .postCode("postCode")
-                        .build())
-                .build())).thenReturn(userInputDTO);
+        when(mockUserMapper.convertToInputDto(any(User.class))).thenReturn(userInputDTO);
 
         // Run the test
         final List<UserInputDTO> result = userServiceImplUnderTest.getInputUsers();
 
         // Verify the results
+        assertThat(result).isNotNull();
+        assertThat(result).hasSize(1);
+        UserInputDTO retrievedUserInputDTO = result.get(0);
+        assertThat(retrievedUserInputDTO.getId()).isEqualTo(0L);
+        assertThat(retrievedUserInputDTO.getFirstname()).isEqualTo("firstname");
+        assertThat(retrievedUserInputDTO.getLastname()).isEqualTo("lastname");
     }
+
 
     @Test
     void testGetInputUsers_UserRepositoryReturnsNoItems() {
         // Setup
-        when(mockUserDao.findAll(Sort.by("properties"))).thenReturn(Collections.emptyList());
+        when(mockUserDao.findAll(Sort.by("lastname"))).thenReturn(Collections.emptyList());
 
         // Run the test
         final List<UserInputDTO> result = userServiceImplUnderTest.getInputUsers();
 
         // Verify the results
-        assertThat(result).isEqualTo(Collections.emptyList());
+        assertThat(result).isNotNull();
+        assertThat(result).isEmpty();
     }
+
+
 
     @Test
     void testDelete() {
@@ -421,20 +429,13 @@ class UserServiceImplTest {
                         .postCode("postCode")
                         .build())
                 .build();
-        when(mockUserMapper.convertToEntity(UserRequest.builder()
-                .id(0L)
-                .password("password")
-                .country("country")
-                .city("city")
-                .street("street")
-                .descriptiveNumber("descriptiveNumber")
-                .postCode("postCode")
-                .build())).thenReturn(user);
+        when(mockUserMapper.convertToEntity(request)).thenReturn(user);
 
         when(mockPasswordEncoder.encode("password")).thenReturn("password");
 
         // Configure UserRepository.save(...).
-        final User user1 = User.builder()
+        final User savedUser = User.builder()
+                .id(0L)
                 .username("username")
                 .password("password")
                 .dateOfAcceptance(new GregorianCalendar(2020, Calendar.JANUARY, 1).getTime())
@@ -446,18 +447,7 @@ class UserServiceImplTest {
                         .postCode("postCode")
                         .build())
                 .build();
-        when(mockUserDao.save(User.builder()
-                .username("username")
-                .password("password")
-                .dateOfAcceptance(new GregorianCalendar(2020, Calendar.JANUARY, 1).getTime())
-                .userAddress(Location.builder()
-                        .city("city")
-                        .street("street")
-                        .descriptiveNumber("descriptiveNumber")
-                        .country("country")
-                        .postCode("postCode")
-                        .build())
-                .build())).thenReturn(user1);
+        when(mockUserDao.save(user)).thenReturn(savedUser);
 
         // Configure UserMapper.convertToDto(...).
         final UserDTO userDTO = new UserDTO();
@@ -476,24 +466,17 @@ class UserServiceImplTest {
         userDTO.setBirthId("birthId");
         userDTO.setHourRate(0);
         userDTO.setMonthSalary(1);
-        when(mockUserMapper.convertToDto(User.builder()
-                .username("username")
-                .password("password")
-                .dateOfAcceptance(new GregorianCalendar(2020, Calendar.JANUARY, 1).getTime())
-                .userAddress(Location.builder()
-                        .city("city")
-                        .street("street")
-                        .descriptiveNumber("descriptiveNumber")
-                        .country("country")
-                        .postCode("postCode")
-                        .build())
-                .build())).thenReturn(userDTO);
+        when(mockUserMapper.convertToDto(savedUser)).thenReturn(userDTO);
 
         // Run the test
         final UserDTO result = userServiceImplUnderTest.update(request);
 
         // Verify the results
+        assertThat(result).isNotNull();
+        assertThat(result.getId()).isEqualTo(0L);
+        assertThat(result.getUsername()).isEqualTo("username");
     }
+
 
     @Test
     void testUpdate_UserMapperConvertToEntityThrowsParseException() throws Exception {

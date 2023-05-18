@@ -1,4 +1,4 @@
-package cz.cvut.fel.constructa.service.squaretest.util;
+package cz.cvut.fel.constructa.service;
 
 import cz.cvut.fel.constructa.dto.request.VehicleRequest;
 import cz.cvut.fel.constructa.dto.response.VehicleDTO;
@@ -8,7 +8,6 @@ import cz.cvut.fel.constructa.mapper.VehicleMapper;
 import cz.cvut.fel.constructa.model.Vehicle;
 import cz.cvut.fel.constructa.model.report.VehicleReport;
 import cz.cvut.fel.constructa.repository.VehicleRepository;
-import cz.cvut.fel.constructa.service.VehicleServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,8 +20,9 @@ import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class VehicleServiceImplTest {
@@ -72,7 +72,7 @@ class VehicleServiceImplTest {
         vehicle1.setCreatedAt(new GregorianCalendar(2020, Calendar.JANUARY, 1).getTime());
         vehicle1.setVehicleReports(List.of(VehicleReport.builder().build()));
         vehicle1.setType(VehicleType.CAR);
-        when(mockVehicleDao.save(new Vehicle())).thenReturn(vehicle1);
+        when(mockVehicleDao.save(vehicle)).thenReturn(vehicle1);
 
         // Configure VehicleMapper.convertToDto(...).
         final VehicleDTO vehicleDTO = new VehicleDTO();
@@ -87,13 +87,17 @@ class VehicleServiceImplTest {
         vehicleDTO.setCreatedAt(new GregorianCalendar(2020, Calendar.JANUARY, 1).getTime());
         vehicleDTO.setQrCode("qrCode");
         vehicleDTO.setVinCode("vinCode");
-        when(mockVehicleMapper.convertToDto(new Vehicle())).thenReturn(vehicleDTO);
+        when(mockVehicleMapper.convertToDto(vehicle1)).thenReturn(vehicleDTO);
 
         // Run the test
         final VehicleDTO result = vehicleServiceImplUnderTest.create(request);
 
         // Verify the results
+        assertThat(result).isEqualTo(vehicleDTO);
+        verify(mockVehicleDao).save(vehicle);
+        verify(mockVehicleMapper).convertToDto(vehicle1);
     }
+
 
     @Test
     void testCreate_VehicleMapperConvertToEntityThrowsParseException() throws Exception {
@@ -132,18 +136,33 @@ class VehicleServiceImplTest {
         vehicleDTO.setRegistrationNumber("registrationNumber");
         vehicleDTO.setConditionMotorcycleWatch(0.0);
         vehicleDTO.setMileage(0.0);
-        vehicleDTO.setType("type");
+        vehicleDTO.setType("CAR");
         vehicleDTO.setBoughtAt(new GregorianCalendar(2020, Calendar.JANUARY, 1).getTime());
         vehicleDTO.setCreatedAt(new GregorianCalendar(2020, Calendar.JANUARY, 1).getTime());
         vehicleDTO.setQrCode("qrCode");
         vehicleDTO.setVinCode("vinCode");
-        when(mockVehicleMapper.convertToDto(new Vehicle())).thenReturn(vehicleDTO);
+        when(mockVehicleMapper.convertToDto(any(Vehicle.class))).thenReturn(vehicleDTO);
 
         // Run the test
         final VehicleDTO result = vehicleServiceImplUnderTest.getVehicleById(0L);
 
         // Verify the results
+        verify(mockVehicleDao).findById(0L);
+        verify(mockVehicleMapper).convertToDto(any(Vehicle.class));
     }
+
+    @Test
+    void testGetVehicles_VehicleRepositoryReturnsNoItems() {
+        // Setup
+        when(mockVehicleDao.findAll(Sort.by("registrationNumber"))).thenReturn(Collections.emptyList());
+
+        // Run the test
+        final List<VehicleDTO> result = vehicleServiceImplUnderTest.getVehicles();
+
+        // Verify the results
+        assertThat(result).isEqualTo(Collections.emptyList());
+    }
+
 
     @Test
     void testGetVehicleById_VehicleRepositoryReturnsAbsent() {
@@ -174,7 +193,7 @@ class VehicleServiceImplTest {
         vehicle.setVehicleReports(List.of(VehicleReport.builder().build()));
         vehicle.setType(VehicleType.CAR);
         final List<Vehicle> vehicles = List.of(vehicle);
-        when(mockVehicleDao.findAll(Sort.by("properties"))).thenReturn(vehicles);
+        when(mockVehicleDao.findAll(any(Sort.class))).thenReturn(vehicles);
 
         // Configure VehicleMapper.convertToDto(...).
         final VehicleDTO vehicleDTO = new VehicleDTO();
@@ -189,24 +208,14 @@ class VehicleServiceImplTest {
         vehicleDTO.setCreatedAt(new GregorianCalendar(2020, Calendar.JANUARY, 1).getTime());
         vehicleDTO.setQrCode("qrCode");
         vehicleDTO.setVinCode("vinCode");
-        when(mockVehicleMapper.convertToDto(new Vehicle())).thenReturn(vehicleDTO);
+        when(mockVehicleMapper.convertToDto(any(Vehicle.class))).thenReturn(vehicleDTO);
 
         // Run the test
         final List<VehicleDTO> result = vehicleServiceImplUnderTest.getVehicles();
 
         // Verify the results
-    }
-
-    @Test
-    void testGetVehicles_VehicleRepositoryReturnsNoItems() {
-        // Setup
-        when(mockVehicleDao.findAll(Sort.by("properties"))).thenReturn(Collections.emptyList());
-
-        // Run the test
-        final List<VehicleDTO> result = vehicleServiceImplUnderTest.getVehicles();
-
-        // Verify the results
-        assertThat(result).isEqualTo(Collections.emptyList());
+        verify(mockVehicleDao).findAll(any(Sort.class));
+        verify(mockVehicleMapper).convertToDto(any(Vehicle.class));
     }
 
     @Test
@@ -235,13 +244,20 @@ class VehicleServiceImplTest {
         vehicleInputDTO.setName("name");
         vehicleInputDTO.setRegistrationNumber("registrationNumber");
         vehicleInputDTO.setType(VehicleType.CAR);
-        when(mockVehicleMapper.convertToInputDto(new Vehicle())).thenReturn(vehicleInputDTO);
+        when(mockVehicleMapper.convertToInputDto(eq(vehicle))).thenReturn(vehicleInputDTO);
 
         // Run the test
         final List<VehicleInputDTO> result = vehicleServiceImplUnderTest.getInputVehicles();
 
-        // Verify the results
+        // Verify that the findAll() method of mockVehicleDao is called exactly once
+        verify(mockVehicleDao, times(1)).findAll();
+
+        // Verify that the convertToInputDto() method of mockVehicleMapper is called exactly once
+        verify(mockVehicleMapper, times(1)).convertToInputDto(any(Vehicle.class));
+
     }
+
+
 
     @Test
     void testGetInputVehicles_VehicleRepositoryReturnsNoItems() {
@@ -273,7 +289,7 @@ class VehicleServiceImplTest {
         vehicle.setCreatedAt(new GregorianCalendar(2020, Calendar.JANUARY, 1).getTime());
         vehicle.setVehicleReports(List.of(VehicleReport.builder().build()));
         vehicle.setType(VehicleType.CAR);
-        when(mockVehicleMapper.convertToEntity(VehicleRequest.builder().build())).thenReturn(vehicle);
+        when(mockVehicleMapper.convertToEntity(any(VehicleRequest.class))).thenReturn(vehicle);
 
         // Configure VehicleRepository.save(...).
         final Vehicle vehicle1 = new Vehicle();
@@ -288,7 +304,7 @@ class VehicleServiceImplTest {
         vehicle1.setCreatedAt(new GregorianCalendar(2020, Calendar.JANUARY, 1).getTime());
         vehicle1.setVehicleReports(List.of(VehicleReport.builder().build()));
         vehicle1.setType(VehicleType.CAR);
-        when(mockVehicleDao.save(new Vehicle())).thenReturn(vehicle1);
+        when(mockVehicleDao.save(any(Vehicle.class))).thenReturn(vehicle1);
 
         // Configure VehicleMapper.convertToDto(...).
         final VehicleDTO vehicleDTO = new VehicleDTO();
@@ -303,13 +319,16 @@ class VehicleServiceImplTest {
         vehicleDTO.setCreatedAt(new GregorianCalendar(2020, Calendar.JANUARY, 1).getTime());
         vehicleDTO.setQrCode("qrCode");
         vehicleDTO.setVinCode("vinCode");
-        when(mockVehicleMapper.convertToDto(new Vehicle())).thenReturn(vehicleDTO);
+        when(mockVehicleMapper.convertToDto(any(Vehicle.class))).thenReturn(vehicleDTO);
 
         // Run the test
         final VehicleDTO result = vehicleServiceImplUnderTest.update(request);
 
         // Verify the results
+        verify(mockVehicleDao, times(1)).save(any(Vehicle.class));
+        verify(mockVehicleMapper, times(1)).convertToDto(any(Vehicle.class));
     }
+
 
     @Test
     void testUpdate_VehicleMapperConvertToEntityThrowsParseException() throws Exception {

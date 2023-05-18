@@ -40,18 +40,6 @@ public class TaskControllerImpl implements TaskController {
     private final TaskService taskService;
 
     /**
-     * Has permission boolean.
-     *
-     * @param requiredRoles the required roles
-     * @return the boolean
-     */
-    private boolean hasPermission(List<GrantedAuthority> requiredRoles){
-        Authentication authentication = authenticationFacade.getAuthentication();
-        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        return authorities.stream().anyMatch(requiredRoles::contains);
-    }
-
-    /**
      * Gets tasks.
      *
      * @return the tasks
@@ -123,6 +111,7 @@ public class TaskControllerImpl implements TaskController {
     @ResponseBody
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TaskDTO> editTask(@RequestBody TaskRequest request) throws ParseException {
+        System.out.println(request);
         return ResponseEntity.ok().body(
                 taskService.update(request)
         );

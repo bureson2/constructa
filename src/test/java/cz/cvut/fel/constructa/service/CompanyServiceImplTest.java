@@ -1,4 +1,4 @@
-package cz.cvut.fel.constructa.service.squaretest.util;
+package cz.cvut.fel.constructa.service;
 
 import cz.cvut.fel.constructa.dto.request.CompanyRequest;
 import cz.cvut.fel.constructa.dto.response.CompanyDTO;
@@ -10,7 +10,6 @@ import cz.cvut.fel.constructa.model.report.VehicleReport;
 import cz.cvut.fel.constructa.model.role.User;
 import cz.cvut.fel.constructa.repository.CompanyRepository;
 import cz.cvut.fel.constructa.repository.LocationRepository;
-import cz.cvut.fel.constructa.service.CompanyServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -66,13 +65,7 @@ class CompanyServiceImplTest {
                 .country("country")
                 .postCode("postCode")
                 .build();
-        when(mockLocationDao.save(Location.builder()
-                .city("city")
-                .street("street")
-                .descriptiveNumber("descriptiveNumber")
-                .country("country")
-                .postCode("postCode")
-                .build())).thenReturn(location);
+        when(mockLocationDao.save(location)).thenReturn(location);
 
         // Configure CompanyMapper.convertToEntity(...).
         final Company company = new Company();
@@ -81,41 +74,22 @@ class CompanyServiceImplTest {
         company.setDin("din");
         company.setCin("cin");
         company.setPhone("phone");
-        company.setCompanyAddress(Location.builder()
-                .city("city")
-                .street("street")
-                .descriptiveNumber("descriptiveNumber")
-                .country("country")
-                .postCode("postCode")
-                .build());
+        company.setCompanyAddress(location);
         company.setExternalist(List.of(User.builder().build()));
-        company.setContractors_transport_reports(Set.of(VehicleReport.builder().build()));
-        when(mockCompanyMapper.convertToEntity(CompanyRequest.builder()
-                .id(0L)
-                .country("country")
-                .city("city")
-                .street("street")
-                .descriptiveNumber("descriptiveNumber")
-                .postCode("postCode")
-                .build())).thenReturn(company);
+        company.setContractorsTransportReports(Set.of(VehicleReport.builder().build()));
+        when(mockCompanyMapper.convertToEntity(request)).thenReturn(company);
 
         // Configure CompanyRepository.save(...).
-        final Company company1 = new Company();
-        company1.setId(0L);
-        company1.setName("name");
-        company1.setDin("din");
-        company1.setCin("cin");
-        company1.setPhone("phone");
-        company1.setCompanyAddress(Location.builder()
-                .city("city")
-                .street("street")
-                .descriptiveNumber("descriptiveNumber")
-                .country("country")
-                .postCode("postCode")
-                .build());
-        company1.setExternalist(List.of(User.builder().build()));
-        company1.setContractors_transport_reports(Set.of(VehicleReport.builder().build()));
-        when(mockCompanyDao.save(new Company())).thenReturn(company1);
+        final Company savedCompany = new Company();
+        savedCompany.setId(0L);
+        savedCompany.setName("name");
+        savedCompany.setDin("din");
+        savedCompany.setCin("cin");
+        savedCompany.setPhone("phone");
+        savedCompany.setCompanyAddress(location);
+        savedCompany.setExternalist(List.of(User.builder().build()));
+        savedCompany.setContractorsTransportReports(Set.of(VehicleReport.builder().build()));
+        when(mockCompanyDao.save(company)).thenReturn(savedCompany);
 
         // Configure CompanyMapper.convertToDto(...).
         final CompanyDTO companyDTO = new CompanyDTO();
@@ -133,19 +107,13 @@ class CompanyServiceImplTest {
         companyAddress.setCountry("country");
         companyAddress.setPostCode("postCode");
         companyDTO.setCompanyAddress(companyAddress);
-        when(mockCompanyMapper.convertToDto(new Company())).thenReturn(companyDTO);
+        when(mockCompanyMapper.convertToDto(savedCompany)).thenReturn(companyDTO);
 
         // Run the test
         final CompanyDTO result = companyServiceImplUnderTest.create(request);
 
         // Verify the results
-        verify(mockLocationDao).save(Location.builder()
-                .city("city")
-                .street("street")
-                .descriptiveNumber("descriptiveNumber")
-                .country("country")
-                .postCode("postCode")
-                .build());
+        verify(mockLocationDao).save(location);
     }
 
     @Test
@@ -214,7 +182,7 @@ class CompanyServiceImplTest {
                 .postCode("postCode")
                 .build());
         company1.setExternalist(List.of(User.builder().build()));
-        company1.setContractors_transport_reports(Set.of(VehicleReport.builder().build()));
+        company1.setContractorsTransportReports(Set.of(VehicleReport.builder().build()));
         final Optional<Company> company = Optional.of(company1);
         when(mockCompanyDao.findById(0L)).thenReturn(company);
 
@@ -234,13 +202,15 @@ class CompanyServiceImplTest {
         companyAddress.setCountry("country");
         companyAddress.setPostCode("postCode");
         companyDTO.setCompanyAddress(companyAddress);
-        when(mockCompanyMapper.convertToDto(new Company())).thenReturn(companyDTO);
+        when(mockCompanyMapper.convertToDto(company1)).thenReturn(companyDTO);
 
         // Run the test
         final CompanyDTO result = companyServiceImplUnderTest.getCompanyById(0L);
 
         // Verify the results
+        verify(mockCompanyMapper).convertToDto(company1);
     }
+
 
     @Test
     void testGetCompanyById_CompanyRepositoryReturnsAbsent() {
@@ -272,9 +242,9 @@ class CompanyServiceImplTest {
                 .postCode("postCode")
                 .build());
         company.setExternalist(List.of(User.builder().build()));
-        company.setContractors_transport_reports(Set.of(VehicleReport.builder().build()));
+        company.setContractorsTransportReports(Set.of(VehicleReport.builder().build()));
         final List<Company> companies = List.of(company);
-        when(mockCompanyDao.findAll(Sort.by("properties"))).thenReturn(companies);
+        when(mockCompanyDao.findAll(Sort.by("name"))).thenReturn(companies);
 
         // Configure CompanyMapper.convertToDto(...).
         final CompanyDTO companyDTO = new CompanyDTO();
@@ -292,18 +262,19 @@ class CompanyServiceImplTest {
         companyAddress.setCountry("country");
         companyAddress.setPostCode("postCode");
         companyDTO.setCompanyAddress(companyAddress);
-        when(mockCompanyMapper.convertToDto(new Company())).thenReturn(companyDTO);
+        when(mockCompanyMapper.convertToDto(company)).thenReturn(companyDTO);
 
         // Run the test
         final List<CompanyDTO> result = companyServiceImplUnderTest.getCompanies();
 
         // Verify the results
+        verify(mockCompanyMapper).convertToDto(company);
     }
 
     @Test
     void testGetCompanies_CompanyRepositoryReturnsNoItems() {
         // Setup
-        when(mockCompanyDao.findAll(Sort.by("properties"))).thenReturn(Collections.emptyList());
+        when(mockCompanyDao.findAll(Sort.by("name"))).thenReturn(Collections.emptyList());
 
         // Run the test
         final List<CompanyDTO> result = companyServiceImplUnderTest.getCompanies();
@@ -311,6 +282,7 @@ class CompanyServiceImplTest {
         // Verify the results
         assertThat(result).isEqualTo(Collections.emptyList());
     }
+
 
     @Test
     void testDelete() {
@@ -349,7 +321,7 @@ class CompanyServiceImplTest {
                 .postCode("postCode")
                 .build());
         company1.setExternalist(List.of(User.builder().build()));
-        company1.setContractors_transport_reports(Set.of(VehicleReport.builder().build()));
+        company1.setContractorsTransportReports(Set.of(VehicleReport.builder().build()));
         final Optional<Company> company = Optional.of(company1);
         when(mockCompanyDao.findById(0L)).thenReturn(company);
 
@@ -361,86 +333,46 @@ class CompanyServiceImplTest {
                 .country("country")
                 .postCode("postCode")
                 .build();
-        when(mockLocationDao.save(Location.builder()
-                .city("city")
-                .street("street")
-                .descriptiveNumber("descriptiveNumber")
-                .country("country")
-                .postCode("postCode")
-                .build())).thenReturn(location);
+        when(mockLocationDao.save(location)).thenReturn(location);
 
         // Configure CompanyMapper.convertToEntity(...).
-        final Company company2 = new Company();
-        company2.setId(0L);
-        company2.setName("name");
-        company2.setDin("din");
-        company2.setCin("cin");
-        company2.setPhone("phone");
-        company2.setCompanyAddress(Location.builder()
-                .city("city")
-                .street("street")
-                .descriptiveNumber("descriptiveNumber")
-                .country("country")
-                .postCode("postCode")
-                .build());
-        company2.setExternalist(List.of(User.builder().build()));
-        company2.setContractors_transport_reports(Set.of(VehicleReport.builder().build()));
-        when(mockCompanyMapper.convertToEntity(CompanyRequest.builder()
-                .id(0L)
-                .country("country")
-                .city("city")
-                .street("street")
-                .descriptiveNumber("descriptiveNumber")
-                .postCode("postCode")
-                .build())).thenReturn(company2);
+        final Company updatedCompany = new Company();
+        updatedCompany.setId(0L);
+        updatedCompany.setName("name");
+        updatedCompany.setDin("din");
+        updatedCompany.setCin("cin");
+        updatedCompany.setPhone("phone");
+        updatedCompany.setCompanyAddress(location);
+        updatedCompany.setExternalist(List.of(User.builder().build()));
+        updatedCompany.setContractorsTransportReports(Set.of(VehicleReport.builder().build()));
+        when(mockCompanyMapper.convertToEntity(request)).thenReturn(updatedCompany);
 
         // Configure CompanyRepository.save(...).
-        final Company company3 = new Company();
-        company3.setId(0L);
-        company3.setName("name");
-        company3.setDin("din");
-        company3.setCin("cin");
-        company3.setPhone("phone");
-        company3.setCompanyAddress(Location.builder()
-                .city("city")
-                .street("street")
-                .descriptiveNumber("descriptiveNumber")
-                .country("country")
-                .postCode("postCode")
-                .build());
-        company3.setExternalist(List.of(User.builder().build()));
-        company3.setContractors_transport_reports(Set.of(VehicleReport.builder().build()));
-        when(mockCompanyDao.save(new Company())).thenReturn(company3);
+        when(mockCompanyDao.save(updatedCompany)).thenReturn(updatedCompany);
 
         // Configure CompanyMapper.convertToDto(...).
-        final CompanyDTO companyDTO = new CompanyDTO();
-        companyDTO.setId(0L);
-        companyDTO.setName("name");
-        companyDTO.setDin("din");
-        companyDTO.setCin("cin");
-        companyDTO.setPhone("phone");
-        final LocationDTO companyAddress = new LocationDTO();
-        companyAddress.setId(0L);
-        companyAddress.setCity("city");
-        companyAddress.setStreet("street");
-        companyAddress.setDescriptiveNumber("descriptiveNumber");
-        companyAddress.setName("name");
-        companyAddress.setCountry("country");
-        companyAddress.setPostCode("postCode");
-        companyDTO.setCompanyAddress(companyAddress);
-        when(mockCompanyMapper.convertToDto(new Company())).thenReturn(companyDTO);
+        final CompanyDTO updatedCompanyDTO = new CompanyDTO();
+        updatedCompanyDTO.setId(0L);
+        updatedCompanyDTO.setName("name");
+        updatedCompanyDTO.setDin("din");
+        updatedCompanyDTO.setCin("cin");
+        updatedCompanyDTO.setPhone("phone");
+        final LocationDTO updatedCompanyAddress = new LocationDTO();
+        updatedCompanyAddress.setId(0L);
+        updatedCompanyAddress.setCity("city");
+        updatedCompanyAddress.setStreet("street");
+        updatedCompanyAddress.setDescriptiveNumber("descriptiveNumber");
+        updatedCompanyAddress.setName("name");
+        updatedCompanyAddress.setCountry("country");
+        updatedCompanyAddress.setPostCode("postCode");
+        updatedCompanyDTO.setCompanyAddress(updatedCompanyAddress);
+        when(mockCompanyMapper.convertToDto(updatedCompany)).thenReturn(updatedCompanyDTO);
 
         // Run the test
         final CompanyDTO result = companyServiceImplUnderTest.update(request);
 
         // Verify the results
-        verify(mockLocationDao).save(Location.builder()
-                .city("city")
-                .street("street")
-                .descriptiveNumber("descriptiveNumber")
-                .country("country")
-                .postCode("postCode")
-                .build());
+        verify(mockLocationDao).save(location);
     }
 
     @Test
@@ -457,70 +389,49 @@ class CompanyServiceImplTest {
         when(mockCompanyDao.findById(0L)).thenReturn(Optional.empty());
 
         // Configure CompanyMapper.convertToEntity(...).
-        final Company company = new Company();
-        company.setId(0L);
-        company.setName("name");
-        company.setDin("din");
-        company.setCin("cin");
-        company.setPhone("phone");
-        company.setCompanyAddress(Location.builder()
+        final Company updatedCompany = new Company();
+        updatedCompany.setId(0L);
+        updatedCompany.setName("name");
+        updatedCompany.setDin("din");
+        updatedCompany.setCin("cin");
+        updatedCompany.setPhone("phone");
+        updatedCompany.setCompanyAddress(Location.builder()
                 .city("city")
                 .street("street")
                 .descriptiveNumber("descriptiveNumber")
                 .country("country")
                 .postCode("postCode")
                 .build());
-        company.setExternalist(List.of(User.builder().build()));
-        company.setContractors_transport_reports(Set.of(VehicleReport.builder().build()));
-        when(mockCompanyMapper.convertToEntity(CompanyRequest.builder()
-                .id(0L)
-                .country("country")
-                .city("city")
-                .street("street")
-                .descriptiveNumber("descriptiveNumber")
-                .postCode("postCode")
-                .build())).thenReturn(company);
+        updatedCompany.setExternalist(List.of(User.builder().build()));
+        updatedCompany.setContractorsTransportReports(Set.of(VehicleReport.builder().build()));
+        when(mockCompanyMapper.convertToEntity(request)).thenReturn(updatedCompany);
 
         // Configure CompanyRepository.save(...).
-        final Company company1 = new Company();
-        company1.setId(0L);
-        company1.setName("name");
-        company1.setDin("din");
-        company1.setCin("cin");
-        company1.setPhone("phone");
-        company1.setCompanyAddress(Location.builder()
-                .city("city")
-                .street("street")
-                .descriptiveNumber("descriptiveNumber")
-                .country("country")
-                .postCode("postCode")
-                .build());
-        company1.setExternalist(List.of(User.builder().build()));
-        company1.setContractors_transport_reports(Set.of(VehicleReport.builder().build()));
-        when(mockCompanyDao.save(new Company())).thenReturn(company1);
+        when(mockCompanyDao.save(updatedCompany)).thenReturn(updatedCompany);
 
         // Configure CompanyMapper.convertToDto(...).
-        final CompanyDTO companyDTO = new CompanyDTO();
-        companyDTO.setId(0L);
-        companyDTO.setName("name");
-        companyDTO.setDin("din");
-        companyDTO.setCin("cin");
-        companyDTO.setPhone("phone");
-        final LocationDTO companyAddress = new LocationDTO();
-        companyAddress.setId(0L);
-        companyAddress.setCity("city");
-        companyAddress.setStreet("street");
-        companyAddress.setDescriptiveNumber("descriptiveNumber");
-        companyAddress.setName("name");
-        companyAddress.setCountry("country");
-        companyAddress.setPostCode("postCode");
-        companyDTO.setCompanyAddress(companyAddress);
-        when(mockCompanyMapper.convertToDto(new Company())).thenReturn(companyDTO);
+        final CompanyDTO updatedCompanyDTO = new CompanyDTO();
+        updatedCompanyDTO.setId(0L);
+        updatedCompanyDTO.setName("name");
+        updatedCompanyDTO.setDin("din");
+        updatedCompanyDTO.setCin("cin");
+        updatedCompanyDTO.setPhone("phone");
+        final LocationDTO updatedCompanyAddress = new LocationDTO();
+        updatedCompanyAddress.setId(0L);
+        updatedCompanyAddress.setCity("city");
+        updatedCompanyAddress.setStreet("street");
+        updatedCompanyAddress.setDescriptiveNumber("descriptiveNumber");
+        updatedCompanyAddress.setName("name");
+        updatedCompanyAddress.setCountry("country");
+        updatedCompanyAddress.setPostCode("postCode");
+        updatedCompanyDTO.setCompanyAddress(updatedCompanyAddress);
+        when(mockCompanyMapper.convertToDto(updatedCompany)).thenReturn(updatedCompanyDTO);
 
         // Run the test
         final CompanyDTO result = companyServiceImplUnderTest.update(request);
 
         // Verify the results
+        verify(mockCompanyDao).save(updatedCompany);
     }
 
     @Test
@@ -550,7 +461,7 @@ class CompanyServiceImplTest {
                 .postCode("postCode")
                 .build());
         company1.setExternalist(List.of(User.builder().build()));
-        company1.setContractors_transport_reports(Set.of(VehicleReport.builder().build()));
+        company1.setContractorsTransportReports(Set.of(VehicleReport.builder().build()));
         final Optional<Company> company = Optional.of(company1);
         when(mockCompanyDao.findById(0L)).thenReturn(company);
 
